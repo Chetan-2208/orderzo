@@ -469,7 +469,7 @@ export default function DashboardPage() {
           <button onClick={() => setActiveTab('orders')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'orders' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
             <span className="text-2xl">📋</span><span className="text-xs font-medium">Orders</span>
           </button>
-          <button onClick={() => setActiveTab('customers')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'customers' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
+          <button onClick={() => router.push("/customers")} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'customers' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
             <span className="text-2xl">👥</span><span className="text-xs font-medium">Customers</span>
           </button>
           <button onClick={() => setActiveTab('settings')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'settings' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
