@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react'
+import Logo from '@/components/Logo'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -183,7 +184,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 mx-auto mb-4 animate-pulse">O</div>
+          <Logo size={64} />
           <p className="text-gray-600">Loading your business...</p>
         </div>
       </div>
@@ -195,7 +196,7 @@ export default function DashboardPage() {
       <header className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10 shadow-sm">
         <div className="flex items-center justify-between max-w-2xl mx-auto">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">O</div>
+            <Logo size={40} />
             <div>
               <h1 className="font-bold text-gray-900">{business?.business_name}</h1>
               <p className="text-xs text-gray-500">+91 {phone}</p>

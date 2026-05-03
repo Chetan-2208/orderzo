@@ -1,12 +1,11 @@
+import Logo from '@/components/Logo';
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex flex-col">
       {/* Header */}
       <header className="px-6 py-6 sm:px-10">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-orange-500/30">
-            O
-          </div>
+          <Logo size={40} />
           <span className="text-2xl font-bold text-gray-900">Orderzo</span>
         </div>
       </header>

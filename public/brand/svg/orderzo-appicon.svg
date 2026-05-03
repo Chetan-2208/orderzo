@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <metadata>© 2026 Orderzo Technologies. All rights reserved. Orderzo and the rounded-square paid-tick mark are trademarks of Orderzo Technologies. Unauthorized use prohibited. legal@orderzo.io</metadata>
+  <title>Orderzo™ app icon</title>
+  <rect width="1024" height="1024" rx="230" fill="#F2752C"/>
+  <g transform="translate(192 192) scale(6.6667)">
+    <rect x="8" y="8" width="80" height="80" rx="22" ry="22" fill="#fff"/>
+    <path d="M30 49 L44 62 L66 36" stroke="#F2752C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

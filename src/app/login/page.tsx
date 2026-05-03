@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react'
+import Logo from '@/components/Logo'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -106,9 +107,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex flex-col">
       <header className="px-6 py-6 sm:px-10">
         <Link href="/" className="flex items-center gap-2 w-fit">
-          <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-orange-500/30">
-            O
-          </div>
+          <Logo size={40} />
           <span className="text-2xl font-bold text-gray-900">Orderzo</span>
         </Link>
       </header>

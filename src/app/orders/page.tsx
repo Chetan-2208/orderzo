@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react'
+import Logo from '@/components/Logo'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -140,7 +141,7 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-orange-50 flex items-center justify-center">
-        <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 animate-pulse">O</div>
+        <Logo size={64} />
       </div>
     )
   }

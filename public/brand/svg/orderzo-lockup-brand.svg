@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120">
+  <metadata>© 2026 Orderzo Technologies. All rights reserved. Orderzo and the rounded-square paid-tick mark are trademarks of Orderzo Technologies. Unauthorized use prohibited. legal@orderzo.io</metadata>
+  <title>Orderzo™ lockup</title>
+  
+  <g transform="translate(20 12)">
+    <rect x="8" y="8" width="80" height="80" rx="22" ry="22" fill="#F2752C"/>
+    <path d="M30 49 L44 62 L66 36" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  <text x="128" y="84" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="80" letter-spacing="-3.2" fill="#0E0E14">orderzo</text>
+</svg>
