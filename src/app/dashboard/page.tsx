@@ -400,7 +400,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <Link href="/items" className="block bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <Link href="/orders" className="block bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow mb-4"><div className="flex items-center justify-between"><div><h3 className="font-semibold text-gray-900 mb-1">📋 All Orders</h3><p className="text-sm text-gray-500">View, search, and manage all orders</p></div><span className="text-orange-500 text-2xl">→</span></div></Link><Link href="/items" className="block bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Menu / Items</h3>
