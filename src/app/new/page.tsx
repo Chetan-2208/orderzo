@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { generateInvoicePDF } from '@/lib/generateInvoice'
 
 interface Item {
   id: string
@@ -36,40 +37,41 @@ function NewOrderContent() {
   const mode = (searchParams.get('mode') || 'order') as 'order' | 'bill'
 
   const [business, setBusiness] = useState<Business | null>(null)
+  const [phone, setPhone] = useState('')
   const [items, setItems] = useState<Item[]>([])
   const [customers, setCustomers] = useState<Customer[]>([])
   const [cart, setCart] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [submittingMessage, setSubmittingMessage] = useState('')
   const [error, setError] = useState('')
 
-  // Customer state
   const [customerSearch, setCustomerSearch] = useState('')
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
   const [showAddCustomer, setShowAddCustomer] = useState(false)
   const [newCustomerName, setNewCustomerName] = useState('')
   const [newCustomerPhone, setNewCustomerPhone] = useState('')
 
-  // Bill mode specific
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'upi'>('cash')
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const phone = localStorage.getItem('orderzo_user_phone')
-    if (!phone) {
+    const savedPhone = localStorage.getItem('orderzo_user_phone')
+    if (!savedPhone) {
       router.push('/login')
       return
     }
+    setPhone(savedPhone)
 
-    loadData(phone)
+    loadData(savedPhone)
   }, [router])
 
-  const loadData = async (phone: string) => {
+  const loadData = async (phoneNum: string) => {
     const { data: businessData } = await supabase
       .from('businesses')
       .select('*')
-      .eq('owner_phone', phone)
+      .eq('owner_phone', phoneNum)
       .single()
 
     if (!businessData) {
@@ -128,7 +130,7 @@ function NewOrderContent() {
     setShowAddCustomer(false)
   }
 
-  const filteredCustomers = customers.filter(c => 
+  const filteredCustomers = customers.filter(c =>
     c.name.toLowerCase().includes(customerSearch.toLowerCase()) ||
     c.phone.includes(customerSearch)
   )
@@ -156,7 +158,7 @@ function NewOrderContent() {
     setSubmitting(true)
 
     try {
-      // 1. Save or get customer
+      setSubmittingMessage('Saving customer...')
       let customerId = selectedCustomer?.id
 
       if (selectedCustomer && selectedCustomer.id === 'new') {
@@ -174,9 +176,9 @@ function NewOrderContent() {
         customerId = newCust.id
       }
 
-      // 2. Create order
+      setSubmittingMessage('Creating order...')
       const orderStatus = mode === 'bill' && paymentMethod === 'cash' ? 'paid' : 'sent'
-      
+
       const { data: orderData, error: orderError } = await supabase
         .from('orders')
         .insert({
@@ -193,7 +195,6 @@ function NewOrderContent() {
 
       if (orderError) throw orderError
 
-      // 3. Save order items
       const orderItems = cart.map(c => ({
         order_id: orderData.id,
         item_id: c.itemId,
@@ -208,52 +209,57 @@ function NewOrderContent() {
 
       if (itemsError) throw itemsError
 
-      // 4. Build WhatsApp message
-      const itemLines = cart.map(c => `📦 ${c.name} × ${c.quantity} = ₹${c.price * c.quantity}`).join('\n')
+      setSubmittingMessage('Generating PDF invoice...')
+      let pdfUrl = ''
+      try {
+        pdfUrl = await generateInvoicePDF({
+          orderId: orderData.id,
+          businessName: business.business_name,
+          businessPhone: phone,
+          businessUpi: business.upi_id,
+          customerName: selectedCustomer?.name || 'Walk-in customer',
+          customerPhone: selectedCustomer?.phone,
+          items: cart.map(c => ({
+            name: c.name,
+            quantity: c.quantity,
+            price: c.price,
+          })),
+          total: total,
+          mode: mode,
+          paymentMethod: mode === 'bill' ? paymentMethod : 'upi',
+          paymentStatus: orderStatus === 'paid' ? 'paid' : 'pending',
+          date: new Date(),
+        })
+      } catch (pdfError: any) {
+        console.error('PDF generation failed:', pdfError)
+      }
+
+      setSubmittingMessage('Opening WhatsApp...')
+      const itemLines = cart.map(c => `• ${c.name} × ${c.quantity} = ₹${c.price * c.quantity}`).join('\n')
       const upiLink = `upi://pay?pa=${business.upi_id}&pn=${encodeURIComponent(business.business_name)}&am=${total}&cu=INR&tn=${encodeURIComponent('Order from ' + business.business_name)}`
-      
+
       let message = ''
       if (mode === 'order') {
-        message = `Namaste ${selectedCustomer?.name},
-
-Aapka order ${business.business_name} se confirm hua:
-${itemLines}
-💰 Total: ₹${total}
-
-Pay here (any UPI app):
-${upiLink}
-
-Dhanyavaad! 🙏`
+        message = `Namaste ${selectedCustomer?.name},\n\nAapka order *${business.business_name}* se confirm hua:\n${itemLines}\n\n💰 *Total: ₹${total}*\n\n📱 *Pay via UPI:*\n${upiLink}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Dhanyavaad! 🙏\n— ${business.business_name}`
       } else {
-        message = `🧾 BILL — ${business.business_name}
-
-${selectedCustomer?.name ? `Customer: ${selectedCustomer.name}\n` : ''}Date: ${new Date().toLocaleDateString('en-IN')}
-Time: ${new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}
-
-ITEMS:
-${itemLines}
-
-TOTAL: ₹${total}
-${paymentMethod === 'cash' ? '✅ PAID via Cash' : '⏳ Pay here: ' + upiLink}
-
-Thank you for shopping! 🙏
-Visit again — ${business.business_name}`
+        message = `🧾 *BILL — ${business.business_name}*\n\n${selectedCustomer?.name ? `Customer: ${selectedCustomer.name}\n` : ''}Date: ${new Date().toLocaleDateString('en-IN')}\nTime: ${new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}\n\n*ITEMS:*\n${itemLines}\n\n💰 *TOTAL: ₹${total}*\n${paymentMethod === 'cash' ? '✅ *PAID via Cash*' : '⏳ *Pay via UPI:* ' + upiLink}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Thank you for shopping! 🙏\nVisit again — ${business.business_name}`
       }
 
-      // 5. Open WhatsApp if customer has phone
       if (selectedCustomer && selectedCustomer.phone) {
-        const phone = selectedCustomer.phone.replace(/\D/g, '')
-        const fullPhone = phone.length === 10 ? '91' + phone : phone
+        const cleanPhone = selectedCustomer.phone.replace(/\D/g, '')
+        const fullPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone
         const whatsappUrl = `https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`
         window.open(whatsappUrl, '_blank')
+      } else if (pdfUrl) {
+        alert('Bill generated! PDF: ' + pdfUrl)
       }
 
-      // 6. Redirect to dashboard
       router.push('/dashboard')
     } catch (err: any) {
       console.error('Order error:', err)
       setError('Could not save: ' + (err.message || 'Unknown error'))
       setSubmitting(false)
+      setSubmittingMessage('')
     }
   }
 
@@ -305,7 +311,6 @@ Visit again — ${business.business_name}`
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-4 space-y-4">
-        {/* Customer Section */}
         <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
           <h3 className="font-semibold text-gray-900 mb-3">
             Customer {mode === 'order' ? <span className="text-red-500">*</span> : <span className="text-gray-400 text-sm font-normal">(optional)</span>}
@@ -368,7 +373,7 @@ Visit again — ${business.business_name}`
             <>
               <input
                 type="text"
-                placeholder="🔍 Search customers or add new"
+                placeholder="Search customers or add new"
                 value={customerSearch}
                 onChange={(e) => setCustomerSearch(e.target.value)}
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 mb-2"
@@ -397,7 +402,6 @@ Visit again — ${business.business_name}`
           )}
         </div>
 
-        {/* Items Section */}
         <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
           <h3 className="font-semibold text-gray-900 mb-3">Items <span className="text-red-500">*</span></h3>
           <div className="space-y-2">
@@ -439,7 +443,6 @@ Visit again — ${business.business_name}`
           </div>
         </div>
 
-        {/* Bill Mode: Payment Method */}
         {mode === 'bill' && cart.length > 0 && (
           <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
             <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
@@ -469,7 +472,6 @@ Visit again — ${business.business_name}`
         )}
       </main>
 
-      {/* Bottom Bar with Total + Submit */}
       {cart.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg p-4 z-20">
           <div className="max-w-2xl mx-auto">
@@ -482,12 +484,12 @@ Visit again — ${business.business_name}`
               disabled={submitting}
               className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:shadow-none transition-colors"
             >
-              {submitting ? 'Saving...' : (
-                mode === 'order' 
-                  ? '📱 Send WhatsApp + UPI Link' 
-                  : selectedCustomer?.phone 
-                    ? '🧾 Generate Bill + Send WhatsApp' 
-                    : '🧾 Generate Bill'
+              {submitting ? (submittingMessage || 'Saving...') : (
+                mode === 'order'
+                  ? '📱 Send WhatsApp + PDF Invoice'
+                  : selectedCustomer?.phone
+                    ? '🧾 Generate PDF + Send WhatsApp'
+                    : '🧾 Generate PDF Invoice'
               )}
             </button>
           </div>
