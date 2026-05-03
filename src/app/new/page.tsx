@@ -6,30 +6,10 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { generateInvoicePDF } from '@/lib/generateInvoice'
 
-interface Item {
-  id: string
-  name: string
-  price: number
-}
-
-interface Customer {
-  id: string
-  name: string
-  phone: string
-}
-
-interface Business {
-  id: string
-  business_name: string
-  upi_id: string
-}
-
-interface CartItem {
-  itemId: string
-  name: string
-  price: number
-  quantity: number
-}
+interface Item { id: string; name: string; price: number }
+interface Customer { id: string; name: string; phone: string }
+interface Business { id: string; business_name: string; upi_id: string }
+interface CartItem { itemId: string; name: string; price: number; quantity: number }
 
 function NewOrderContent() {
   const router = useRouter()
@@ -56,36 +36,20 @@ function NewOrderContent() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-
     const savedPhone = localStorage.getItem('orderzo_user_phone')
-    if (!savedPhone) {
-      router.push('/login')
-      return
-    }
+    if (!savedPhone) { router.push('/login'); return }
     setPhone(savedPhone)
-
     loadData(savedPhone)
   }, [router])
 
   const loadData = async (phoneNum: string) => {
-    const { data: businessData } = await supabase
-      .from('businesses')
-      .select('*')
-      .eq('owner_phone', phoneNum)
-      .single()
-
-    if (!businessData) {
-      router.push('/setup')
-      return
-    }
-
+    const { data: businessData } = await supabase.from('businesses').select('*').eq('owner_phone', phoneNum).single()
+    if (!businessData) { router.push('/setup'); return }
     setBusiness(businessData)
-
     const [{ data: itemsData }, { data: customersData }] = await Promise.all([
       supabase.from('items').select('*').eq('business_id', businessData.id).eq('active', true).order('created_at', { ascending: false }),
       supabase.from('customers').select('*').eq('business_id', businessData.id).order('last_order_date', { ascending: false, nullsFirst: false })
     ])
-
     if (itemsData) setItems(itemsData)
     if (customersData) setCustomers(customersData)
     setLoading(false)
@@ -97,62 +61,33 @@ function NewOrderContent() {
     const existing = cart.find(c => c.itemId === item.id)
     if (existing) {
       const newQty = existing.quantity + delta
-      if (newQty <= 0) {
-        setCart(cart.filter(c => c.itemId !== item.id))
-      } else {
-        setCart(cart.map(c => c.itemId === item.id ? { ...c, quantity: newQty } : c))
-      }
+      if (newQty <= 0) setCart(cart.filter(c => c.itemId !== item.id))
+      else setCart(cart.map(c => c.itemId === item.id ? { ...c, quantity: newQty } : c))
     } else if (delta > 0) {
       setCart([...cart, { itemId: item.id, name: item.name, price: item.price, quantity: 1 }])
     }
   }
 
-  const getQuantity = (itemId: string) => {
-    return cart.find(c => c.itemId === itemId)?.quantity || 0
-  }
+  const getQuantity = (itemId: string) => cart.find(c => c.itemId === itemId)?.quantity || 0
 
   const handleAddCustomer = () => {
-    if (!newCustomerName.trim()) {
-      setError('Customer name required')
-      return
-    }
+    if (!newCustomerName.trim()) { setError('Customer name required'); return }
     const cleanPhone = newCustomerPhone.replace(/\D/g, '')
-    if (cleanPhone && cleanPhone.length !== 10) {
-      setError('Phone must be 10 digits or empty')
-      return
-    }
+    if (cleanPhone && cleanPhone.length !== 10) { setError('Phone must be 10 digits or empty'); return }
     setError('')
-    setSelectedCustomer({
-      id: 'new',
-      name: newCustomerName.trim(),
-      phone: cleanPhone
-    })
+    setSelectedCustomer({ id: 'new', name: newCustomerName.trim(), phone: cleanPhone })
     setShowAddCustomer(false)
   }
 
   const filteredCustomers = customers.filter(c =>
-    c.name.toLowerCase().includes(customerSearch.toLowerCase()) ||
-    c.phone.includes(customerSearch)
+    c.name.toLowerCase().includes(customerSearch.toLowerCase()) || c.phone.includes(customerSearch)
   )
 
   const handleSubmit = async () => {
     setError('')
-
-    if (mode === 'order' && !selectedCustomer) {
-      setError('Please select or add a customer')
-      return
-    }
-
-    if (mode === 'order' && selectedCustomer && !selectedCustomer.phone) {
-      setError('Customer needs a phone number for WhatsApp')
-      return
-    }
-
-    if (cart.length === 0) {
-      setError('Please add at least one item')
-      return
-    }
-
+    if (mode === 'order' && !selectedCustomer) { setError('Please select or add a customer'); return }
+    if (mode === 'order' && selectedCustomer && !selectedCustomer.phone) { setError('Customer needs a phone number for WhatsApp'); return }
+    if (cart.length === 0) { setError('Please add at least one item'); return }
     if (!business) return
 
     setSubmitting(true)
@@ -160,54 +95,62 @@ function NewOrderContent() {
     try {
       setSubmittingMessage('Saving customer...')
       let customerId = selectedCustomer?.id
-
       if (selectedCustomer && selectedCustomer.id === 'new') {
-        const { data: newCust, error: custError } = await supabase
-          .from('customers')
-          .insert({
-            business_id: business.id,
-            name: selectedCustomer.name,
-            phone: selectedCustomer.phone || null,
-          })
-          .select()
-          .single()
-
+        const { data: newCust, error: custError } = await supabase.from('customers').insert({
+          business_id: business.id, name: selectedCustomer.name, phone: selectedCustomer.phone || null,
+        }).select().single()
         if (custError) throw custError
         customerId = newCust.id
       }
 
       setSubmittingMessage('Creating order...')
       const orderStatus = mode === 'bill' && paymentMethod === 'cash' ? 'paid' : 'sent'
-
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          business_id: business.id,
-          customer_id: customerId !== 'new' ? customerId : null,
-          mode: mode,
-          total: total,
-          status: orderStatus,
-          payment_method: mode === 'bill' ? paymentMethod : 'upi',
-          paid_at: orderStatus === 'paid' ? new Date().toISOString() : null,
-        })
-        .select()
-        .single()
-
+      const { data: orderData, error: orderError } = await supabase.from('orders').insert({
+        business_id: business.id,
+        customer_id: customerId !== 'new' ? customerId : null,
+        mode, total, status: orderStatus,
+        payment_method: mode === 'bill' ? paymentMethod : 'upi',
+        paid_at: orderStatus === 'paid' ? new Date().toISOString() : null,
+      }).select().single()
       if (orderError) throw orderError
 
       const orderItems = cart.map(c => ({
-        order_id: orderData.id,
-        item_id: c.itemId,
-        item_name: c.name,
-        quantity: c.quantity,
-        price_at_time: c.price,
+        order_id: orderData.id, item_id: c.itemId, item_name: c.name, quantity: c.quantity, price_at_time: c.price,
       }))
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems)
-
+      const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
       if (itemsError) throw itemsError
+
+      // Create Razorpay payment link if not paid via cash
+      let paymentUrl = ''
+      if (orderStatus !== 'paid') {
+        setSubmittingMessage('Creating payment link...')
+        try {
+          const paymentResponse = await fetch('/api/payments/create-link', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: total,
+              orderId: orderData.id,
+              customerName: selectedCustomer?.name || 'Customer',
+              customerPhone: selectedCustomer?.phone,
+              businessName: business.business_name,
+              description: `Order from ${business.business_name}`,
+            }),
+          })
+          const paymentData = await paymentResponse.json()
+          if (paymentData.success && paymentData.paymentUrl) {
+            paymentUrl = paymentData.paymentUrl
+            // Update order with payment link
+            await supabase.from('orders').update({
+              razorpay_payment_link_id: paymentData.paymentLinkId,
+              razorpay_payment_url: paymentData.paymentUrl,
+            }).eq('id', orderData.id)
+          }
+        } catch (payError) {
+          console.error('Payment link error:', payError)
+          // Continue without payment link
+        }
+      }
 
       setSubmittingMessage('Generating PDF invoice...')
       let pdfUrl = ''
@@ -219,20 +162,13 @@ function NewOrderContent() {
           businessUpi: business.upi_id,
           customerName: selectedCustomer?.name || 'Walk-in customer',
           customerPhone: selectedCustomer?.phone,
-          items: cart.map(c => ({
-            name: c.name,
-            quantity: c.quantity,
-            price: c.price,
-          })),
-          total: total,
-          mode: mode,
+          items: cart.map(c => ({ name: c.name, quantity: c.quantity, price: c.price })),
+          total, mode,
           paymentMethod: mode === 'bill' ? paymentMethod : 'upi',
           paymentStatus: orderStatus === 'paid' ? 'paid' : 'pending',
           date: new Date(),
         })
-      } catch (pdfError: any) {
-        console.error('PDF generation failed:', pdfError)
-      }
+      } catch (pdfError: any) { console.error('PDF generation failed:', pdfError) }
 
       setSubmittingMessage('Opening WhatsApp...')
       const itemLines = cart.map(c => `• ${c.name} × ${c.quantity} = ₹${c.price * c.quantity}`).join('\n')
@@ -240,18 +176,17 @@ function NewOrderContent() {
 
       let message = ''
       if (mode === 'order') {
-        message = `Namaste ${selectedCustomer?.name},\n\nAapka order *${business.business_name}* se confirm hua:\n${itemLines}\n\n💰 *Total: ₹${total}*\n\n📱 *Pay via UPI:*\n${upiLink}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Dhanyavaad! 🙏\n— ${business.business_name}`
+        message = `Namaste ${selectedCustomer?.name},\n\nAapka order *${business.business_name}* se confirm hua:\n${itemLines}\n\n💰 *Total: ₹${total}*\n\n${paymentUrl ? `💳 *Pay securely (UPI/Card/NetBanking):*\n${paymentUrl}\n\n📱 *Or pay via UPI direct:*\n${upiLink}\n\n` : `📱 *Pay via UPI:*\n${upiLink}\n\n`}${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Dhanyavaad! 🙏\n— ${business.business_name}`
       } else {
-        message = `🧾 *BILL — ${business.business_name}*\n\n${selectedCustomer?.name ? `Customer: ${selectedCustomer.name}\n` : ''}Date: ${new Date().toLocaleDateString('en-IN')}\nTime: ${new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}\n\n*ITEMS:*\n${itemLines}\n\n💰 *TOTAL: ₹${total}*\n${paymentMethod === 'cash' ? '✅ *PAID via Cash*' : '⏳ *Pay via UPI:* ' + upiLink}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Thank you for shopping! 🙏\nVisit again — ${business.business_name}`
+        message = `🧾 *BILL — ${business.business_name}*\n\n${selectedCustomer?.name ? `Customer: ${selectedCustomer.name}\n` : ''}Date: ${new Date().toLocaleDateString('en-IN')}\nTime: ${new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}\n\n*ITEMS:*\n${itemLines}\n\n💰 *TOTAL: ₹${total}*\n${paymentMethod === 'cash' ? '✅ *PAID via Cash*' : paymentUrl ? `💳 *Pay securely:* ${paymentUrl}\n📱 *Or via UPI:* ${upiLink}` : `⏳ *Pay via UPI:* ${upiLink}`}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Thank you for shopping! 🙏\nVisit again — ${business.business_name}`
       }
 
       if (selectedCustomer && selectedCustomer.phone) {
         const cleanPhone = selectedCustomer.phone.replace(/\D/g, '')
         const fullPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone
-        const whatsappUrl = `https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`
-        window.open(whatsappUrl, '_blank')
-      } else if (pdfUrl) {
-        alert('Bill generated! PDF: ' + pdfUrl)
+        window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`, '_blank')
+      } else if (pdfUrl || paymentUrl) {
+        alert(`Bill generated!\n${pdfUrl ? 'PDF: ' + pdfUrl : ''}\n${paymentUrl ? 'Payment: ' + paymentUrl : ''}`)
       }
 
       router.push('/dashboard')
@@ -266,9 +201,7 @@ function NewOrderContent() {
   if (loading) {
     return (
       <div className="min-h-screen bg-orange-50 flex items-center justify-center">
-        <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 animate-pulse">
-          O
-        </div>
+        <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 animate-pulse">O</div>
       </div>
     )
   }
@@ -287,9 +220,7 @@ function NewOrderContent() {
             <div className="text-6xl mb-4">📋</div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">Add items first</h2>
             <p className="text-gray-600 mb-6">You need to add menu items before creating orders or bills.</p>
-            <Link href="/items" className="inline-block bg-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-orange-600">
-              Add Items →
-            </Link>
+            <Link href="/items" className="inline-block bg-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-orange-600">Add Items →</Link>
           </div>
         </main>
       </div>
@@ -302,9 +233,7 @@ function NewOrderContent() {
         <div className="flex items-center gap-3 max-w-2xl mx-auto">
           <Link href="/dashboard" className="text-gray-500 text-2xl">←</Link>
           <div className="flex-1">
-            <h1 className="font-bold text-gray-900">
-              {mode === 'order' ? '📦 New Order' : '🧾 New Bill'}
-            </h1>
+            <h1 className="font-bold text-gray-900">{mode === 'order' ? '📦 New Order' : '🧾 New Bill'}</h1>
             <p className="text-xs text-gray-500">{business?.business_name}</p>
           </div>
         </div>
@@ -315,89 +244,40 @@ function NewOrderContent() {
           <h3 className="font-semibold text-gray-900 mb-3">
             Customer {mode === 'order' ? <span className="text-red-500">*</span> : <span className="text-gray-400 text-sm font-normal">(optional)</span>}
           </h3>
-
           {selectedCustomer ? (
             <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3 flex items-center justify-between">
               <div>
                 <p className="font-medium text-gray-900">{selectedCustomer.name}</p>
-                {selectedCustomer.phone && (
-                  <p className="text-xs text-gray-500">+91 {selectedCustomer.phone}</p>
-                )}
+                {selectedCustomer.phone && <p className="text-xs text-gray-500">+91 {selectedCustomer.phone}</p>}
               </div>
-              <button
-                onClick={() => setSelectedCustomer(null)}
-                className="text-sm text-gray-500 hover:text-red-500 px-2"
-              >
-                Change
-              </button>
+              <button onClick={() => setSelectedCustomer(null)} className="text-sm text-gray-500 hover:text-red-500 px-2">Change</button>
             </div>
           ) : showAddCustomer ? (
             <div className="space-y-2">
-              <input
-                type="text"
-                placeholder="Customer name"
-                value={newCustomerName}
-                onChange={(e) => setNewCustomerName(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
-                autoFocus
-              />
+              <input type="text" placeholder="Customer name" value={newCustomerName} onChange={(e) => setNewCustomerName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500" autoFocus />
               <div className="flex gap-2">
-                <div className="flex items-center px-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 text-sm">
-                  +91
-                </div>
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  placeholder="WhatsApp number (optional for bills)"
-                  value={newCustomerPhone}
-                  onChange={(e) => setNewCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
-                />
+                <div className="flex items-center px-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 text-sm">+91</div>
+                <input type="tel" inputMode="numeric" placeholder="WhatsApp number (optional for bills)" value={newCustomerPhone} onChange={(e) => setNewCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))} className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500" />
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={handleAddCustomer}
-                  className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium hover:bg-orange-600"
-                >
-                  Add Customer
-                </button>
-                <button
-                  onClick={() => { setShowAddCustomer(false); setNewCustomerName(''); setNewCustomerPhone(''); setError('') }}
-                  className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl"
-                >
-                  Cancel
-                </button>
+                <button onClick={handleAddCustomer} className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium hover:bg-orange-600">Add Customer</button>
+                <button onClick={() => { setShowAddCustomer(false); setNewCustomerName(''); setNewCustomerPhone(''); setError('') }} className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl">Cancel</button>
               </div>
             </div>
           ) : (
             <>
-              <input
-                type="text"
-                placeholder="Search customers or add new"
-                value={customerSearch}
-                onChange={(e) => setCustomerSearch(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 mb-2"
-              />
+              <input type="text" placeholder="Search customers or add new" value={customerSearch} onChange={(e) => setCustomerSearch(e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 mb-2" />
               {customerSearch && filteredCustomers.length > 0 && (
                 <div className="space-y-1 max-h-48 overflow-y-auto">
                   {filteredCustomers.map(c => (
-                    <button
-                      key={c.id}
-                      onClick={() => { setSelectedCustomer(c); setCustomerSearch('') }}
-                      className="w-full text-left p-3 hover:bg-gray-50 rounded-lg"
-                    >
+                    <button key={c.id} onClick={() => { setSelectedCustomer(c); setCustomerSearch('') }} className="w-full text-left p-3 hover:bg-gray-50 rounded-lg">
                       <p className="font-medium text-gray-900">{c.name}</p>
                       {c.phone && <p className="text-xs text-gray-500">+91 {c.phone}</p>}
                     </button>
                   ))}
                 </div>
               )}
-              <button
-                onClick={() => setShowAddCustomer(true)}
-                className="w-full mt-2 py-2.5 border-2 border-dashed border-orange-300 text-orange-600 rounded-xl font-medium hover:bg-orange-50"
-              >
-                + Add new customer
-              </button>
+              <button onClick={() => setShowAddCustomer(true)} className="w-full mt-2 py-2.5 border-2 border-dashed border-orange-300 text-orange-600 rounded-xl font-medium hover:bg-orange-50">+ Add new customer</button>
             </>
           )}
         </div>
@@ -414,27 +294,12 @@ function NewOrderContent() {
                     <p className="text-sm text-orange-500 font-semibold">₹{item.price}</p>
                   </div>
                   {qty === 0 ? (
-                    <button
-                      onClick={() => updateQuantity(item, 1)}
-                      className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600"
-                    >
-                      + Add
-                    </button>
+                    <button onClick={() => updateQuantity(item, 1)} className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600">+ Add</button>
                   ) : (
                     <div className="flex items-center gap-3 bg-white rounded-lg border border-orange-300 p-1">
-                      <button
-                        onClick={() => updateQuantity(item, -1)}
-                        className="w-8 h-8 rounded-md bg-orange-100 text-orange-600 font-bold hover:bg-orange-200"
-                      >
-                        −
-                      </button>
+                      <button onClick={() => updateQuantity(item, -1)} className="w-8 h-8 rounded-md bg-orange-100 text-orange-600 font-bold hover:bg-orange-200">−</button>
                       <span className="font-bold text-gray-900 w-6 text-center">{qty}</span>
-                      <button
-                        onClick={() => updateQuantity(item, 1)}
-                        className="w-8 h-8 rounded-md bg-orange-500 text-white font-bold hover:bg-orange-600"
-                      >
-                        +
-                      </button>
+                      <button onClick={() => updateQuantity(item, 1)} className="w-8 h-8 rounded-md bg-orange-500 text-white font-bold hover:bg-orange-600">+</button>
                     </div>
                   )}
                 </div>
@@ -447,28 +312,20 @@ function NewOrderContent() {
           <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
             <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
             <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => setPaymentMethod('cash')}
-                className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'cash' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}
-              >
+              <button onClick={() => setPaymentMethod('cash')} className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'cash' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}>
                 <div className="text-2xl mb-1">💵</div>
                 <p className="font-medium text-gray-900 text-sm">Cash</p>
               </button>
-              <button
-                onClick={() => setPaymentMethod('upi')}
-                className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'upi' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}
-              >
+              <button onClick={() => setPaymentMethod('upi')} className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'upi' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}>
                 <div className="text-2xl mb-1">📱</div>
-                <p className="font-medium text-gray-900 text-sm">UPI</p>
+                <p className="font-medium text-gray-900 text-sm">UPI / Card</p>
               </button>
             </div>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm">
-            {error}
-          </div>
+          <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm">{error}</div>
         )}
       </main>
 
@@ -479,17 +336,9 @@ function NewOrderContent() {
               <p className="text-gray-600 text-sm">{cart.length} item{cart.length !== 1 ? 's' : ''}</p>
               <p className="text-2xl font-bold text-gray-900">₹{total}</p>
             </div>
-            <button
-              onClick={handleSubmit}
-              disabled={submitting}
-              className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:shadow-none transition-colors"
-            >
+            <button onClick={handleSubmit} disabled={submitting} className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:shadow-none transition-colors">
               {submitting ? (submittingMessage || 'Saving...') : (
-                mode === 'order'
-                  ? '📱 Send WhatsApp + PDF Invoice'
-                  : selectedCustomer?.phone
-                    ? '🧾 Generate PDF + Send WhatsApp'
-                    : '🧾 Generate PDF Invoice'
+                mode === 'order' ? '📱 Send Payment Link + PDF' : selectedCustomer?.phone ? '🧾 Send Bill + Payment Link' : '🧾 Generate Bill'
               )}
             </button>
           </div>
