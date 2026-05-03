@@ -1,201 +1,283 @@
 "use client";
 
 import { useState, useEffect, Suspense } from 'react'
-import Logo from '@/components/Logo'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Logo from '@/components/Logo'
 import { supabase } from '@/lib/supabase'
 import { generateInvoicePDF } from '@/lib/generateInvoice'
 
-interface Item { id: string; name: string; price: number }
-interface Customer { id: string; name: string; phone: string }
-interface Business { id: string; business_name: string; upi_id: string }
-interface CartItem { itemId: string; name: string; price: number; quantity: number }
+interface Business {
+  id: string
+  business_name: string
+  business_type: string
+  upi_id: string
+  owner_phone: string
+}
+
+interface Item {
+  id: string
+  name: string
+  price: number
+}
+
+interface Customer {
+  id: string
+  name: string
+  phone?: string
+}
+
+interface OrderItem {
+  itemId: string
+  name: string
+  quantity: number
+  price: number
+}
 
 function NewOrderContent() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const mode = (searchParams.get('mode') || 'order') as 'order' | 'bill'
-
+  
   const [business, setBusiness] = useState<Business | null>(null)
-  const [phone, setPhone] = useState('')
   const [items, setItems] = useState<Item[]>([])
   const [customers, setCustomers] = useState<Customer[]>([])
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
-  const [submittingMessage, setSubmittingMessage] = useState('')
-  const [error, setError] = useState('')
-
-  const [customerSearch, setCustomerSearch] = useState('')
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([])
+  const [paymentMethod, setPaymentMethod] = useState<'cash' | 'upi'>('upi')
   const [showAddCustomer, setShowAddCustomer] = useState(false)
   const [newCustomerName, setNewCustomerName] = useState('')
   const [newCustomerPhone, setNewCustomerPhone] = useState('')
-
-  const [paymentMethod, setPaymentMethod] = useState<'cash' | 'upi'>('cash')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const savedPhone = localStorage.getItem('orderzo_user_phone')
-    if (!savedPhone) { router.push('/login'); return }
-    setPhone(savedPhone)
-    loadData(savedPhone)
+    const phone = localStorage.getItem('orderzo_user_phone')
+    if (!phone) { router.push('/login'); return }
+    loadData(phone)
   }, [router])
 
-  const loadData = async (phoneNum: string) => {
-    const { data: businessData } = await supabase.from('businesses').select('*').eq('owner_phone', phoneNum).single()
+  const loadData = async (phone: string) => {
+    const { data: businessData } = await supabase
+      .from('businesses').select('*').eq('owner_phone', phone).single()
     if (!businessData) { router.push('/setup'); return }
     setBusiness(businessData)
-    const [{ data: itemsData }, { data: customersData }] = await Promise.all([
-      supabase.from('items').select('*').eq('business_id', businessData.id).eq('active', true).order('created_at', { ascending: false }),
-      supabase.from('customers').select('*').eq('business_id', businessData.id).order('last_order_date', { ascending: false, nullsFirst: false })
-    ])
+
+    const { data: itemsData } = await supabase
+      .from('items').select('*').eq('business_id', businessData.id).order('name')
     if (itemsData) setItems(itemsData)
+
+    const { data: customersData } = await supabase
+      .from('customers').select('*').eq('business_id', businessData.id).order('name')
     if (customersData) setCustomers(customersData)
+
+    if (mode === 'bill') {
+      setSelectedCustomer({ id: 'walk-in', name: 'Walk-in customer' })
+    }
+
     setLoading(false)
   }
 
-  const total = cart.reduce((sum, c) => sum + (c.price * c.quantity), 0)
-
-  const updateQuantity = (item: Item, delta: number) => {
-    const existing = cart.find(c => c.itemId === item.id)
+  const handleAddItem = (item: Item) => {
+    const existing = orderItems.find(oi => oi.itemId === item.id)
     if (existing) {
-      const newQty = existing.quantity + delta
-      if (newQty <= 0) setCart(cart.filter(c => c.itemId !== item.id))
-      else setCart(cart.map(c => c.itemId === item.id ? { ...c, quantity: newQty } : c))
-    } else if (delta > 0) {
-      setCart([...cart, { itemId: item.id, name: item.name, price: item.price, quantity: 1 }])
+      setOrderItems(orderItems.map(oi => 
+        oi.itemId === item.id ? { ...oi, quantity: oi.quantity + 1 } : oi
+      ))
+    } else {
+      setOrderItems([...orderItems, {
+        itemId: item.id, name: item.name, quantity: 1, price: item.price
+      }])
     }
   }
 
-  const getQuantity = (itemId: string) => cart.find(c => c.itemId === itemId)?.quantity || 0
-
-  const handleAddCustomer = () => {
-    if (!newCustomerName.trim()) { setError('Customer name required'); return }
-    const cleanPhone = newCustomerPhone.replace(/\D/g, '')
-    if (cleanPhone && cleanPhone.length !== 10) { setError('Phone must be 10 digits or empty'); return }
-    setError('')
-    setSelectedCustomer({ id: 'new', name: newCustomerName.trim(), phone: cleanPhone })
-    setShowAddCustomer(false)
+  const handleQtyChange = (itemId: string, delta: number) => {
+    setOrderItems(orderItems.map(oi => {
+      if (oi.itemId === itemId) {
+        const newQty = oi.quantity + delta
+        if (newQty <= 0) return null
+        return { ...oi, quantity: newQty }
+      }
+      return oi
+    }).filter(Boolean) as OrderItem[])
   }
 
-  const filteredCustomers = customers.filter(c =>
-    c.name.toLowerCase().includes(customerSearch.toLowerCase()) || c.phone.includes(customerSearch)
-  )
+  const handleAddCustomer = async () => {
+    if (!newCustomerName.trim()) { setError('Name required'); return }
+    const cleanPhone = newCustomerPhone.replace(/\D/g, '')
+    if (cleanPhone && cleanPhone.length !== 10) { setError('Phone must be 10 digits or empty'); return }
+    if (!business) return
+
+    const { data, error: insertError } = await supabase
+      .from('customers')
+      .insert({ business_id: business.id, name: newCustomerName.trim(), phone: cleanPhone || null })
+      .select().single()
+
+    if (insertError) { setError('Could not add: ' + insertError.message); return }
+
+    if (data) {
+      setCustomers([data, ...customers])
+      setSelectedCustomer(data)
+      setNewCustomerName('')
+      setNewCustomerPhone('')
+      setShowAddCustomer(false)
+      setError('')
+    }
+  }
+
+  const total = orderItems.reduce((sum, oi) => sum + oi.price * oi.quantity, 0)
 
   const handleSubmit = async () => {
     setError('')
-    if (mode === 'order' && !selectedCustomer) { setError('Please select or add a customer'); return }
-    if (mode === 'order' && selectedCustomer && !selectedCustomer.phone) { setError('Customer needs a phone number for WhatsApp'); return }
-    if (cart.length === 0) { setError('Please add at least one item'); return }
     if (!business) return
+    if (!selectedCustomer) { setError('Please select a customer'); return }
+    if (orderItems.length === 0) { setError('Please add at least one item'); return }
 
     setSubmitting(true)
 
     try {
-      setSubmittingMessage('Saving customer...')
-      let customerId = selectedCustomer?.id
-      if (selectedCustomer && selectedCustomer.id === 'new') {
-        const { data: newCust, error: custError } = await supabase.from('customers').insert({
-          business_id: business.id, name: selectedCustomer.name, phone: selectedCustomer.phone || null,
-        }).select().single()
-        if (custError) throw custError
-        customerId = newCust.id
+      // Create order
+      const orderData: any = {
+        business_id: business.id,
+        total: total,
+        mode: mode,
+        payment_method: paymentMethod,
+        status: paymentMethod === 'cash' ? 'paid' : 'sent',
+      }
+      if (selectedCustomer.id !== 'walk-in') {
+        orderData.customer_id = selectedCustomer.id
+      }
+      if (paymentMethod === 'cash') {
+        orderData.paid_at = new Date().toISOString()
       }
 
-      setSubmittingMessage('Creating order...')
-      const orderStatus = mode === 'bill' && paymentMethod === 'cash' ? 'paid' : 'sent'
-      const { data: orderData, error: orderError } = await supabase.from('orders').insert({
-        business_id: business.id,
-        customer_id: customerId !== 'new' ? customerId : null,
-        mode, total, status: orderStatus,
-        payment_method: mode === 'bill' ? paymentMethod : 'upi',
-        paid_at: orderStatus === 'paid' ? new Date().toISOString() : null,
-      }).select().single()
-      if (orderError) throw orderError
+      const { data: order, error: orderError } = await supabase
+        .from('orders').insert(orderData).select().single()
 
-      const orderItems = cart.map(c => ({
-        order_id: orderData.id, item_id: c.itemId, item_name: c.name, quantity: c.quantity, price_at_time: c.price,
+      if (orderError || !order) throw new Error('Could not create order: ' + orderError?.message)
+
+      // Insert order items
+      const itemRows = orderItems.map(oi => ({
+        order_id: order.id,
+        item_id: oi.itemId,
+        item_name: oi.name,
+        quantity: oi.quantity,
+        price: oi.price,
       }))
-      const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
-      if (itemsError) throw itemsError
+      await supabase.from('order_items').insert(itemRows)
 
-      // Create Razorpay payment link if not paid via cash
+      // Create Razorpay payment link if UPI mode
       let paymentUrl = ''
-      if (orderStatus !== 'paid') {
-        setSubmittingMessage('Creating payment link...')
+      if (paymentMethod === 'upi' && selectedCustomer.id !== 'walk-in') {
         try {
-          const paymentResponse = await fetch('/api/payments/create-link', {
+          const customerPhone = selectedCustomer.phone || ''
+          const linkRes = await fetch('/api/payments/create-link', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+              orderId: order.id,
               amount: total,
-              orderId: orderData.id,
-              customerName: selectedCustomer?.name || 'Customer',
-              customerPhone: selectedCustomer?.phone,
+              customerName: selectedCustomer.name,
+              customerPhone: customerPhone,
               businessName: business.business_name,
-              description: `Order from ${business.business_name}`,
             }),
           })
-          const paymentData = await paymentResponse.json()
-          if (paymentData.success && paymentData.paymentUrl) {
-            paymentUrl = paymentData.paymentUrl
-            // Update order with payment link
-            await supabase.from('orders').update({
-              razorpay_payment_link_id: paymentData.paymentLinkId,
-              razorpay_payment_url: paymentData.paymentUrl,
-            }).eq('id', orderData.id)
+          if (linkRes.ok) {
+            const linkData = await linkRes.json()
+            paymentUrl = linkData.short_url || ''
+            if (paymentUrl) {
+              await supabase
+                .from('orders')
+                .update({ razorpay_payment_url: paymentUrl, razorpay_payment_link_id: linkData.id })
+                .eq('id', order.id)
+            }
           }
-        } catch (payError) {
-          console.error('Payment link error:', payError)
-          // Continue without payment link
-        }
+        } catch (e) { console.error('Razorpay error:', e) }
       }
 
-      setSubmittingMessage('Generating PDF invoice...')
+      // Generate PDF invoice
       let pdfUrl = ''
       try {
         pdfUrl = await generateInvoicePDF({
-          orderId: orderData.id,
+          orderId: order.id,
           businessName: business.business_name,
-          businessPhone: phone,
+          businessPhone: business.owner_phone,
           businessUpi: business.upi_id,
-          customerName: selectedCustomer?.name || 'Walk-in customer',
-          customerPhone: selectedCustomer?.phone,
-          items: cart.map(c => ({ name: c.name, quantity: c.quantity, price: c.price })),
-          total, mode,
-          paymentMethod: mode === 'bill' ? paymentMethod : 'upi',
-          paymentStatus: orderStatus === 'paid' ? 'paid' : 'pending',
+          customerName: selectedCustomer.name,
+          customerPhone: selectedCustomer.phone,
+          items: orderItems.map(oi => ({ name: oi.name, quantity: oi.quantity, price: oi.price })),
+          total: total,
+          mode: mode,
+          paymentMethod: paymentMethod,
+          paymentStatus: paymentMethod === 'cash' ? 'paid' : 'pending',
           date: new Date(),
+          paymentUrl: paymentUrl,
         })
-      } catch (pdfError: any) { console.error('PDF generation failed:', pdfError) }
+      } catch (e) { console.error('PDF error:', e) }
 
-      setSubmittingMessage('Opening WhatsApp...')
-      const itemLines = cart.map(c => `• ${c.name} × ${c.quantity} = ₹${c.price * c.quantity}`).join('\n')
-      const upiLink = `upi://pay?pa=${business.upi_id}&pn=${encodeURIComponent(business.business_name)}&am=${total}&cu=INR&tn=${encodeURIComponent('Order from ' + business.business_name)}`
+      // Generate UPI deep link
+      const upiLink = paymentMethod === 'upi'
+        ? `upi://pay?pa=${business.upi_id}&pn=${encodeURIComponent(business.business_name)}&am=${total}&cu=INR&tn=${encodeURIComponent('Order from ' + business.business_name)}`
+        : ''
+
+      // Build WhatsApp message — CLEAN, no broken emojis
+      const itemLines = orderItems.map(oi => `- ${oi.name} x ${oi.quantity} = Rs.${oi.price * oi.quantity}`).join('\n')
+      const dateStr = new Date().toLocaleDateString('en-IN')
+      const timeStr = new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true })
 
       let message = ''
-      if (mode === 'order') {
-        message = `Namaste ${selectedCustomer?.name},\n\nAapka order *${business.business_name}* se confirm hua:\n${itemLines}\n\n💰 *Total: ₹${total}*\n\n${paymentUrl ? `💳 *Pay securely (UPI/Card/NetBanking):*\n${paymentUrl}\n\n📱 *Or pay via UPI direct:*\n${upiLink}\n\n` : `📱 *Pay via UPI:*\n${upiLink}\n\n`}${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Dhanyavaad! 🙏\n— ${business.business_name}`
+      
+      if (mode === 'bill') {
+        message = `*BILL - ${business.business_name}*\n\nCustomer: ${selectedCustomer.name}\nDate: ${dateStr}\nTime: ${timeStr}\n\nITEMS:\n${itemLines}\n\n*TOTAL: Rs.${total}*\n`
+        
+        if (paymentMethod === 'cash') {
+          message += `\nPayment: CASH (received)\n`
+        } else {
+          if (paymentUrl) {
+            message += `\nPay securely (UPI/Card/NetBanking):\n${paymentUrl}\n`
+          }
+          if (upiLink) {
+            message += `\nOr pay via UPI:\n${upiLink}\n`
+          }
+        }
+        
+        if (pdfUrl) {
+          message += `\nInvoice PDF:\n${pdfUrl}\n`
+        }
+        
+        message += `\nThank you for shopping!\nVisit ${business.business_name} again.`
       } else {
-        message = `🧾 *BILL — ${business.business_name}*\n\n${selectedCustomer?.name ? `Customer: ${selectedCustomer.name}\n` : ''}Date: ${new Date().toLocaleDateString('en-IN')}\nTime: ${new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}\n\n*ITEMS:*\n${itemLines}\n\n💰 *TOTAL: ₹${total}*\n${paymentMethod === 'cash' ? '✅ *PAID via Cash*' : paymentUrl ? `💳 *Pay securely:* ${paymentUrl}\n📱 *Or via UPI:* ${upiLink}` : `⏳ *Pay via UPI:* ${upiLink}`}\n\n${pdfUrl ? `📄 *Invoice PDF:*\n${pdfUrl}\n\n` : ''}Thank you for shopping! 🙏\nVisit again — ${business.business_name}`
+        message = `Hi ${selectedCustomer.name},\n\nYour order from *${business.business_name}* is confirmed:\n\n${itemLines}\n\n*TOTAL: Rs.${total}*\n`
+        
+        if (paymentUrl) {
+          message += `\nPay securely (UPI/Card/NetBanking):\n${paymentUrl}\n`
+        }
+        if (upiLink) {
+          message += `\nOr pay via UPI:\n${upiLink}\n`
+        }
+        if (pdfUrl) {
+          message += `\nInvoice PDF:\n${pdfUrl}\n`
+        }
+        
+        message += `\nThank you!\n- ${business.business_name}`
       }
 
-      if (selectedCustomer && selectedCustomer.phone) {
+      // Open WhatsApp
+      if (selectedCustomer.phone) {
         const cleanPhone = selectedCustomer.phone.replace(/\D/g, '')
         const fullPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone
         window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`, '_blank')
-      } else if (pdfUrl || paymentUrl) {
-        alert(`Bill generated!\n${pdfUrl ? 'PDF: ' + pdfUrl : ''}\n${paymentUrl ? 'Payment: ' + paymentUrl : ''}`)
+      } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
       }
 
       router.push('/dashboard')
-    } catch (err: any) {
-      console.error('Order error:', err)
-      setError('Could not save: ' + (err.message || 'Unknown error'))
+    } catch (e: any) {
+      setError(e.message || 'Something went wrong')
       setSubmitting(false)
-      setSubmittingMessage('')
     }
   }
 
@@ -207,26 +289,10 @@ function NewOrderContent() {
     )
   }
 
-  if (items.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <header className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10 shadow-sm">
-          <div className="flex items-center gap-3 max-w-2xl mx-auto">
-            <Link href="/dashboard" className="text-gray-500 text-2xl">←</Link>
-            <h1 className="font-bold text-gray-900">New {mode === 'order' ? 'Order' : 'Bill'}</h1>
-          </div>
-        </header>
-        <main className="flex-1 flex items-center justify-center px-6">
-          <div className="text-center max-w-md">
-            <div className="text-6xl mb-4">📋</div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Add items first</h2>
-            <p className="text-gray-600 mb-6">You need to add menu items before creating orders or bills.</p>
-            <Link href="/items" className="inline-block bg-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-orange-600">Add Items →</Link>
-          </div>
-        </main>
-      </div>
-    )
-  }
+  const filteredCustomers = customers.filter(c =>
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    c.phone?.includes(searchQuery)
+  )
 
   return (
     <div className="min-h-screen bg-gray-50 pb-32">
@@ -234,113 +300,189 @@ function NewOrderContent() {
         <div className="flex items-center gap-3 max-w-2xl mx-auto">
           <Link href="/dashboard" className="text-gray-500 text-2xl">←</Link>
           <div className="flex-1">
-            <h1 className="font-bold text-gray-900">{mode === 'order' ? '📦 New Order' : '🧾 New Bill'}</h1>
+            <h1 className="font-bold text-gray-900">{mode === 'bill' ? 'New Bill' : 'New Order'}</h1>
             <p className="text-xs text-gray-500">{business?.business_name}</p>
           </div>
         </div>
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-4 space-y-4">
-        <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-3">
-            Customer {mode === 'order' ? <span className="text-red-500">*</span> : <span className="text-gray-400 text-sm font-normal">(optional)</span>}
-          </h3>
+        {/* Customer Section */}
+        <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+          <h3 className="font-semibold text-gray-900 mb-3">Customer</h3>
+          
           {selectedCustomer ? (
-            <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3 flex items-center justify-between">
+            <div className="flex items-center justify-between bg-orange-50 border-2 border-orange-200 rounded-xl p-3">
               <div>
-                <p className="font-medium text-gray-900">{selectedCustomer.name}</p>
+                <p className="font-semibold text-gray-900">{selectedCustomer.name}</p>
                 {selectedCustomer.phone && <p className="text-xs text-gray-500">+91 {selectedCustomer.phone}</p>}
               </div>
-              <button onClick={() => setSelectedCustomer(null)} className="text-sm text-gray-500 hover:text-red-500 px-2">Change</button>
+              {mode === 'order' && (
+                <button onClick={() => setSelectedCustomer(null)} className="text-orange-500 text-sm">Change</button>
+              )}
             </div>
           ) : showAddCustomer ? (
-            <div className="space-y-2">
-              <input type="text" placeholder="Customer name" value={newCustomerName} onChange={(e) => setNewCustomerName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500" autoFocus />
+            <div className="space-y-3">
+              <input
+                type="text"
+                placeholder="Customer name"
+                value={newCustomerName}
+                onChange={(e) => setNewCustomerName(e.target.value)}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
+                autoFocus
+              />
               <div className="flex gap-2">
                 <div className="flex items-center px-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 text-sm">+91</div>
-                <input type="tel" inputMode="numeric" placeholder="WhatsApp number (optional for bills)" value={newCustomerPhone} onChange={(e) => setNewCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))} className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500" />
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="Phone (optional)"
+                  value={newCustomerPhone}
+                  onChange={(e) => setNewCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
+                />
               </div>
               <div className="flex gap-2">
-                <button onClick={handleAddCustomer} className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium hover:bg-orange-600">Add Customer</button>
-                <button onClick={() => { setShowAddCustomer(false); setNewCustomerName(''); setNewCustomerPhone(''); setError('') }} className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl">Cancel</button>
+                <button onClick={handleAddCustomer} className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium">Add</button>
+                <button onClick={() => { setShowAddCustomer(false); setNewCustomerName(''); setNewCustomerPhone('') }} className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl">Cancel</button>
               </div>
             </div>
           ) : (
-            <>
-              <input type="text" placeholder="Search customers or add new" value={customerSearch} onChange={(e) => setCustomerSearch(e.target.value)} className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 mb-2" />
-              {customerSearch && filteredCustomers.length > 0 && (
-                <div className="space-y-1 max-h-48 overflow-y-auto">
-                  {filteredCustomers.map(c => (
-                    <button key={c.id} onClick={() => { setSelectedCustomer(c); setCustomerSearch('') }} className="w-full text-left p-3 hover:bg-gray-50 rounded-lg">
-                      <p className="font-medium text-gray-900">{c.name}</p>
-                      {c.phone && <p className="text-xs text-gray-500">+91 {c.phone}</p>}
-                    </button>
-                  ))}
-                </div>
+            <div className="space-y-3">
+              <button
+                onClick={() => setShowAddCustomer(true)}
+                className="w-full bg-orange-500 text-white py-2.5 rounded-xl font-medium"
+              >
+                + Add new customer
+              </button>
+              {customers.length > 0 && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Search customers..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
+                  />
+                  <div className="max-h-40 overflow-y-auto space-y-1">
+                    {filteredCustomers.slice(0, 10).map(c => (
+                      <button
+                        key={c.id}
+                        onClick={() => setSelectedCustomer(c)}
+                        className="w-full text-left px-3 py-2 hover:bg-gray-50 rounded-lg"
+                      >
+                        <p className="font-medium text-gray-900 text-sm">{c.name}</p>
+                        {c.phone && <p className="text-xs text-gray-500">+91 {c.phone}</p>}
+                      </button>
+                    ))}
+                  </div>
+                </>
               )}
-              <button onClick={() => setShowAddCustomer(true)} className="w-full mt-2 py-2.5 border-2 border-dashed border-orange-300 text-orange-600 rounded-xl font-medium hover:bg-orange-50">+ Add new customer</button>
-            </>
+            </div>
           )}
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-3">Items <span className="text-red-500">*</span></h3>
-          <div className="space-y-2">
-            {items.map(item => {
-              const qty = getQuantity(item.id)
-              return (
-                <div key={item.id} className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${qty > 0 ? 'border-orange-300 bg-orange-50' : 'border-gray-100'}`}>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">{item.name}</p>
-                    <p className="text-sm text-orange-500 font-semibold">₹{item.price}</p>
-                  </div>
-                  {qty === 0 ? (
-                    <button onClick={() => updateQuantity(item, 1)} className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600">+ Add</button>
-                  ) : (
-                    <div className="flex items-center gap-3 bg-white rounded-lg border border-orange-300 p-1">
-                      <button onClick={() => updateQuantity(item, -1)} className="w-8 h-8 rounded-md bg-orange-100 text-orange-600 font-bold hover:bg-orange-200">−</button>
-                      <span className="font-bold text-gray-900 w-6 text-center">{qty}</span>
-                      <button onClick={() => updateQuantity(item, 1)} className="w-8 h-8 rounded-md bg-orange-500 text-white font-bold hover:bg-orange-600">+</button>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
+        {/* Items Section */}
+        {items.length === 0 ? (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
+            <p className="text-sm text-yellow-800 mb-2">No items yet. Add some first.</p>
+            <Link href="/items" className="text-orange-600 font-medium text-sm">Add items →</Link>
           </div>
-        </div>
+        ) : (
+          <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <h3 className="font-semibold text-gray-900 mb-3">Add Items</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {items.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => handleAddItem(item)}
+                  className="text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 hover:border-orange-300 rounded-xl p-3 transition-all"
+                >
+                  <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
+                  <p className="text-xs text-orange-500 font-bold">Rs.{item.price}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-        {mode === 'bill' && cart.length > 0 && (
-          <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
+        {/* Order Items */}
+        {orderItems.length > 0 && (
+          <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+            <h3 className="font-semibold text-gray-900 mb-3">Order Summary</h3>
+            <div className="space-y-2">
+              {orderItems.map(oi => (
+                <div key={oi.itemId} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-900 text-sm">{oi.name}</p>
+                    <p className="text-xs text-gray-500">Rs.{oi.price} each</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => handleQtyChange(oi.itemId, -1)} className="w-7 h-7 bg-gray-200 rounded-full text-gray-700 font-bold">-</button>
+                    <span className="font-semibold w-6 text-center">{oi.quantity}</span>
+                    <button onClick={() => handleQtyChange(oi.itemId, 1)} className="w-7 h-7 bg-orange-500 rounded-full text-white font-bold">+</button>
+                  </div>
+                  <p className="font-bold text-orange-500 ml-3 w-16 text-right">Rs.{oi.price * oi.quantity}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 pt-3 border-t border-gray-200 flex justify-between items-center">
+              <span className="font-semibold text-gray-900">TOTAL</span>
+              <span className="text-2xl font-bold text-orange-500">Rs.{total}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Method */}
+        {orderItems.length > 0 && (
+          <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
             <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
             <div className="grid grid-cols-2 gap-2">
-              <button onClick={() => setPaymentMethod('cash')} className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'cash' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}>
-                <div className="text-2xl mb-1">💵</div>
-                <p className="font-medium text-gray-900 text-sm">Cash</p>
-              </button>
-              <button onClick={() => setPaymentMethod('upi')} className={`p-3 rounded-xl border-2 transition-all ${paymentMethod === 'upi' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'}`}>
+              <button
+                onClick={() => setPaymentMethod('upi')}
+                className={`p-3 rounded-xl border-2 transition-all ${
+                  paymentMethod === 'upi'
+                    ? 'border-orange-500 bg-orange-50'
+                    : 'border-gray-200 bg-white'
+                }`}
+              >
                 <div className="text-2xl mb-1">📱</div>
-                <p className="font-medium text-gray-900 text-sm">UPI / Card</p>
+                <p className="font-semibold text-sm">UPI / Card</p>
+                <p className="text-xs text-gray-500">Send payment link</p>
+              </button>
+              <button
+                onClick={() => setPaymentMethod('cash')}
+                className={`p-3 rounded-xl border-2 transition-all ${
+                  paymentMethod === 'cash'
+                    ? 'border-orange-500 bg-orange-50'
+                    : 'border-gray-200 bg-white'
+                }`}
+              >
+                <div className="text-2xl mb-1">💵</div>
+                <p className="font-semibold text-sm">Cash</p>
+                <p className="text-xs text-gray-500">Already paid</p>
               </button>
             </div>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-700">
+            {error}
+          </div>
         )}
       </main>
 
-      {cart.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg p-4 z-20">
+      {/* Submit Button */}
+      {orderItems.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 shadow-lg z-20">
           <div className="max-w-2xl mx-auto">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-gray-600 text-sm">{cart.length} item{cart.length !== 1 ? 's' : ''}</p>
-              <p className="text-2xl font-bold text-gray-900">₹{total}</p>
-            </div>
-            <button onClick={handleSubmit} disabled={submitting} className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:shadow-none transition-colors">
-              {submitting ? (submittingMessage || 'Saving...') : (
-                mode === 'order' ? '📱 Send Payment Link + PDF' : selectedCustomer?.phone ? '🧾 Send Bill + Payment Link' : '🧾 Generate Bill'
-              )}
+            <button
+              onClick={handleSubmit}
+              disabled={submitting || !selectedCustomer}
+              className="w-full bg-orange-500 text-white py-4 rounded-xl font-bold shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+            >
+              {submitting ? 'Processing...' : `${mode === 'bill' ? 'Send Bill' : 'Send Order'} - Rs.${total}`}
             </button>
           </div>
         </div>
@@ -351,11 +493,7 @@ function NewOrderContent() {
 
 export default function NewOrderPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
-        <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl animate-pulse">O</div>
-      </div>
-    }>
+    <Suspense fallback={<div className="min-h-screen bg-orange-50 flex items-center justify-center"><Logo size={64} /></div>}>
       <NewOrderContent />
     </Suspense>
   )
