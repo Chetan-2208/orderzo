@@ -14,17 +14,14 @@ export default function Home() {
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         <div className="max-w-2xl">
-          {/* Coming soon badge */}
           <div className="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 rounded-full text-sm font-medium mb-6">
             🚀 Launching soon
           </div>
 
-          {/* Headline */}
           <h1 className="text-5xl sm:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
             Order. Bill. <span className="text-orange-500">Done.</span>
           </h1>
 
-          {/* Subheadline */}
           <p className="text-xl sm:text-2xl text-gray-600 mb-4 leading-relaxed">
             The simplest WhatsApp-first app for Indian small businesses
           </p>
@@ -32,7 +29,6 @@ export default function Home() {
             Take orders. Send digital bills. Get paid via UPI. All in one place.
           </p>
 
-          {/* Features */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-3xl mx-auto">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
               <div className="text-3xl mb-2">📦</div>
@@ -51,15 +47,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hindi tagline */}
           <p className="text-lg text-gray-700 font-medium mb-8">
             Har dukandar ka order book — ₹199/month
           </p>
 
-          {/* CTA */}
-          <div className="inline-flex items-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors cursor-pointer">
-            Join the waitlist →
-          </div>
+          <a href="/login" className="inline-flex items-center gap-2 bg-orange-500 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors cursor-pointer">
+            Get Started →
+          </a>
 
           <p className="text-sm text-gray-500 mt-4">
             Be among the first 100 businesses to try Orderzo
