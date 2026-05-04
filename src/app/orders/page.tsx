@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react'
-import Logo from '@/components/Logo'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Logo from '@/components/Logo'
 import { supabase } from '@/lib/supabase'
 
 interface Order {
@@ -62,7 +62,7 @@ export default function OrdersPage() {
         ...o,
         customer_name: o.customers?.name || 'Walk-in customer',
         customer_phone: o.customers?.phone,
-        items_summary: o.order_items?.map((i: any) => `${i.item_name} × ${i.quantity}`).join(', ') || '',
+        items_summary: o.order_items?.map((i: any) => `${i.item_name} x ${i.quantity}`).join(', ') || '',
       }))
       setOrders(enriched)
     }
@@ -100,15 +100,13 @@ export default function OrdersPage() {
     }
     const cleanPhone = order.customer_phone.replace(/\D/g, '')
     const fullPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone
-    const message = `Reminder: Your order from ${business?.business_name}\n\n${order.items_summary}\n\nTotal: ₹${order.total}\n${order.razorpay_payment_url ? `\nPay here: ${order.razorpay_payment_url}` : ''}`
+    const message = `Reminder: Your order from ${business?.business_name}\n\n${order.items_summary}\n\nTotal: Rs.${order.total}\n${order.razorpay_payment_url ? `\nPay here: ${order.razorpay_payment_url}` : ''}`
     window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`, '_blank')
   }
 
-  // Filter orders
   const getFiltered = () => {
     let filtered = [...orders]
 
-    // Date filter
     if (dateFilter !== 'all') {
       const start = new Date()
       if (dateFilter === 'today') start.setHours(0, 0, 0, 0)
@@ -117,11 +115,9 @@ export default function OrdersPage() {
       filtered = filtered.filter(o => new Date(o.created_at) >= start)
     }
 
-    // Status filter
     if (statusFilter === 'paid') filtered = filtered.filter(o => o.status === 'paid' || o.status === 'done')
     if (statusFilter === 'pending') filtered = filtered.filter(o => o.status === 'sent' || o.status === 'new')
 
-    // Search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       filtered = filtered.filter(o => 
@@ -159,16 +155,14 @@ export default function OrdersPage() {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-4">
-        {/* Search */}
         <input
           type="text"
-          placeholder="🔍 Search by customer, item, or amount..."
+          placeholder="Search by customer, item, or amount..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
         />
 
-        {/* Date filter */}
         <div className="bg-white rounded-2xl p-1 border border-gray-200 mb-3 flex gap-1">
           {(['today', 'week', 'month', 'all'] as DateFilter[]).map(range => (
             <button
@@ -185,7 +179,6 @@ export default function OrdersPage() {
           ))}
         </div>
 
-        {/* Status filter */}
         <div className="bg-white rounded-2xl p-1 border border-gray-200 mb-4 flex gap-1">
           {(['all', 'paid', 'pending'] as StatusFilter[]).map(s => (
             <button
@@ -197,19 +190,17 @@ export default function OrdersPage() {
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
-              {s === 'all' ? 'All' : s === 'paid' ? '✅ Paid' : '⏳ Pending'}
+              {s === 'all' ? 'All' : s === 'paid' ? 'Paid' : 'Pending'}
             </button>
           ))}
         </div>
 
-        {/* Summary */}
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 mb-4 text-center">
           <p className="text-sm text-orange-700">
-            <span className="font-bold">{filtered.length}</span> orders · ₹<span className="font-bold">{totalAmount.toLocaleString('en-IN')}</span> total
+            <span className="font-bold">{filtered.length}</span> orders · Rs.<span className="font-bold">{totalAmount.toLocaleString('en-IN')}</span> total
           </p>
         </div>
 
-        {/* Orders list */}
         {filtered.length === 0 ? (
           <div className="bg-white rounded-3xl p-8 text-center border border-gray-200">
             <div className="text-5xl mb-3">🔍</div>
@@ -228,10 +219,10 @@ export default function OrdersPage() {
                           ? 'bg-green-100 text-green-700' 
                           : 'bg-orange-100 text-orange-700'
                       }`}>
-                        {order.status === 'paid' || order.status === 'done' ? '✅ Paid' : '⏳ Pending'}
+                        {order.status === 'paid' || order.status === 'done' ? 'Paid' : 'Pending'}
                       </span>
                       <span className="text-xs text-gray-500">
-                        {order.mode === 'bill' ? '🧾 Bill' : '📦 Order'}
+                        {order.mode === 'bill' ? 'Bill' : 'Order'}
                       </span>
                       {order.payment_method && (
                         <span className="text-xs text-gray-400">
@@ -245,7 +236,7 @@ export default function OrdersPage() {
                     )}
                   </div>
                   <div className="text-right ml-3">
-                    <p className="text-xl font-bold text-orange-500">₹{order.total}</p>
+                    <p className="text-xl font-bold text-orange-500">Rs.{order.total}</p>
                     <p className="text-xs text-gray-500">
                       {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                     </p>
@@ -259,21 +250,27 @@ export default function OrdersPage() {
                 )}
 
                 <div className="flex flex-wrap gap-2">
+                  <Link 
+                    href={`/orders/${order.id}/edit`}
+                    className="flex-1 min-w-[100px] text-center bg-blue-50 text-blue-700 border border-blue-200 py-2 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
+                  >
+                    ✏️ Edit
+                  </Link>
                   {(order.status === 'sent' || order.status === 'new') && (
                     <button
                       onClick={() => handleMarkPaid(order.id)}
                       disabled={updatingOrderId === order.id}
-                      className="flex-1 min-w-[120px] bg-green-50 text-green-700 border border-green-200 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors disabled:opacity-50"
+                      className="flex-1 min-w-[100px] bg-green-50 text-green-700 border border-green-200 py-2 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors disabled:opacity-50"
                     >
-                      {updatingOrderId === order.id ? 'Updating...' : '✅ Mark as Paid'}
+                      {updatingOrderId === order.id ? 'Updating...' : '✅ Paid'}
                     </button>
                   )}
                   {order.customer_phone && (order.status === 'sent' || order.status === 'new') && (
                     <button
                       onClick={() => handleResendWhatsApp(order)}
-                      className="flex-1 min-w-[120px] bg-orange-50 text-orange-700 border border-orange-200 py-2 rounded-lg text-sm font-medium hover:bg-orange-100 transition-colors"
+                      className="flex-1 min-w-[100px] bg-orange-50 text-orange-700 border border-orange-200 py-2 rounded-lg text-sm font-medium hover:bg-orange-100 transition-colors"
                     >
-                      📱 Send Reminder
+                      📱 Remind
                     </button>
                   )}
                   <button
