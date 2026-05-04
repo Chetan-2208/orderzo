@@ -7,6 +7,11 @@ interface InvoiceData {
   businessName: string
   businessPhone: string
   businessUpi: string
+  businessTagline?: string
+  businessAddress?: string
+  businessEmail?: string
+  businessGstin?: string
+  businessLogoUrl?: string
   customerName: string
   customerPhone?: string
   items: Array<{
@@ -30,66 +35,119 @@ const ORANGE_DARK: [number, number, number] = [220, 100, 30]
 const GREEN: [number, number, number] = [22, 163, 74]
 const GREEN_LIGHT: [number, number, number] = [220, 252, 231]
 
-function drawHeader(doc: jsPDF, pageWidth: number, margin: number) {
-  // Top decorative bar
-  doc.setFillColor(...ORANGE)
-  doc.rect(0, 0, pageWidth, 8, 'F')
-
-  // Orderzo logo (orange rounded square + checkmark)
-  doc.setFillColor(...ORANGE)
-  doc.roundedRect(margin, 15, 16, 16, 3.5, 3.5, 'F')
-  doc.setDrawColor(255, 255, 255)
-  doc.setLineWidth(1.5)
-  doc.setLineCap('round')
-  doc.setLineJoin('round')
-  doc.line(margin + 4.5, 23, margin + 7.5, 26)
-  doc.line(margin + 7.5, 26, margin + 12, 20)
-  
-  // "orderzo" wordmark
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(24)
-  doc.setTextColor(15, 15, 20)
-  doc.text('orderzo', margin + 22, 27)
-  
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
-  doc.setTextColor(120, 120, 120)
-  doc.text('Order. Bill. Done.', margin + 22, 32)
+async function fetchImageAsDataUrl(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url)
+    if (!response.ok) return null
+    const blob = await response.blob()
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result as string)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    })
+  } catch (e) {
+    console.error('Could not load logo:', e)
+    return null
+  }
 }
 
-function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: number, businessName: string, businessPhone: string) {
-  const footerY = pageHeight - 30
+async function drawBrandedHeader(doc: jsPDF, pageWidth: number, margin: number, data: InvoiceData, headerColor: [number, number, number] = ORANGE) {
+  doc.setFillColor(...headerColor)
+  doc.rect(0, 0, pageWidth, 8, 'F')
+
+  let textStartX = margin
+
+  if (data.businessLogoUrl) {
+    const logoData = await fetchImageAsDataUrl(data.businessLogoUrl)
+    if (logoData) {
+      try {
+        const format = logoData.startsWith('data:image/png') ? 'PNG' :
+                       logoData.startsWith('data:image/jpeg') ? 'JPEG' :
+                       logoData.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+        doc.addImage(logoData, format, margin, 15, 20, 20, undefined, 'FAST')
+        textStartX = margin + 25
+      } catch (e) {
+        console.error('Could not embed logo:', e)
+      }
+    }
+  } else {
+    doc.setFillColor(...headerColor)
+    doc.roundedRect(margin, 15, 20, 20, 4, 4, 'F')
+    doc.setTextColor(255, 255, 255)
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(20)
+    doc.text(data.businessName.charAt(0).toUpperCase(), margin + 10, 28, { align: 'center' })
+    textStartX = margin + 25
+  }
+
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(18)
+  doc.setTextColor(15, 15, 20)
+  doc.text(data.businessName, textStartX, 23)
+
+  let infoY = 28
+  if (data.businessTagline) {
+    doc.setFont('helvetica', 'italic')
+    doc.setFontSize(8)
+    doc.setTextColor(120, 120, 120)
+    doc.text(data.businessTagline, textStartX, infoY)
+    infoY += 4
+  }
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(8)
+  doc.setTextColor(100, 100, 100)
+  let infoLine = `+91 ${data.businessPhone}`
+  if (data.businessEmail) infoLine += ` · ${data.businessEmail}`
+  if (data.businessGstin) infoLine += ` · GSTIN: ${data.businessGstin}`
+  doc.text(infoLine, textStartX, infoY)
+}
+
+function drawFooter(doc, pageWidth, pageHeight, margin, businessName, businessPhone, isPaidReceipt = false) {
+  const footerY = pageHeight - 38
   doc.setDrawColor(220, 220, 220)
   doc.setLineWidth(0.3)
   doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5)
-  
+
   doc.setTextColor(60, 60, 60)
   doc.setFontSize(10)
-  doc.setFont('helvetica', 'bold')
-  doc.text(`Visit ${businessName} again - we'd love to serve you!`, pageWidth / 2, footerY, { align: 'center' })
-  
-  doc.setFont('helvetica', 'normal')
+  doc.setFont("helvetica", "bold")
+  doc.text(`Thank you for choosing !`, pageWidth / 2, footerY, { align: "center" })
+
+  doc.setFont("helvetica", "normal")
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
-  doc.text(`Save us in your contacts: +91 ${businessPhone}`, pageWidth / 2, footerY + 5, { align: 'center' })
-  
+  doc.text(`Save us in your contacts: +91 `, pageWidth / 2, footerY + 5, { align: "center" })
+
+  // BIG Orderzo branding banner
+  const brandY = pageHeight - 18
+  doc.setFillColor(255, 247, 237)
+  doc.rect(0, brandY - 6, pageWidth, 14, "F")
+
+  doc.setTextColor(...ORANGE)
+  doc.setFontSize(14)
+  doc.setFont("helvetica", "bold")
+  doc.text("orderzo", pageWidth / 2 - 30, brandY + 1, { align: "center" })
+
+  doc.setTextColor(80, 80, 80)
+  doc.setFontSize(9)
+  doc.setFont("helvetica", "normal")
+  doc.text("Order. Bill. Done.", pageWidth / 2 + 6, brandY + 1)
+
   doc.setTextColor(...ORANGE)
   doc.setFontSize(9)
-  doc.setFont('helvetica', 'bold')
-  doc.text('orderzo', pageWidth / 2 - 22, footerY + 13)
-  doc.setTextColor(150, 150, 150)
-  doc.setFontSize(7)
-  doc.setFont('helvetica', 'normal')
-  doc.text('. Order. Bill. Done. . orderzo.io', pageWidth / 2 - 5, footerY + 13)
+  doc.setFont("helvetica", "bold")
+  doc.text("orderzo.io", pageWidth / 2 + 38, brandY + 1)
 
-  doc.setFillColor(...ORANGE)
-  doc.rect(0, pageHeight - 4, pageWidth, 4, 'F')
+  doc.setFillColor(...(isPaidReceipt ? GREEN : ORANGE))
+  doc.rect(0, pageHeight - 4, pageWidth, 4, "F")
 }
 
 async function uploadPDF(doc: jsPDF, orderId: string, prefix: string = 'invoice'): Promise<string> {
   const pdfBlob = doc.output('blob')
   const fileName = `${prefix}-${orderId}-${Date.now()}.pdf`
-  
+
   const { error: uploadError } = await supabase.storage
     .from('invoices')
     .upload(fileName, pdfBlob, {
@@ -106,65 +164,58 @@ async function uploadPDF(doc: jsPDF, orderId: string, prefix: string = 'invoice'
   return urlData.publicUrl
 }
 
-// PENDING / regular invoice (sent before payment)
 export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const pageWidth = doc.internal.pageSize.getWidth()
   const pageHeight = doc.internal.pageSize.getHeight()
   const margin = 15
 
-  drawHeader(doc, pageWidth, margin)
+  await drawBrandedHeader(doc, pageWidth, margin, data, ORANGE)
 
-  // Right side: Invoice details
   doc.setTextColor(50, 50, 50)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(16)
-  doc.text(data.mode === 'bill' ? 'INVOICE' : 'ORDER', pageWidth - margin, 25, { align: 'right' })
+  doc.setFontSize(15)
+  doc.text(data.mode === 'bill' ? 'INVOICE' : 'ORDER', pageWidth - margin, 22, { align: 'right' })
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
   doc.setTextColor(120, 120, 120)
-  doc.text(`#${data.orderId.slice(0, 8).toUpperCase()}`, pageWidth - margin, 30, { align: 'right' })
-  doc.text(data.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }), pageWidth - margin, 35, { align: 'right' })
+  doc.text(`#${data.orderId.slice(0, 8).toUpperCase()}`, pageWidth - margin, 27, { align: 'right' })
+  doc.text(data.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }), pageWidth - margin, 32, { align: 'right' })
 
   doc.setDrawColor(...ORANGE)
   doc.setLineWidth(0.8)
   doc.line(margin, 42, pageWidth - margin, 42)
 
-  // FROM
-  let yPos = 52
-  doc.setTextColor(150, 150, 150)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
-  doc.text('FROM', margin, yPos)
-  yPos += 5
-  doc.setTextColor(30, 30, 30)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(14)
-  doc.text(data.businessName, margin, yPos)
-  yPos += 5
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  doc.setTextColor(100, 100, 100)
-  doc.text(`+91 ${data.businessPhone}`, margin, yPos)
-  doc.text(`UPI: ${data.businessUpi}`, margin, yPos + 4)
+  let yPos = 50
+  if (data.businessAddress) {
+    doc.setTextColor(150, 150, 150)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7)
+    doc.text('FROM ADDRESS', margin, yPos)
+    yPos += 4
+    doc.setTextColor(80, 80, 80)
+    doc.setFontSize(8)
+    const addressLines = doc.splitTextToSize(data.businessAddress, 80)
+    doc.text(addressLines, margin, yPos)
+    yPos += addressLines.length * 4 + 4
+  }
 
-  // TO
+  const toY = data.businessAddress ? 50 : 52
   doc.setTextColor(150, 150, 150)
-  doc.setFontSize(8)
-  doc.text('TO', pageWidth - margin, 52, { align: 'right' })
+  doc.setFontSize(7)
+  doc.text('BILL TO', pageWidth - margin, toY, { align: 'right' })
   doc.setTextColor(30, 30, 30)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(14)
-  doc.text(data.customerName, pageWidth - margin, 57, { align: 'right' })
+  doc.setFontSize(13)
+  doc.text(data.customerName, pageWidth - margin, toY + 5, { align: 'right' })
   if (data.customerPhone) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     doc.setTextColor(100, 100, 100)
-    doc.text(`+91 ${data.customerPhone}`, pageWidth - margin, 62, { align: 'right' })
+    doc.text(`+91 ${data.customerPhone}`, pageWidth - margin, toY + 10, { align: 'right' })
   }
 
-  // Thank you
-  yPos = 80
+  yPos = Math.max(yPos, 78)
   doc.setFillColor(...ORANGE_LIGHT)
   doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 14, 3, 3, 'F')
   doc.setTextColor(...ORANGE_DARK)
@@ -173,8 +224,7 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
   const firstName = data.customerName.split(' ')[0]
   doc.text(`Thank you, ${firstName}! ${data.mode === 'bill' ? 'Hope to see you again soon.' : 'Your order is confirmed.'}`, pageWidth / 2, yPos + 9, { align: 'center' })
 
-  // Items table
-  yPos = 105
+  yPos += 24
   doc.setFillColor(45, 45, 45)
   doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 9, 2, 2, 'F')
   doc.setTextColor(255, 255, 255)
@@ -203,17 +253,11 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
     yPos += 8
   })
 
-  // Total
   yPos += 5
   doc.setDrawColor(220, 220, 220)
   doc.line(margin, yPos, pageWidth - margin, yPos)
-  yPos += 8
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text('Subtotal:', pageWidth - margin - 30, yPos, { align: 'right' })
-  doc.text(`Rs.${data.total}`, pageWidth - margin - 4, yPos, { align: 'right' })
-
   yPos += 10
+
   doc.setFillColor(...ORANGE)
   doc.roundedRect(pageWidth - margin - 75, yPos - 5, 75, 18, 3, 3, 'F')
   doc.setTextColor(255, 255, 255)
@@ -224,7 +268,6 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
   doc.setFont('helvetica', 'bold')
   doc.text(`Rs.${data.total}`, pageWidth - margin - 4, yPos + 5, { align: 'right' })
 
-  // Payment status block
   yPos += 22
   if (data.paymentStatus === 'paid') {
     doc.setFillColor(...GREEN_LIGHT)
@@ -263,55 +306,31 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
     }
   }
 
-  drawFooter(doc, pageWidth, pageHeight, margin, data.businessName, data.businessPhone)
+  drawFooter(doc, pageWidth, pageHeight, margin, data.businessName, data.businessPhone, false)
   return uploadPDF(doc, data.orderId, 'invoice')
 }
 
-// PAID receipt — sent AFTER payment is received
 export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string> {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const pageWidth = doc.internal.pageSize.getWidth()
   const pageHeight = doc.internal.pageSize.getHeight()
   const margin = 15
 
-  // Top GREEN bar (different from pending invoice)
-  doc.setFillColor(...GREEN)
-  doc.rect(0, 0, pageWidth, 8, 'F')
+  await drawBrandedHeader(doc, pageWidth, margin, data, GREEN)
 
-  // Orderzo logo (kept orange — brand color)
-  doc.setFillColor(...ORANGE)
-  doc.roundedRect(margin, 15, 16, 16, 3.5, 3.5, 'F')
-  doc.setDrawColor(255, 255, 255)
-  doc.setLineWidth(1.5)
-  doc.setLineCap('round')
-  doc.setLineJoin('round')
-  doc.line(margin + 4.5, 23, margin + 7.5, 26)
-  doc.line(margin + 7.5, 26, margin + 12, 20)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(24)
-  doc.setTextColor(15, 15, 20)
-  doc.text('orderzo', margin + 22, 27)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
-  doc.setTextColor(120, 120, 120)
-  doc.text('Order. Bill. Done.', margin + 22, 32)
-
-  // PAID stamp on right
   doc.setTextColor(...GREEN)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(20)
-  doc.text('RECEIPT', pageWidth - margin, 25, { align: 'right' })
+  doc.setFontSize(18)
+  doc.text('RECEIPT', pageWidth - margin, 22, { align: 'right' })
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
   doc.setTextColor(120, 120, 120)
-  doc.text(`#${data.orderId.slice(0, 8).toUpperCase()}`, pageWidth - margin, 31, { align: 'right' })
+  doc.text(`#${data.orderId.slice(0, 8).toUpperCase()}`, pageWidth - margin, 28, { align: 'right' })
 
-  // Green divider
   doc.setDrawColor(...GREEN)
   doc.setLineWidth(0.8)
   doc.line(margin, 42, pageWidth - margin, 42)
 
-  // BIG PAID STAMP/BANNER
   let yPos = 50
   doc.setFillColor(...GREEN_LIGHT)
   doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 22, 4, 4, 'F')
@@ -319,7 +338,6 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(22)
   doc.text('PAID', pageWidth / 2 - 15, yPos + 12, { align: 'center' })
-  // Checkmark next to PAID
   doc.setDrawColor(...GREEN)
   doc.setLineWidth(2.5)
   doc.line(pageWidth / 2 + 5, yPos + 11, pageWidth / 2 + 9, yPos + 15)
@@ -331,39 +349,35 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
   const paidDate = data.paidAt || new Date()
   doc.text(`Paid on ${paidDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} at ${paidDate.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true })}`, pageWidth / 2, yPos + 18, { align: 'center' })
 
-  // FROM / TO
-  yPos = 82
-  doc.setTextColor(150, 150, 150)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(8)
-  doc.text('FROM', margin, yPos)
-  yPos += 5
-  doc.setTextColor(30, 30, 30)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(13)
-  doc.text(data.businessName, margin, yPos)
-  yPos += 5
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  doc.setTextColor(100, 100, 100)
-  doc.text(`+91 ${data.businessPhone}`, margin, yPos)
+  yPos = 80
+  if (data.businessAddress) {
+    doc.setTextColor(150, 150, 150)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7)
+    doc.text('FROM ADDRESS', margin, yPos)
+    yPos += 4
+    doc.setTextColor(80, 80, 80)
+    doc.setFontSize(8)
+    const addressLines = doc.splitTextToSize(data.businessAddress, 80)
+    doc.text(addressLines, margin, yPos)
+    yPos += addressLines.length * 4 + 4
+  }
 
   doc.setTextColor(150, 150, 150)
-  doc.setFontSize(8)
-  doc.text('TO', pageWidth - margin, 82, { align: 'right' })
+  doc.setFontSize(7)
+  doc.text('BILL TO', pageWidth - margin, 80, { align: 'right' })
   doc.setTextColor(30, 30, 30)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(13)
-  doc.text(data.customerName, pageWidth - margin, 87, { align: 'right' })
+  doc.text(data.customerName, pageWidth - margin, 85, { align: 'right' })
   if (data.customerPhone) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     doc.setTextColor(100, 100, 100)
-    doc.text(`+91 ${data.customerPhone}`, pageWidth - margin, 92, { align: 'right' })
+    doc.text(`+91 ${data.customerPhone}`, pageWidth - margin, 90, { align: 'right' })
   }
 
-  // Thank you
-  yPos = 105
+  yPos = Math.max(yPos, 105)
   doc.setFillColor(...GREEN_LIGHT)
   doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 14, 3, 3, 'F')
   doc.setTextColor(...GREEN)
@@ -372,8 +386,7 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
   const firstName = data.customerName.split(' ')[0]
   doc.text(`Thank you, ${firstName}! Your payment has been received.`, pageWidth / 2, yPos + 9, { align: 'center' })
 
-  // Items table
-  yPos = 130
+  yPos += 25
   doc.setFillColor(45, 45, 45)
   doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 9, 2, 2, 'F')
   doc.setTextColor(255, 255, 255)
@@ -402,7 +415,6 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
     yPos += 8
   })
 
-  // Total card (GREEN this time)
   yPos += 8
   doc.setFillColor(...GREEN)
   doc.roundedRect(pageWidth - margin - 75, yPos - 5, 75, 18, 3, 3, 'F')
@@ -414,7 +426,6 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
   doc.setFont('helvetica', 'bold')
   doc.text(`Rs.${data.total}`, pageWidth - margin - 4, yPos + 5, { align: 'right' })
 
-  // Payment details
   yPos += 22
   doc.setFillColor(245, 250, 245)
   doc.roundedRect(margin, yPos - 5, pageWidth - 2 * margin, 16, 3, 3, 'F')
@@ -430,6 +441,6 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
     doc.text(`Transaction ID: ${data.paymentId}`, margin + 4, yPos + 10)
   }
 
-  drawFooter(doc, pageWidth, pageHeight, margin, data.businessName, data.businessPhone)
+  drawFooter(doc, pageWidth, pageHeight, margin, data.businessName, data.businessPhone, true)
   return uploadPDF(doc, data.orderId, 'receipt')
 }
