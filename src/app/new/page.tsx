@@ -206,6 +206,11 @@ function NewOrderContent() {
           businessName: business.business_name,
           businessPhone: business.owner_phone,
           businessUpi: business.upi_id,
+          businessTagline: (business as any).tagline,
+          businessAddress: (business as any).address,
+          businessEmail: (business as any).email,
+          businessGstin: (business as any).gstin,
+          businessLogoUrl: (business as any).logo_url,
           customerName: selectedCustomer.name,
           customerPhone: selectedCustomer.phone,
           items: orderItems.map(oi => ({ name: oi.name, quantity: oi.quantity, price: oi.price })),
@@ -217,6 +222,17 @@ function NewOrderContent() {
           paymentUrl: paymentUrl,
         })
       } catch (e) { console.error('PDF error:', e) }
+
+      // Save PDF URL to order so /i/[shortId] route can find it
+      if (pdfUrl && order?.id) {
+        try {
+          await supabase.from('orders').update({ pdf_url: pdfUrl }).eq('id', order.id)
+        } catch (e) { console.error('Could not save pdf_url:', e) }
+      }
+
+      // Build short branded URL
+      const shortId = order?.id?.slice(0, 8) || ''
+      const shortPdfUrl = shortId ? `https://orderzo.io/i/${shortId}` : pdfUrl
 
       // Generate UPI deep link
       const upiLink = paymentMethod === 'upi'
@@ -245,10 +261,10 @@ function NewOrderContent() {
         }
         
         if (pdfUrl) {
-          message += `\nInvoice PDF:\n${pdfUrl}\n`
+          message += `\nInvoice:\n${shortPdfUrl}\n`
         }
         
-        message += `\nThank you for shopping!\nVisit ${business.business_name} again.`
+        message += `\nThank you for shopping!\nVisit ${business.business_name} again.\n\n_Sent via Orderzo · orderzo.io_`
       } else {
         message = `Hi ${selectedCustomer.name},\n\nYour order from *${business.business_name}* is confirmed:\n\n${itemLines}\n\n*TOTAL: Rs.${total}*\n`
         
@@ -259,10 +275,10 @@ function NewOrderContent() {
           message += `\nOr pay via UPI:\n${upiLink}\n`
         }
         if (pdfUrl) {
-          message += `\nInvoice PDF:\n${pdfUrl}\n`
+          message += `\nInvoice:\n${shortPdfUrl}\n`
         }
         
-        message += `\nThank you!\n- ${business.business_name}`
+        message += `\nThank you!\n- ${business.business_name}\n\n_Sent via Orderzo · orderzo.io_`
       }
 
       // Open WhatsApp
