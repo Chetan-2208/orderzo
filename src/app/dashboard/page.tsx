@@ -45,6 +45,7 @@ interface Stats {
 export default function DashboardPage() {
   const [business, setBusiness] = useState<Business | null>(null)
   const [recurringBills, setRecurringBills] = useState<any[]>([])
+  const [todaySummary, setTodaySummary] = useState<any>(null)
   const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'orders' | 'customers' | 'settings'>('orders')
@@ -372,6 +373,65 @@ export default function DashboardPage() {
             )}
 
             
+        
+        {/* Today's Summary Widget */}
+        {todaySummary && (
+          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl shadow-lg p-6 mb-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="text-xs font-semibold text-orange-100 mb-1">
+                  🎉 TODAY'S WINS
+                </div>
+                <h2 className="text-2xl font-bold">
+                  {business?.business_name || 'Your business'}
+                </h2>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold">Rs.{todaySummary.total_revenue || 0}</div>
+                <div className="text-xs text-orange-100">earned today</div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
+                <div className="text-2xl font-bold">{todaySummary.total_orders || 0}</div>
+                <div className="text-xs text-orange-100">orders</div>
+              </div>
+              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
+                <div className="text-2xl font-bold">{todaySummary.paid_orders || 0}</div>
+                <div className="text-xs text-orange-100">paid</div>
+              </div>
+              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
+                <div className="text-2xl font-bold">Rs.{todaySummary.pending_amount || 0}</div>
+                <div className="text-xs text-orange-100">pending</div>
+              </div>
+            </div>
+
+            {todaySummary.top_customer?.name && (
+              <div className="bg-white/15 backdrop-blur rounded-xl p-3 mb-3">
+                <div className="text-xs text-orange-100 mb-1">⭐ Top customer</div>
+                <div className="font-semibold text-sm">
+                  {todaySummary.top_customer.name} (Rs.{todaySummary.top_customer.total})
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={() => {
+                const msg = `🎉 ${business?.business_name} - Today's Wins!\n\n` +
+                  `✨ ${todaySummary.total_orders} orders\n` +
+                  `✨ Rs.${todaySummary.total_revenue} earned\n` +
+                  (todaySummary.top_customer?.name ? `✨ Top customer: ${todaySummary.top_customer.name} (Rs.${todaySummary.top_customer.total})\n` : '') +
+                  `\nKeep going! 💪\n— Sent via Orderzo`
+                window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
+              }}
+              className="w-full bg-white text-orange-600 py-3 rounded-xl font-semibold hover:bg-orange-50 transition-all"
+            >
+              📱 Share to WhatsApp
+            </button>
+          </div>
+        )}
+
         {/* Recurring Bills Panel */}
         {recurringBills.length > 0 && (
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-6">
