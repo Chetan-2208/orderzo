@@ -5,6 +5,39 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import { supabase } from '@/lib/supabase'
+const ALL_CHANNELS: Record<string, { id: string; label: string; initial: string; color: string; bg: string }> = {
+  whatsapp: { id: 'whatsapp', label: 'WhatsApp', initial: 'W', color: '#25D366', bg: '#DCFCE7' },
+  instagram: { id: 'instagram', label: 'Instagram', initial: 'I', color: '#E4405F', bg: '#FCE7F3' },
+  swiggy: { id: 'swiggy', label: 'Swiggy', initial: 'S', color: '#FC8019', bg: '#FFEDD5' },
+  zomato: { id: 'zomato', label: 'Zomato', initial: 'Z', color: '#E23744', bg: '#FEE2E2' },
+  website: { id: 'website', label: 'Website', initial: 'Wb', color: '#3B82F6', bg: '#DBEAFE' },
+  walkin: { id: 'walkin', label: 'Walk-in', initial: 'Wk', color: '#6B7280', bg: '#F3F4F6' },
+  phone: { id: 'phone', label: 'Phone', initial: 'P', color: '#8B5CF6', bg: '#EDE9FE' },
+  delivery: { id: 'delivery', label: 'Delivery', initial: 'Dl', color: '#0EA5E9', bg: '#E0F2FE' },
+  office: { id: 'office', label: 'Office', initial: 'Of', color: '#7C3AED', bg: '#EDE9FE' },
+  referral: { id: 'referral', label: 'Referral', initial: 'Rf', color: '#10B981', bg: '#D1FAE5' },
+  justdial: { id: 'justdial', label: 'JustDial', initial: 'JD', color: '#F59E0B', bg: '#FEF3C7' },
+  other: { id: 'other', label: 'Other', initial: '+', color: '#64748B', bg: '#F1F5F9' },
+}
+
+const CHANNELS_BY_BUSINESS_TYPE: Record<string, string[]> = {
+  cloud_kitchen: ['whatsapp', 'instagram', 'swiggy', 'zomato', 'website', 'phone', 'other'],
+  tiffin: ['whatsapp', 'phone', 'office', 'delivery', 'walkin', 'other'],
+  retail: ['walkin', 'whatsapp', 'phone', 'delivery', 'other'],
+  salon: ['walkin', 'phone', 'instagram', 'justdial', 'referral', 'other'],
+  tutor: ['referral', 'whatsapp', 'instagram', 'website', 'other'],
+  bakery: ['whatsapp', 'instagram', 'website', 'referral', 'other'],
+  freelancer: ['whatsapp', 'instagram', 'website', 'referral', 'other'],
+  general: ['walkin', 'whatsapp', 'phone', 'other'],
+  other: ['walkin', 'whatsapp', 'phone', 'other'],
+}
+
+function getChannelsForBusinessType(businessType: string | null | undefined) {
+  const type = businessType || 'general'
+  const channelIds = CHANNELS_BY_BUSINESS_TYPE[type] || CHANNELS_BY_BUSINESS_TYPE.general
+  return channelIds.map(id => ALL_CHANNELS[id]).filter(Boolean)
+}
+
 import { generateInvoicePDF } from '@/lib/generateInvoice'
 
 interface Business {
@@ -51,6 +84,10 @@ function NewOrderContent() {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [channel, setChannel] = useState<string>('walkin')
+  const [isRecurring, setIsRecurring] = useState<boolean>(false)
+  const [recurringFrequency, setRecurringFrequency] = useState<string>('monthly')
+  const [recurringLabel, setRecurringLabel] = useState<string>('')
   const router = useRouter()
 
   useEffect(() => {
@@ -63,6 +100,14 @@ function NewOrderContent() {
   const loadData = async (phone: string) => {
     const { data: businessData } = await supabase
       .from('businesses').select('*').eq('owner_phone', phone).single()
+    
+    // Set default channel based on business type
+    if (businessData) {
+      const channels = getChannelsForBusinessType((businessData as any)?.business_type)
+      if (channels.length > 0) {
+        setChannel(channels[0].id)
+      }
+    }
     if (!businessData) { router.push('/setup'); return }
     setBusiness(businessData)
 
@@ -145,6 +190,11 @@ function NewOrderContent() {
         total: total,
         mode: mode,
         payment_method: paymentMethod,
+        channel: channel,
+        is_recurring: isRecurring,
+        recurring_frequency: isRecurring ? recurringFrequency : null,
+        recurring_label: isRecurring ? recurringLabel : null,
+        next_due_date: isRecurring ? new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0] : null,
         status: paymentMethod === 'cash' ? 'paid' : 'sent',
       }
       if (selectedCustomer.id !== 'walk-in') {
@@ -448,6 +498,101 @@ function NewOrderContent() {
             </div>
           </div>
         )}
+
+        {/* Channel Source */}
+        <div className="mb-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            Where did this order come from?
+          </label>
+          <div className="grid grid-cols-4 gap-2">
+            {getChannelsForBusinessType((business as any)?.business_type).map((ch) => (
+              <button
+                key={ch.id}
+                type="button"
+                onClick={() => setChannel(ch.id)}
+                className={`px-3 py-4 rounded-xl text-xs font-semibold border-2 transition-all flex flex-col items-center justify-center gap-2 ${
+                  channel === ch.id
+                    ? 'border-orange-500 bg-orange-50 text-orange-700 shadow-md'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:shadow-sm'
+                }`}
+              >
+                <div 
+                  className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm"
+                  style={{ backgroundColor: ch.bg, color: ch.color }}
+                >
+                  {ch.initial}
+                </div>
+                <div className="text-xs">{ch.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Recurring Bill Toggle */}
+        <div className="mb-6">
+          <div className={`rounded-2xl border-2 transition-all ${
+            isRecurring 
+              ? 'border-orange-500 bg-orange-50' 
+              : 'border-gray-200 bg-white'
+          }`}>
+            <button
+              type="button"
+              onClick={() => setIsRecurring(!isRecurring)}
+              className="w-full px-4 py-4 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl ${
+                  isRecurring ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-500'
+                }`}>
+                  🔄
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-gray-900">
+                    Recurring monthly bill
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Auto-create on 1st of each month (PG rent, tiffin, gym fees)
+                  </div>
+                </div>
+              </div>
+              <div className={`w-12 h-7 rounded-full transition-all relative ${
+                isRecurring ? 'bg-orange-500' : 'bg-gray-300'
+              }`}>
+                <div className={`absolute top-0.5 w-6 h-6 rounded-full bg-white transition-all shadow-sm ${
+                  isRecurring ? 'left-5' : 'left-0.5'
+                }`}></div>
+              </div>
+            </button>
+
+            {isRecurring && (
+              <div className="px-4 pb-4 border-t border-orange-200 pt-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Label (e.g., "Room 101 - May Rent")
+                </label>
+                <input
+                  type="text"
+                  value={recurringLabel}
+                  onChange={(e) => setRecurringLabel(e.target.value)}
+                  placeholder="Room 101 Rent"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-orange-500 outline-none text-base"
+                />
+                <div className="mt-3 p-3 bg-white rounded-xl border border-orange-200">
+                  <div className="text-xs font-semibold text-orange-700 mb-1">
+                    ✨ Auto-magic
+                  </div>
+                  <div className="text-sm text-gray-700">
+                    Next bill auto-creates on{' '}
+                    <span className="font-semibold">
+                      {new Date(new Date().setMonth(new Date().getMonth() + 1)).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        
 
         {/* Payment Method */}
         {orderItems.length > 0 && (

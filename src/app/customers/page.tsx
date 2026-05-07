@@ -194,7 +194,7 @@ export default function CustomersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-28">
       <header className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10 shadow-sm">
         <div className="flex items-center gap-3 max-w-2xl mx-auto">
           <Link href="/dashboard" className="text-gray-500 text-2xl">←</Link>
@@ -307,7 +307,15 @@ export default function CustomersPage() {
         ) : (
           <div className="space-y-2">
             {filtered.map((customer, idx) => (
-              <div key={customer.id} className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+              <div 
+              key={customer.id} 
+              onClick={(e) => {
+                // Don't navigate if user clicked WhatsApp button or other action buttons
+                const target = e.target as HTMLElement
+                if (target.closest('button') || target.closest('a')) return
+                router.push(`/customers/${customer.id}`)
+              }}
+              className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm hover:border-orange-300 hover:shadow-md transition-all cursor-pointer">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">

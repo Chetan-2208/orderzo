@@ -38,7 +38,8 @@ export default function SetupPage() {
       .then(({ data }) => {
         if (data) {
           setIsEdit(true)
-          setBusinessName(data.business_name || '')
+          setBusinessType((data as any)?.business_type || 'other')
+      setBusinessName(data.business_name || '')
           setBusinessType(data.business_type || 'tiffin')
           setTagline(data.tagline || '')
           setUpiId(data.upi_id || '')
@@ -262,13 +263,14 @@ export default function SetupPage() {
               onChange={(e) => setBusinessType(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
             >
-              <option value="tiffin">Tiffin / Food service</option>
-              <option value="retail">Retail / Kirana shop</option>
-              <option value="salon">Salon / Beauty</option>
-              <option value="tutor">Tutor / Education</option>
-              <option value="bakery">Home bakery</option>
-              <option value="freelancer">Freelancer / Service</option>
-              <option value="other">Other</option>
+              <option value="cloud_kitchen">🍳 Cloud Kitchen / Restaurant</option>
+                  <option value="tiffin">🍱 Tiffin / Food Service</option>
+                  <option value="bakery">🎂 Home Bakery / Sweets</option>
+                  <option value="retail">🛒 Kirana / Retail Shop</option>
+                  <option value="salon">💇 Salon / Beauty</option>
+                  <option value="tutor">📚 Tutor / Coaching</option>
+                  <option value="freelancer">💼 Freelancer / Service</option>
+                  <option value="other">📌 Other</option>
             </select>
           </div>
 

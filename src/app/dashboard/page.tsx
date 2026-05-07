@@ -44,6 +44,7 @@ interface Stats {
 
 export default function DashboardPage() {
   const [business, setBusiness] = useState<Business | null>(null)
+  const [recurringBills, setRecurringBills] = useState<any[]>([])
   const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'orders' | 'customers' | 'settings'>('orders')
@@ -190,7 +191,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-28">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-4 sticky top-0 z-10 shadow-sm">
         <div className="flex items-center justify-between max-w-2xl mx-auto">
@@ -370,7 +371,78 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {/* Recent Orders */}
+            
+        {/* Recurring Bills Panel */}
+        {recurringBills.length > 0 && (
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-xl">
+                  🔄
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">
+                    Recurring Bills
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    {recurringBills.length} active subscription{recurringBills.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              {recurringBills.slice(0, 5).map((bill: any) => {
+                const dueDate = bill.next_due_date ? new Date(bill.next_due_date) : null
+                const daysUntilDue = dueDate ? Math.ceil((dueDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : null
+                const isPastDue = daysUntilDue !== null && daysUntilDue < 0
+                const isDueSoon = daysUntilDue !== null && daysUntilDue >= 0 && daysUntilDue <= 7
+                
+                return (
+                  <div 
+                    key={bill.id}
+                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50/30 transition-all"
+                  >
+                    <div className="flex-1">
+                      <div className="font-semibold text-gray-900 text-sm">
+                        {bill.recurring_label || 'Monthly bill'}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5">
+                        Rs.{bill.total} · {bill.recurring_frequency || 'monthly'}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      {dueDate && (
+                        <>
+                          <div className={`text-xs font-semibold ${
+                            isPastDue ? 'text-red-600' : 
+                            isDueSoon ? 'text-orange-600' : 
+                            'text-gray-500'
+                          }`}>
+                            {isPastDue ? 'Past due' : isDueSoon ? 'Due soon' : 'Upcoming'}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {dueDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            
+            {recurringBills.length > 5 && (
+              <div className="mt-4 text-center">
+                <span className="text-sm text-orange-600 font-medium">
+                  +{recurringBills.length - 5} more recurring bills
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Recent Orders */}
             {stats.recentList.length > 0 ? (
               <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
