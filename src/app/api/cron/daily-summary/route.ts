@@ -24,12 +24,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'No businesses found', count: 0 })
     }
 
-    // Get today's date range (IST)
+    // Get last 24 hours range (simpler, more reliable)
     const now = new Date()
-    const istOffset = 5.5 * 60 * 60 * 1000
-    const istNow = new Date(now.getTime() + istOffset)
-    const todayStart = new Date(istNow.getFullYear(), istNow.getMonth(), istNow.getDate())
-    const todayEnd = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000)
+    const todayEnd = new Date(now.getTime())
+    const todayStart = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+    
+    console.log('Cron checking orders between:', todayStart.toISOString(), 'and', todayEnd.toISOString())
 
     const summaries: any[] = []
 
