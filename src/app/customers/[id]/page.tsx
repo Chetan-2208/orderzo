@@ -13,6 +13,9 @@ export default function CustomerProfilePage() {
   const [orders, setOrders] = useState<any[]>([])
   const [business, setBusiness] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [isEditingNotes, setIsEditingNotes] = useState(false)
+  const [notesDraft, setNotesDraft] = useState('')
+  const [savingNotes, setSavingNotes] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -89,6 +92,30 @@ export default function CustomerProfilePage() {
   else if (totalSpent >= 2000) { tier = 'Silver'; tierEmoji = '🥈'; tierColor = 'bg-gray-100 text-gray-700' }
   else if (totalVisits >= 3) { tier = 'Regular'; tierEmoji = '👋'; tierColor = 'bg-blue-100 text-blue-700' }
 
+  const handleSaveNotes = async () => {
+    if (!customer) return
+    setSavingNotes(true)
+    try {
+      const now = new Date().toISOString()
+      const { error } = await supabase
+        .from('customers')
+        .update({ notes: notesDraft.trim() || null, notes_updated_at: now })
+        .eq('id', customer.id)
+      
+      if (error) {
+        alert('Could not save notes: ' + error.message)
+      } else {
+        setCustomer({ ...customer, notes: notesDraft.trim() || null, notes_updated_at: now })
+        setIsEditingNotes(false)
+        setNotesDraft('')
+      }
+    } catch (e: any) {
+      alert('Save failed: ' + (e?.message || 'Unknown error'))
+    } finally {
+      setSavingNotes(false)
+    }
+  }
+
   const handleWhatsApp = () => {
     const phone = customer.phone?.replace(/\D/g, '')
     if (!phone) return
@@ -141,7 +168,9 @@ export default function CustomerProfilePage() {
           </div>
           <div className="bg-white rounded-2xl border border-gray-100 p-4">
             <div className="text-xs text-gray-500 mb-1">Average order</div>
-            <div className="text-xl font-bold text-gray-900">Rs.{avgOrder}</div>
+<div className="text-xl font-bold text-gray-900">Rs.{avgOrder}</div>
+
+
           </div>
           <div className="bg-white rounded-2xl border border-gray-100 p-4">
             <div className="text-xs text-gray-500 mb-1">Pending</div>
@@ -150,6 +179,98 @@ export default function CustomerProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* ═══════════════════════════════════════════════════
+            NOTES SECTION — Private notes about this customer
+        ═══════════════════════════════════════════════════ */}
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📝</span>
+              <h3 className="font-bold text-gray-900">Private notes</h3>
+            </div>
+            {!isEditingNotes && (
+              <button
+                onClick={() => {
+                  setNotesDraft(customer.notes || '')
+                  setIsEditingNotes(true)
+                }}
+                className="text-sm text-orange-600 font-medium hover:text-orange-700"
+              >
+                {customer.notes ? 'Edit' : '+ Add'}
+              </button>
+            )}
+          </div>
+
+          {!isEditingNotes ? (
+            <>
+              {customer.notes ? (
+                <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">{customer.notes}</p>
+              ) : (
+                <p className="text-gray-400 text-sm italic">
+                  Tap "+ Add" to remember things like preferences, allergies, or payment method.
+                </p>
+              )}
+              {customer.notes_updated_at && (
+                <p className="text-xs text-gray-400 mt-3">
+                  Last updated: {new Date(customer.notes_updated_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <textarea
+                value={notesDraft}
+                onChange={(e) => setNotesDraft(e.target.value)}
+                placeholder="e.g. Likes mango pickle. Pays via PhonePe. Allergic to peanuts."
+                className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
+                rows={4}
+                autoFocus
+              />
+
+              {/* Suggested tags */}
+              <div className="mb-3">
+                <p className="text-xs text-gray-500 mb-2">Quick add:</p>
+                <div className="flex flex-wrap gap-2">
+                  {['⭐ VIP', '💵 Pays cash', '📱 Pays UPI', '🌱 Vegetarian', '🥜 Allergic', '📅 Regular'].map(tag => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => {
+                        const newText = notesDraft ? `${notesDraft}\n${tag}` : tag
+                        setNotesDraft(newText)
+                      }}
+                      className="px-3 py-1.5 text-xs bg-gray-50 hover:bg-orange-50 hover:text-orange-700 border border-gray-200 rounded-full text-gray-700 transition-colors"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={handleSaveNotes}
+                  disabled={savingNotes}
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-2.5 rounded-xl font-medium transition-colors"
+                >
+                  {savingNotes ? 'Saving...' : 'Save'}
+                </button>
+                <button
+                  onClick={() => {
+                    setIsEditingNotes(false)
+                    setNotesDraft('')
+                  }}
+                  disabled={savingNotes}
+                  className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
 
         {/* Customer journey */}
         {firstVisit && (
