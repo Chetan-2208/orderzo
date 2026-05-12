@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* Force light mode app-wide (dark mode planned for Phase 4) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light !important;
+  }
+  html, body {
+    background: white !important;
+    color: #1f2937 !important;
+  }
+  input, textarea, select {
+    background: white !important;
+    color: #1f2937 !important;
+  }
+}
