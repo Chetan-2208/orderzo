@@ -210,340 +210,286 @@ export default function DashboardPage() {
       <main className="max-w-2xl mx-auto px-4 py-4">
         {activeTab === 'orders' && stats && (
           <>
-            {/* Date range toggle */}
-            <div className="bg-white rounded-2xl p-1 border border-gray-200 mb-4 flex gap-1 shadow-sm">
-              {(['today', 'week', 'month', 'all'] as DateRange[]).map(range => (
-                <button
-                  key={range}
-                  onClick={() => setDateRange(range)}
-                  className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-                    dateRange === range
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'text-gray-600 hover:bg-gray-50'
-                  }`}
-                >
-                  {getRangeLabel(range)}
-                </button>
-              ))}
-            </div>
+            {/* ═══════════════════════════════════════════════════
+                TODAY SCREEN — Design A: Personal Assistant + Festive
+                Modes auto-switch based on data:
+                - Empty (0 invoices total)
+                - Sparse (1-30 invoices total)
+                - Mature (30+ invoices total)
+            ═══════════════════════════════════════════════════ */}
 
-            {/* HERO Revenue Card */}
-            <div className="bg-white rounded-3xl p-6 text-gray-900 border border-gray-200 shadow-lg mb-4 relative overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
-              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-yellow-300/20 rounded-full blur-2xl" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">💰</span>
-                  <p className="text-gray-900 text-sm font-medium">{getRangeLabel(dateRange)} · Revenue</p>
-                </div>
-                <h2 className="text-5xl font-bold mb-2 tracking-tight text-gray-900">Rs.{stats.totalCollected.toLocaleString('en-IN')}</h2>
-                <p className="text-gray-600 text-sm mb-4">Avg order: Rs.{stats.avgOrderValue}</p>
-                <div className="flex gap-3 text-sm bg-orange-50 rounded-2xl p-3">
-                  <div className="flex-1">
-                    <p className="text-gray-600 text-xs mb-1">Total Orders</p>
-                    <p className="text-2xl font-bold">{stats.totalOrders}</p>
-                  </div>
-                  <div className="flex-1 border-l border-orange-200 pl-3">
-                    <p className="text-gray-600 text-xs mb-1">✅ Paid</p>
-                    <p className="text-2xl font-bold">{stats.paidOrders}</p>
-                  </div>
-                  <div className="flex-1 border-l border-orange-200 pl-3">
-                    <p className="text-gray-600 text-xs mb-1">⏳ Pending</p>
-                    <p className="text-2xl font-bold">{stats.pendingOrders}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick stats grid - colorful */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">⏳</span>
-                  <p className="text-xs text-gray-600 font-medium">Pending Amount</p>
-                </div>
-                <p className="text-2xl font-bold text-gray-900">Rs.{stats.totalPending.toLocaleString('en-IN')}</p>
-                <p className="text-xs text-gray-500 mt-1">{stats.pendingOrders} unpaid orders</p>
-              </div>
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">👥</span>
-                  <p className="text-xs text-gray-600 font-medium">Customers</p>
-                </div>
-                <p className="text-2xl font-bold text-gray-900">{stats.uniqueCustomers}</p>
-                <p className="text-xs text-gray-500 mt-1">unique customers</p>
-              </div>
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">💵</span>
-                  <p className="text-xs text-gray-600 font-medium">Cash</p>
-                </div>
-                <p className="text-xl font-bold text-gray-900">Rs.{stats.paymentMethods.cash.toLocaleString('en-IN')}</p>
-              </div>
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">📱</span>
-                  <p className="text-xs text-gray-600 font-medium">UPI / Card</p>
-                </div>
-                <p className="text-xl font-bold text-gray-900">Rs.{stats.paymentMethods.upi.toLocaleString('en-IN')}</p>
-              </div>
-            </div>
-
-            {/* Pending Payments */}
-            {stats.pendingList.length > 0 && (
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm mb-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <span>⏳</span> Pending Payments
-                  </h3>
-                  <Link href="/orders" className="text-xs text-orange-500 font-medium">See all →</Link>
-                </div>
-                <div className="space-y-2">
-                  {stats.pendingList.map(order => (
-                    <Link href={`/orders/${order.id}/edit`} key={order.id} className="flex items-center justify-between p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors">
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm truncate">{order.customer_name}</p>
-                        <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} · {order.mode === 'bill' ? '🧾 Bill' : '📦 Order'}</p>
-                      </div>
-                      <p className="font-bold text-orange-600 text-lg">Rs.{order.total}</p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Top Customers */}
-            {stats.topCustomers.length > 0 && (
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm mb-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <span>🏆</span> Top Customers
-                  </h3>
-                  <Link href="/customers" className="text-xs text-orange-500 font-medium">See all →</Link>
-                </div>
-                <div className="space-y-2">
-                  {stats.topCustomers.map((customer, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl transition-colors">
-                      <span className={`w-10 h-10 rounded-full flex items-center justify-center text-base font-bold flex-shrink-0 ${
-                        idx === 0 ? 'bg-yellow-100 text-yellow-700' :
-                        idx === 1 ? 'bg-gray-200 text-gray-500' :
-                        idx === 2 ? 'bg-orange-100 text-orange-700' :
-                        'bg-gray-100 text-gray-500'
-                      }`}>
-                        {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm truncate">{customer.name}</p>
-                        <p className="text-xs text-gray-500">{customer.orderCount} orders</p>
-                      </div>
-                      <p className="font-bold text-gray-900">Rs.{customer.total.toLocaleString('en-IN')}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Top Items - Visual bars */}
-            {stats.topItems.length > 0 && (
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm mb-4">
-                <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span>🔥</span> Top Selling Items
-                </h3>
-                <div className="space-y-3">
-                  {stats.topItems.map((item, idx) => {
-                    const maxCount = stats.topItems[0].count
-                    const percentage = (item.count / maxCount) * 100
-                    return (
-                      <div key={idx}>
-                        <div className="flex justify-between items-center mb-1">
-                          <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                          <p className="text-sm font-bold text-orange-500">{item.count} sold</p>
-                        </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all"
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-
-            
-        
-        {/* Today's Summary Widget */}
-        {todaySummary && (
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl shadow-lg p-6 mb-6 text-white">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="text-xs font-semibold text-orange-100 mb-1">
-                  🎉 TODAY'S WINS
-                </div>
-                <h2 className="text-2xl font-bold">
-                  {business?.business_name || 'Your business'}
-                </h2>
-              </div>
-              <div className="text-right">
-                <div className="text-3xl font-bold">Rs.{todaySummary.total_revenue || 0}</div>
-                <div className="text-xs text-orange-100">earned today</div>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
-                <div className="text-2xl font-bold">{todaySummary.total_orders || 0}</div>
-                <div className="text-xs text-orange-100">orders</div>
-              </div>
-              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
-                <div className="text-2xl font-bold">{todaySummary.paid_orders || 0}</div>
-                <div className="text-xs text-orange-100">paid</div>
-              </div>
-              <div className="bg-white/20 backdrop-blur rounded-xl p-3 text-center">
-                <div className="text-2xl font-bold">Rs.{todaySummary.pending_amount || 0}</div>
-                <div className="text-xs text-orange-100">pending</div>
-              </div>
-            </div>
-
-            {todaySummary.top_customer?.name && (
-              <div className="bg-white/15 backdrop-blur rounded-xl p-3 mb-3">
-                <div className="text-xs text-orange-100 mb-1">⭐ Top customer</div>
-                <div className="font-semibold text-sm">
-                  {todaySummary.top_customer.name} (Rs.{todaySummary.top_customer.total})
-                </div>
-              </div>
-            )}
-
-            <button
-              onClick={() => {
-                const msg = `🎉 ${business?.business_name} - Today's Wins!\n\n` +
-                  `✨ ${todaySummary.total_orders} orders\n` +
-                  `✨ Rs.${todaySummary.total_revenue} earned\n` +
-                  (todaySummary.top_customer?.name ? `✨ Top customer: ${todaySummary.top_customer.name} (Rs.${todaySummary.top_customer.total})\n` : '') +
-                  `\nKeep going! 💪\n— Sent via Orderzo`
-                window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
-              }}
-              className="w-full bg-white text-orange-600 py-3 rounded-xl font-semibold hover:bg-orange-50 transition-all"
-            >
-              📱 Share to WhatsApp
-            </button>
-          </div>
-        )}
-
-        {/* Recurring Bills Panel */}
-        {recurringBills.length > 0 && (
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-xl">
-                  🔄
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">
-                    Recurring Bills
-                  </h2>
-                  <p className="text-xs text-gray-500">
-                    {recurringBills.length} active subscription{recurringBills.length !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              {recurringBills.slice(0, 5).map((bill: any) => {
-                const dueDate = bill.next_due_date ? new Date(bill.next_due_date) : null
-                const daysUntilDue = dueDate ? Math.ceil((dueDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : null
-                const isPastDue = daysUntilDue !== null && daysUntilDue < 0
-                const isDueSoon = daysUntilDue !== null && daysUntilDue >= 0 && daysUntilDue <= 7
-                
-                return (
-                  <div 
-                    key={bill.id}
-                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50/30 transition-all"
-                  >
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-900 text-sm">
-                        {bill.recurring_label || 'Monthly bill'}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        Rs.{bill.total} · {bill.recurring_frequency || 'monthly'}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      {dueDate && (
-                        <>
-                          <div className={`text-xs font-semibold ${
-                            isPastDue ? 'text-red-600' : 
-                            isDueSoon ? 'text-orange-600' : 
-                            'text-gray-500'
-                          }`}>
-                            {isPastDue ? 'Past due' : isDueSoon ? 'Due soon' : 'Upcoming'}
-                          </div>
-                          <div className="text-xs text-gray-500 mt-0.5">
-                            {dueDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-            
-            {recurringBills.length > 5 && (
-              <div className="mt-4 text-center">
-                <span className="text-sm text-orange-600 font-medium">
-                  +{recurringBills.length - 5} more recurring bills
+            {/* GREETING — same across all modes */}
+            <div className="mb-6 pt-2">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-2xl">
+                  {new Date().getHours() < 12 ? '☀️' : new Date().getHours() < 17 ? '🌤️' : '🌙'}
                 </span>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 17 ? 'Good afternoon' : 'Good evening'}, {business?.business_name}
+                </h1>
               </div>
-            )}
-          </div>
-        )}
+              <p className="text-sm text-gray-500 ml-9">
+                {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}
+              </p>
+            </div>
 
-        {/* Recent Orders */}
-            {stats.recentList.length > 0 ? (
-              <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <span>📋</span> Recent Orders
-                  </h3>
-                  <Link href="/orders" className="text-xs text-orange-500 font-medium">See all →</Link>
+            {/* ─────────────── EMPTY MODE (0 total orders) ─────────────── */}
+            {stats.totalOrders === 0 && (
+              <>
+                {/* Festive blessing card */}
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-5 mb-5 border border-orange-100">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">💬</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">Aaj ka din shubh ho!</p>
+                      <p className="text-sm text-gray-600">Wishing you a great day ahead</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  {stats.recentList.slice(0, 5).map(order => (
-                    <Link href={`/orders/${order.id}/edit`} key={order.id} className="block p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                              order.status === 'paid' || order.status === 'done' 
-                                ? 'bg-green-100 text-green-700' 
-                                : 'bg-orange-100 text-orange-700'
-                            }`}>
-                              {order.status === 'paid' || order.status === 'done' ? '✅ Paid' : '⏳ Pending'}
-                            </span>
-                            <span className="text-xs text-gray-500">{order.mode === 'bill' ? '🧾 Bill' : '📦 Order'}</span>
-                          </div>
-                          <p className="font-semibold text-gray-900 text-sm">{order.customer_name}</p>
-                          <p className="text-xs text-gray-500">
-                            {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} · {new Date(order.created_at).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}
-                          </p>
-                        </div>
-                        <p className="text-xl font-bold text-orange-500">Rs.{order.total}</p>
+
+                {/* Big primary action */}
+                <button
+                  onClick={() => router.push('/new?mode=order')}
+                  className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.99] transition-all text-white rounded-3xl p-6 mb-5 shadow-lg shadow-orange-500/30"
+                >
+                  <div className="flex items-center justify-center gap-3 mb-1">
+                    <span className="text-3xl">➕</span>
+                    <span className="text-xl font-bold">Note your first sale</span>
+                  </div>
+                  <p className="text-sm text-orange-50">Takes just 10 seconds</p>
+                </button>
+
+                {/* Setup tips */}
+                <div className="mb-5">
+                  <div className="flex items-center gap-2 mb-3 px-1">
+                    <span className="text-xl">💡</span>
+                    <h2 className="font-semibold text-gray-900">3 things to try today</h2>
+                  </div>
+
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => setActiveTab('settings')}
+                      className="w-full bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200 text-left transition-colors flex items-start gap-3"
+                    >
+                      <span className="text-2xl">✨</span>
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900">Add your shop logo</p>
+                        <p className="text-sm text-gray-500">Makes invoices look professional</p>
                       </div>
-                    </Link>
-                  ))}
+                      <span className="text-gray-400">→</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab('settings')}
+                      className="w-full bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200 text-left transition-colors flex items-start gap-3"
+                    >
+                      <span className="text-2xl">💳</span>
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900">Set your UPI ID</p>
+                        <p className="text-sm text-gray-500">Customers can pay you instantly</p>
+                      </div>
+                      <span className="text-gray-400">→</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab('customers')}
+                      className="w-full bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200 text-left transition-colors flex items-start gap-3"
+                    >
+                      <span className="text-2xl">👥</span>
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900">Add 3 regular customers</p>
+                        <p className="text-sm text-gray-500">Send invoices faster next time</p>
+                      </div>
+                      <span className="text-gray-400">→</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="bg-white rounded-3xl p-8 text-center border border-gray-200 shadow-sm">
-                <div className="text-6xl mb-4">📋</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">No orders yet</h3>
-                <p className="text-gray-600 mb-6 text-sm">Tap the + button below to add your first order or bill</p>
-                <p className="text-xs text-gray-400">💡 Tip: Add your menu items in Settings first</p>
-              </div>
+
+                {/* Festive nudge */}
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🎉</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">Did you know?</p>
+                      <p className="text-sm text-gray-600">
+                        Mango pickle season starts soon. Many cafes earn 30% more in summer. Stock up early!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* ─────────────── SPARSE MODE (1-30 total orders) ─────────────── */}
+            {stats.totalOrders > 0 && stats.totalOrders <= 30 && (
+              <>
+                {/* Festive blessing */}
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-5 mb-5 border border-orange-100">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">💬</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">Keep going, you're doing great!</p>
+                      <p className="text-sm text-gray-600">Every invoice brings you closer to your goal</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Today's progress */}
+                <div className="bg-white rounded-3xl p-6 mb-5 border border-gray-200 shadow-sm">
+                  <p className="text-sm text-gray-500 mb-1">Today's earnings</p>
+                  <h2 className="text-5xl font-bold text-gray-900 mb-1">
+                    ₹{stats.totalCollected.toLocaleString('en-IN')}
+                  </h2>
+                  <p className="text-sm text-gray-600">
+                    from {stats.paidOrders} {stats.paidOrders === 1 ? 'invoice' : 'invoices'}
+                  </p>
+
+                  {stats.pendingOrders > 0 && (
+                    <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-gray-500">Still pending</p>
+                        <p className="text-lg font-semibold text-amber-600">₹{stats.totalPending.toLocaleString('en-IN')}</p>
+                      </div>
+                      <p className="text-xs text-gray-400">{stats.pendingOrders} unpaid</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Encouragement */}
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 mb-5 border border-green-200">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">📈</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">You're learning fast!</p>
+                      <p className="text-sm text-gray-600">
+                        You've sent {stats.totalOrders} {stats.totalOrders === 1 ? 'invoice' : 'invoices'} so far. Keep it up.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick action */}
+                <button
+                  onClick={() => router.push('/new?mode=order')}
+                  className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.99] transition-all text-white rounded-3xl p-5 mb-5 shadow-lg shadow-orange-500/30"
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-2xl">➕</span>
+                    <span className="text-lg font-bold">New invoice</span>
+                  </div>
+                </button>
+
+                {/* Festive nudge */}
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🎉</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">Tip of the day</p>
+                      <p className="text-sm text-gray-600">
+                        Tuesday is usually busy for tiffin businesses. Get ready for the lunch rush!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* ─────────────── MATURE MODE (30+ total orders) ─────────────── */}
+            {stats.totalOrders > 30 && (
+              <>
+                {/* Hero earnings */}
+                <div className="bg-white rounded-3xl p-6 mb-5 border border-gray-200 shadow-sm">
+                  <p className="text-sm text-gray-500 mb-1">Today's earnings</p>
+                  <h2 className="text-5xl font-bold text-gray-900 mb-1">
+                    ₹{stats.totalCollected.toLocaleString('en-IN')}
+                  </h2>
+                  <p className="text-sm text-gray-600 mb-4">
+                    from {stats.paidOrders} invoices · Avg ₹{stats.avgOrderValue}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100">
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Total</p>
+                      <p className="text-xl font-bold text-gray-900">{stats.totalOrders}</p>
+                    </div>
+                    <div className="border-l border-gray-100 pl-3">
+                      <p className="text-xs text-gray-500 mb-1">✅ Paid</p>
+                      <p className="text-xl font-bold text-green-600">{stats.paidOrders}</p>
+                    </div>
+                    <div className="border-l border-gray-100 pl-3">
+                      <p className="text-xs text-gray-500 mb-1">⏳ Pending</p>
+                      <p className="text-xl font-bold text-amber-600">{stats.pendingOrders}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Things waiting */}
+                {stats.pendingList.length > 0 && (
+                  <div className="mb-5">
+                    <div className="flex items-center gap-2 mb-3 px-1">
+                      <span className="text-xl">⚡</span>
+                      <h2 className="font-semibold text-gray-900">Things waiting for you</h2>
+                    </div>
+                    <div className="space-y-2">
+                      {stats.pendingList.slice(0, 3).map((order: any) => (
+                        <div key={order.id} className="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1">
+                              <p className="font-semibold text-gray-900">{order.customer_name || 'Walk-in customer'}</p>
+                              <p className="text-sm text-amber-600">Pending ₹{parseFloat(String(order.total)).toLocaleString('en-IN')}</p>
+                              <p className="text-xs text-gray-400 mt-1">
+                                {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                              </p>
+                            </div>
+                            <span className="text-2xl">🟡</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Recent invoices */}
+                {stats.recentList.length > 0 && (
+                  <div className="mb-5">
+                    <div className="flex items-center gap-2 mb-3 px-1">
+                      <span className="text-xl">📋</span>
+                      <h2 className="font-semibold text-gray-900">Recent invoices</h2>
+                    </div>
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm divide-y divide-gray-100">
+                      {stats.recentList.slice(0, 5).map((order: any) => (
+                        <div key={order.id} className="p-4 flex items-center justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-gray-900 truncate">{order.customer_name || 'Walk-in'}</p>
+                            <p className="text-xs text-gray-400">
+                              {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-gray-900">₹{parseFloat(String(order.total)).toLocaleString('en-IN')}</p>
+                            <p className={`text-xs ${order.status === 'paid' || order.status === 'done' ? 'text-green-600' : 'text-amber-600'}`}>
+                              {order.status === 'paid' || order.status === 'done' ? '✅ Paid' : '⏳ Pending'}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Festive nudge */}
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">💡</span>
+                    <div>
+                      <p className="font-semibold text-gray-900 mb-1">Insight</p>
+                      <p className="text-sm text-gray-600">
+                        You've served {stats.uniqueCustomers} unique customers. Reach out to your top 5 — they're your VIPs!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </>
         )}

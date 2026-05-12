@@ -150,9 +150,9 @@ export default function PricingPage() {
             <div className="mb-6">
               <div className="text-3xl mb-2">🏢</div>
               <h3 className="text-xl font-bold mb-1">Enterprise</h3>
-              <p className="text-sm text-gray-400 mb-4">For multi-brand cloud kitchens</p>
+              <p className="text-sm text-gray-400 mb-4">For larger businesses</p>
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-bold">Rs. 979</span>
+                <span className="text-4xl font-bold">Rs. 999</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <p className="text-xs text-gray-500 mt-1">7 days free, cancel anytime</p>
@@ -165,7 +165,7 @@ export default function PricingPage() {
               </li>
               <li className="flex items-start gap-2 text-sm text-gray-300">
                 <span className="text-green-400 mt-0.5">✓</span>
-                <span>Multi-brand support (3+ brands)</span>
+                <span>Run multiple businesses or brands</span>
               </li>
               <li className="flex items-start gap-2 text-sm text-gray-300">
                 <span className="text-green-400 mt-0.5">✓</span>
@@ -263,7 +263,7 @@ export default function PricingPage() {
                 <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <p className="text-gray-600 text-sm mt-3">
-                <strong>Pro</strong> works for most small businesses (cafes, tiffin services, home bakers, salons). <strong>Business</strong> is for growing teams that need multi-staff access and advanced features. <strong>Enterprise</strong> is built for cloud kitchens running multiple brands.
+                <strong>Pro</strong> works for most small businesses (cafes, tiffin services, home bakers, salons). <strong>Business</strong> is for growing teams that need multi-staff access and advanced features. <strong>Enterprise</strong> is built for businesses managing multiple brands or locations.
               </p>
             </details>
           </div>
