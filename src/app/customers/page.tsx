@@ -28,6 +28,7 @@ export default function CustomersPage() {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'spent' | 'recent' | 'orders' | 'pending'>('spent')
+  const [filterType, setFilterType] = useState<'all' | 'vips' | 'new' | 'owe-me'>('all')
   const [showAddCustomer, setShowAddCustomer] = useState(false)
   const [newCustomerName, setNewCustomerName] = useState('')
   const [newCustomerPhone, setNewCustomerPhone] = useState('')
@@ -147,8 +148,40 @@ export default function CustomersPage() {
   }
 
   // Filter + sort
+  // Compute VIP threshold (top 20% by spending)
+  const vipThreshold = (() => {
+    if (customers.length < 5) return Infinity
+    const sortedSpent = [...customers].map(c => c.total_spent).sort((a, b) => b - a)
+    const top20Index = Math.max(0, Math.floor(customers.length * 0.2) - 1)
+    return sortedSpent[top20Index] || 0
+  })()
+
+  // Counts for filter chips
+  const countAll = customers.length
+  const countVips = customers.filter(c => c.total_spent >= vipThreshold && c.total_spent > 0).length
+  const countNew = customers.filter(c => {
+    if (!c.first_order_date) return false
+    const daysSince = (Date.now() - new Date(c.first_order_date).getTime()) / (1000 * 60 * 60 * 24)
+    return daysSince <= 7
+  }).length
+  const countOweMe = customers.filter(c => c.total_pending > 0).length
+
   const getFiltered = () => {
     let filtered = [...customers]
+
+    // Apply filter chip
+    if (filterType === 'vips') {
+      filtered = filtered.filter(c => c.total_spent >= vipThreshold && c.total_spent > 0)
+    } else if (filterType === 'new') {
+      filtered = filtered.filter(c => {
+        if (!c.first_order_date) return false
+        const daysSince = (Date.now() - new Date(c.first_order_date).getTime()) / (1000 * 60 * 60 * 24)
+        return daysSince <= 7
+      })
+    } else if (filterType === 'owe-me') {
+      filtered = filtered.filter(c => c.total_pending > 0)
+    }
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       filtered = filtered.filter(c => 
@@ -270,6 +303,34 @@ export default function CustomersPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
         />
+
+        {/* Filter chips */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {([
+            ['all', 'All', countAll, '👥'],
+            ['vips', 'VIPs', countVips, '⭐'],
+            ['new', 'New', countNew, '🆕'],
+            ['owe-me', 'Owe me', countOweMe, '💰'],
+          ] as const).map(([key, label, count, emoji]) => (
+            <button
+              key={key}
+              onClick={() => setFilterType(key as any)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
+                filterType === key
+                  ? 'bg-orange-500 text-white border-orange-500 shadow-md'
+                  : 'bg-white text-gray-700 border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+              }`}
+            >
+              <span className="mr-1">{emoji}</span>
+              {label}
+              <span className={`ml-2 px-1.5 py-0.5 rounded-full text-xs ${
+                filterType === key ? 'bg-white/20' : 'bg-gray-100'
+              }`}>
+                {count}
+              </span>
+            </button>
+          ))}
+        </div>
 
         {/* Sort */}
         <div className="bg-white rounded-2xl p-1 border border-gray-200 mb-4 flex gap-1 text-xs">
