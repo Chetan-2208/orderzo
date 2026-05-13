@@ -557,7 +557,7 @@ export default function DashboardPage() {
 
       {activeTab === 'orders' && (
         <button
-          onClick={() => setShowModeSheet(true)}
+          onClick={() => router.push('/new?mode=order')}
           className="fixed bottom-24 right-6 w-16 h-16 bg-orange-500 text-white rounded-2xl shadow-2xl shadow-orange-500/40 hover:bg-orange-600 transition-colors flex items-center justify-center text-3xl font-light z-20"
         >
           +
