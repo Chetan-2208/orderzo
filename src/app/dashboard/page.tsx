@@ -203,7 +203,6 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-500">+91 {phone}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 px-3 py-1">Logout</button>
         </div>
       </header>
 
@@ -292,7 +291,7 @@ export default function DashboardPage() {
                     </button>
 
                     <button
-                      onClick={() => setActiveTab('customers')}
+                      onClick={() => router.push('/customers')}
                       className="w-full bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200 text-left transition-colors flex items-start gap-3"
                     >
                       <span className="text-2xl">👥</span>
@@ -601,13 +600,13 @@ export default function DashboardPage() {
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-10">
         <div className="max-w-2xl mx-auto flex">
           <button onClick={() => setActiveTab('orders')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'orders' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
-            <span className="text-2xl">📊</span><span className="text-xs font-medium">Dashboard</span>
+            <span className="text-2xl">📊</span><span className="text-xs font-medium">Today</span>
           </button>
           <button onClick={() => router.push('/customers')} className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-600">
             <span className="text-2xl">👥</span><span className="text-xs font-medium">Customers</span>
           </button>
           <button onClick={() => setActiveTab('settings')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'settings' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
-            <span className="text-2xl">⚙️</span><span className="text-xs font-medium">Settings</span>
+            <span className="text-2xl">👤</span><span className="text-xs font-medium">Me</span>
           </button>
         </div>
       </nav>

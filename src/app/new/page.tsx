@@ -362,9 +362,7 @@ function NewFastContent() {
           {sending ? 'Sending...' : '📤 Send via WhatsApp'}
         </button>
 
-        <p className="text-center text-xs text-gray-400 mt-2">
-          Need the full invoice page (more fields)? <button onClick={() => router.push('/new-classic')} className="text-orange-600 underline">Open it here</button>
-        </p>
+
       </main>
     </div>
   )
