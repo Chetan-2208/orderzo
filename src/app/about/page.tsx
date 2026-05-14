@@ -19,57 +19,105 @@ export default function AboutPage() {
       </header>
 
       <main className="flex-1 max-w-3xl mx-auto px-4 py-12">
+        {/* Page intro */}
         <div className="text-center mb-12">
+          <p className="text-orange-600 font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why Orderzo exists</h1>
-          <p className="text-xl text-gray-600">We're building the digital order book for every Indian dukan.</p>
+          <p className="text-xl text-gray-600">We're building the phone-first billing platform for Indian micro-businesses.</p>
         </div>
 
         <div className="space-y-6 text-gray-700">
+          {/* The Problem */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">The Problem</h2>
-            <p className="mb-3">India has over 50 million small businesses. Tiffin services, retail shops, salons, tutors, home bakeries — they all run on paper bill books and WhatsApp messages.</p>
-            <p className="mb-3">Forgotten orders. Lost payment reminders. Hours of monthly accounting pain. Customers who say "I'll pay later" and never do. Paper bills that get torn or lost.</p>
-            <p className="font-semibold text-gray-900">The shop owner deserves better.</p>
+            <p className="mb-3">India has over 60 million micro-businesses. Most of them still run on paper notebooks and WhatsApp chats — outgrowing one but underserved by the other.</p>
+            <p className="mb-3">Orders get forgotten. Payment reminders get lost in long chats. Customers say "I'll pay later" and never do. Paper bills tear, fade, and disappear. Every month ends in accounting pain that should take minutes.</p>
+            <p className="font-semibold text-gray-900">Indian business owners deserve a tool built for how they actually work — not how someone in a glass office thinks they should.</p>
           </section>
 
+          {/* Our Mission */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Our Mission</h2>
-            <p className="mb-3">Help every shop owner in India get paid faster, never lose money, and look professional — without changing how they already work.</p>
-            <p>You take orders on WhatsApp. You serve walk-in customers at your counter. That's not changing. We just make sure every transaction is captured, every customer is remembered, every payment is tracked, and every receipt looks beautiful.</p>
+            <p className="mb-3">Help every Indian business owner generate beautiful invoices in 10 seconds, get paid via UPI, and never lose a transaction again.</p>
+            <p>Whether you take orders on WhatsApp, serve walk-in customers at your counter, or do both — Orderzo adapts to you. One phone. One app. No computer, no thermal printer, no Tally.</p>
           </section>
 
+          {/* What we do */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">What we do</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Generate digital bills in 30 seconds</li>
-              <li>Send UPI / Card / Net Banking payment links via WhatsApp</li>
-              <li>Create branded PDF invoices automatically</li>
-              <li>Track who paid, who owes, who's a regular</li>
+              <li>Generate beautiful PDF invoices in 10 seconds</li>
+              <li>Send UPI payment links via WhatsApp in one tap</li>
+              <li>Replace expensive computer billing software entirely</li>
+              <li>Track every customer — who paid, who owes, who's a regular</li>
+              <li>Adapt to your business mode: online orders, walk-in counter, or both</li>
               <li>Show your business performance — daily, weekly, monthly</li>
-              <li>Replace your paper bill book entirely</li>
             </ul>
           </section>
 
+          {/* The Founder */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">The Founder</h2>
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 my-4">
-              <h3 className="font-bold text-gray-900 mb-1">Chetan Aitaraju</h3>
-              <p className="text-sm text-gray-600 mb-4">Founder & CEO · Based in New York City</p>
-              <p className="text-gray-700 mb-3">Chetan moved from India to the United States in December 2021 to pursue his master's degree. Today, he works as a Data Engineer in NYC while building Orderzo on the side.</p>
-              <p className="text-gray-700 mb-3">Tech startups have always been his passion. He's spent years studying how product gaps in emerging markets become real businesses — especially in India, where 50 million shops still run on paper bill books.</p>
-              <p className="text-gray-700">Across friends and small businesses he saw back home, the same broken loop kept playing out: orders on WhatsApp, payments on paper, customers chased manually for what they owed. So in 2026, while still working full-time as a Data Engineer, he started Orderzo to solve it.</p>
+            <div className="bg-gradient-to-br from-orange-50 to-white border border-orange-200 rounded-2xl p-6 my-4">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  C
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900">Chetan Aitaraju</h3>
+                  <p className="text-sm text-gray-600">Founder · Data Engineer in NYC, building Orderzo from home</p>
+                </div>
+              </div>
+
+              <p className="text-gray-700 mb-3 leading-relaxed">
+                India's micro-businesses are the country's quiet engine. Most of them still run on paper notebooks and WhatsApp chats — outgrowing one but underserved by the other.
+              </p>
+              <p className="text-gray-700 mb-3 leading-relaxed">
+                I noticed something while talking to over 100 of them: they had moved past the notebook. But the tools available felt heavy, complicated, built for someone else.
+              </p>
+              <p className="text-gray-700 mb-3 leading-relaxed">
+                Most billing apps treat the business owner like an accountant. They aren't. A business owner needs to send a beautiful bill in 10 seconds, get paid via UPI, and move on with their day. Nothing more, nothing less.
+              </p>
+              <p className="text-gray-700 mb-3 leading-relaxed">
+                So I started Orderzo in 2026 while working full-time as a Data Engineer in New York City. Phone-only. WhatsApp-native. ₹249 per month. Built for how Indian businesses actually work — not how someone in a glass office thinks they should work.
+              </p>
+              <p className="text-gray-700 mb-4 leading-relaxed font-medium">
+                Orderzo is built for the way Indian businesses actually work. One phone. One app. Every business owner deserves that.
+              </p>
+
+              <div className="flex flex-wrap gap-3 mt-5">
+                <a 
+                  href="https://wa.me/918466089662" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  WhatsApp me
+                </a>
+                <a 
+                  href="https://linkedin.com/in/chetan-aitaraju" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Connect on LinkedIn
+                </a>
+              </div>
             </div>
           </section>
 
+          {/* Where we're built */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Where we're built</h2>
-            <p className="mb-3">Orderzo is built in New York City and operated from Hyderabad, Telangana — bridging US-grade engineering with India-first design. All customer data is securely hosted in Mumbai (AWS Mumbai region), per RBI data residency guidelines.</p>
-            <p>We are a registered Indian company (registration in progress) and proudly Made for India.</p>
+            <p className="mb-3">Orderzo is built from New York City and operated from Hyderabad, Telangana — bridging US-grade engineering with India-first design.</p>
+            <p>All customer data is securely hosted in Mumbai (AWS Mumbai region), per RBI data residency guidelines. Made in India 🇮🇳, for India.</p>
           </section>
 
+          {/* CTA */}
           <section className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-8 text-white mt-12 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">Order. Bill. Done.</h2>
-            <p className="text-orange-100 mb-6">Replace your paper bill book today. Free to start.</p>
+            <p className="font-bold italic text-lg text-orange-100 mb-2">"Apna dukan, apne haath mein."</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Throw away your billing computer.</h2>
+            <p className="text-orange-100 mb-6">Start free. Send your first invoice in 2 minutes.</p>
             <Link href="/login" className="inline-block bg-white text-orange-600 px-8 py-3 rounded-xl font-bold hover:bg-orange-50 transition-colors">Get Started Free</Link>
           </section>
         </div>
