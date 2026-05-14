@@ -48,7 +48,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">2. Information we collect</h2>
             <p className="mb-3">We collect the following categories of personal data:</p>
             
-            <h3 className="font-semibold text-gray-900 mt-4 mb-2">From shop owners (our customers):</h3>
+            <h3 className="font-semibold text-gray-900 mt-4 mb-2">From business owners (our customers):</h3>
             <ul className="list-disc pl-6 space-y-1 text-sm">
               <li>Mobile phone number (used as unique identifier)</li>
               <li>Business name, business type, business address (if provided)</li>
@@ -57,9 +57,9 @@ export default function PrivacyPage() {
               <li>Order and transaction records you create</li>
             </ul>
 
-            <h3 className="font-semibold text-gray-900 mt-4 mb-2">From shop owners' customers (data you enter):</h3>
+            <h3 className="font-semibold text-gray-900 mt-4 mb-2">From business owners' customers (data you enter):</h3>
             <ul className="list-disc pl-6 space-y-1 text-sm">
-              <li>Customer name and phone number (entered by shop owner)</li>
+              <li>Customer name and phone number (entered by business owner)</li>
               <li>Order history and payment records</li>
             </ul>
 

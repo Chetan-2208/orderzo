@@ -66,6 +66,23 @@ export default function SupportPage() {
           <p className="text-orange-100 text-sm">We typically reply within 4 hours during business hours (9 AM - 9 PM IST)</p>
         </div>
 
+        
+          href="https://wa.me/918466089662?text=Hi%20Orderzo%2C%20I%20need%20help"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm hover:shadow-md transition-shadow text-left"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">💬</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 mb-1">WhatsApp Support (fastest)</h3>
+              <p className="text-sm text-gray-500">+91 84660 89662</p>
+              <p className="text-xs text-gray-400 mt-1">Reply within 4 hours</p>
+            </div>
+            <span className="text-green-600 text-2xl">→</span>
+          </div>
+        </a>
+
         <button
           onClick={handleEmailSupport}
           className="w-full bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-shadow text-left"
@@ -153,7 +170,7 @@ export default function SupportPage() {
             <details className="bg-gray-50 rounded-xl p-3 cursor-pointer">
               <summary className="font-medium text-gray-900 text-sm">How much does Orderzo cost?</summary>
               <p className="text-sm text-gray-600 mt-2">
-                Currently free during beta. Soon: Free plan (5 orders/day), ₹199/month Pro (unlimited), ₹499/month Business (multi-user, advanced reports).
+                Two simple plans. <strong>Free:</strong> 30 invoices/month, one business mode, basic template. <strong>Pro:</strong> ₹2,499/year (save ₹489) or ₹249/month — unlimited invoices, all 3 modes, full template, daily WhatsApp summary, priority support.
               </p>
             </details>
           </div>
@@ -161,7 +178,7 @@ export default function SupportPage() {
 
         <div className="text-center text-xs text-gray-500 mt-6">
           <p>Orderzo · Order. Bill. Done.</p>
-          <p className="mt-1">Made with care for Indian small businesses</p>
+          <p className="mt-1">Made for India 🇮🇳</p>
         </div>
       </main>
     </div>

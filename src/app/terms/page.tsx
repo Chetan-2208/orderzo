@@ -93,7 +93,8 @@ export default function TermsPage() {
             <p>Current plans (subject to change with 30 days notice):</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li><strong>Free Plan</strong> — limited to 5 transactions/day</li>
-              <li><strong>Pro Plan</strong> — Rs. 199/month, unlimited transactions</li>
+              <li><strong>Free Plan</strong> — Rs. 0/forever, 30 invoices per month</li>
+              <li><strong>Pro Plan</strong> — Rs. 2,499/year (or Rs. 249/month), unlimited invoices</li>
               <li><strong>Business Plan</strong> — Rs. 499/month, unlimited + advanced features</li>
             </ul>
             <p className="mt-3">All prices are inclusive of applicable taxes. We reserve the right to modify pricing with 30 days advance notice via email.</p>

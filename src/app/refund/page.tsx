@@ -38,7 +38,7 @@ export default function RefundPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">2. Pro Plan (Rs. 199/month)</h2>
+            <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">2. Pro Plan (Rs. 249/month or Rs. 2,499/year)</h2>
             <p>If you are not satisfied with the Pro Plan, you can request a refund within 7 days of payment. Refund eligibility:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li>Within first 7 days: full refund, no questions asked</li>
