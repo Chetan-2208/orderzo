@@ -338,144 +338,175 @@ export default function Home() {
           </div>
         </section>
 
-        {/* What replaces */}
-        <section className="px-4 sm:px-10 py-16 bg-gradient-to-br from-gray-50 to-[#F4F3FF]">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-                Orderzo replaces:
+        {/* What replaces — OLD vs ORDERZO comparison */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-gray-50 to-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">What we replace</p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
+                Two old things. One new app.
               </h2>
-              <p className="text-lg text-gray-600">Two old things. One new app.</p>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Indian micro-businesses are stuck between two bad options. Orderzo replaces both.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Replace 1 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">💬</span>
-                  <h3 className="font-bold text-lg text-gray-900">WhatsApp chaos</h3>
-                </div>
-                <p className="text-gray-700 mb-3">No more typing "kitne hue?", "UPI bhejo", "payment ka screenshot send kar do"...</p>
-                <div className="bg-[#F4F3FF] border border-[#EFEEFF] rounded-xl p-4 text-sm text-gray-700">
-                  <span className="font-semibold text-[#3530B8]">With Orderzo:</span> Tap 4 fields. Send beautiful invoice + UPI payment link via WhatsApp. Customer pays in one tap. Done in 30 seconds.
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+              
+              {/* OLD WAY */}
+              <div className="bg-gray-50 border-2 border-gray-200 rounded-3xl p-7 sm:p-8 relative">
+                <div className="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-5">❌ Old way</div>
+                
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl opacity-60">💬</span>
+                      <h3 className="font-bold text-lg text-gray-700">WhatsApp chaos</h3>
+                    </div>
+                    <p className="text-gray-500 text-sm leading-relaxed line-through decoration-gray-400">
+                      "kitne hue?" · "UPI bhejo" · "payment ka screenshot send kar do" · 5 messages later, still confused
+                    </p>
+                  </div>
+                  
+                  <div className="h-px bg-gray-200"></div>
+                  
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl opacity-60">🖥️</span>
+                      <h3 className="font-bold text-lg text-gray-700">Computer billing software</h3>
+                    </div>
+                    <ul className="text-gray-500 text-sm space-y-1 line-through decoration-gray-400">
+                      <li>₹25,000 desktop PC</li>
+                      <li>₹18,000/year Tally license</li>
+                      <li>Thermal printer + paper rolls</li>
+                      <li>Training, IT support, headaches</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              {/* Replace 2 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">🖥️</span>
-                  <h3 className="font-bold text-lg text-gray-900">Computer billing software</h3>
-                </div>
-                <p className="text-gray-700 mb-3">No more ₹25,000 desktop PC + ₹18,000/year Tally + thermal printer + barcode scanner...</p>
-                <div className="bg-green-50 border border-green-100 rounded-xl p-4 text-sm text-gray-700">
-                  <span className="font-semibold text-green-700">With Orderzo:</span> Your phone is the billing machine. ₹249/month. Beautiful invoices on WhatsApp. End-of-day cash/UPI/card split.
+              {/* ORDERZO WAY */}
+              <div className="bg-gradient-to-br from-[#EFEEFF] to-white border-2 border-[#635BFF] rounded-3xl p-7 sm:p-8 relative shadow-xl">
+                <div className="inline-block bg-[#635BFF] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-5">✅ With Orderzo</div>
+                
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">📱</span>
+                      <h3 className="font-bold text-lg text-gray-900">WhatsApp invoices</h3>
+                    </div>
+                    <p className="text-gray-800 text-sm leading-relaxed">
+                      Tap 4 fields. Send <span className="font-semibold">beautiful invoice + UPI link</span> via WhatsApp. Customer pays in one tap. Done in 30 seconds.
+                    </p>
+                  </div>
+                  
+                  <div className="h-px bg-[#DAD8FF]"></div>
+                  
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">📱</span>
+                      <h3 className="font-bold text-lg text-gray-900">Phone billing machine</h3>
+                    </div>
+                    <ul className="text-gray-800 text-sm space-y-1.5">
+                      <li>✓ <span className="font-semibold">₹0</span> hardware</li>
+                      <li>✓ <span className="font-semibold">₹249/month</span> all-in (or use free)</li>
+                      <li>✓ Beautiful invoices on WhatsApp</li>
+                      <li>✓ <span className="font-semibold">2-minute</span> setup. No training.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
 
-        {/* Trust signal */}
-        <section className="px-4 sm:px-10 py-16 bg-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
-              ✨ Already trusted by 100+ Indian businesses
+        {/* Founder block — tightened, combined with trust signal */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white">
+          <div className="max-w-4xl mx-auto">
+            
+            {/* Trust pill above founder */}
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 bg-[#EFEEFF] text-[#3530B8] px-4 py-2 rounded-full text-sm font-semibold">
+                <span>✨</span>
+                <span>100+ Indian businesses already signed up · No bots, no fake reviews</span>
+              </div>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-              Built for Indian micro-businesses. Across categories. Across cities.
-            </h2>
-            <p className="text-lg text-gray-600 mb-6">
-              Real Indian micro-businesses are signing up. We onboard each one personally — because we believe in word of mouth, not ads.
-            </p>
-            <p className="text-sm text-gray-500">
-              No bots. No fake reviews. Just real shops, getting bills done faster.
-            </p>
-          </div>
-        </section>
 
-        {/* Founder note */}
-        <section className="px-4 sm:px-10 py-16 bg-gradient-to-br from-[#F4F3FF] to-white">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#EFEEFF]">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-[#635BFF] text-white rounded-full flex items-center justify-center font-bold text-lg">
+            {/* Founder card */}
+            <div className="bg-gradient-to-br from-white to-[#F4F3FF] rounded-3xl p-8 sm:p-12 border-2 border-[#EFEEFF] shadow-lg">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#635BFF] to-[#3530B8] text-white rounded-2xl flex items-center justify-center font-bold text-2xl sm:text-3xl shadow-lg">
                   C
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900">Chetan Aitaraju</p>
-                  <p className="text-sm text-gray-500">Founder · Data Engineer in NYC, building Orderzo from home</p>
+                  <p className="font-bold text-xl sm:text-2xl text-gray-900">Chetan Aitaraju</p>
+                  <p className="text-sm sm:text-base text-gray-600">Founder · Data Engineer in NYC, building Orderzo from home</p>
                 </div>
               </div>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                India's micro-businesses are the country's quiet engine. Most of them still run on paper notebooks and WhatsApp chats — outgrowing one but underserved by the other.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                I noticed something while talking to over 100 of them: they had moved past the notebook. But the tools available felt heavy, complicated, built for someone else.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Most billing apps treat the business owner like an accountant. They aren't. A business owner needs to send a beautiful bill in 10 seconds, get paid via UPI, and move on with their day. Nothing more, nothing less.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                So I started Orderzo in 2026 while working full-time as a Data Engineer in New York City. Phone-only. WhatsApp-native. ₹249 per month. Built for how Indian businesses actually work — not how someone in a glass office thinks they should work.
-              </p>
-              <p className="text-gray-700 leading-relaxed font-medium">
-                Orderzo is built for the way Indian businesses actually work. One phone. One app. Every business owner deserves that.
-              </p>
-              <div className="flex flex-wrap gap-3 mt-5">
+              
+              <div className="space-y-5 text-gray-700 leading-relaxed text-base sm:text-lg">
+                <p>
+                  India's <span className="font-semibold text-gray-900">60 million micro-businesses</span> still run on paper notebooks and WhatsApp chats. They've outgrown one but are underserved by the other. Most billing apps treat them like accountants — they're not.
+                </p>
+                <p>
+                  A business owner needs to send a beautiful bill in 10 seconds, get paid via UPI, and move on with their day. Nothing more, nothing less. <span className="font-semibold text-gray-900">That's what Orderzo is.</span>
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3 mt-8">
                 <a 
                   href="https://wa.me/918466089662" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
                 >
-                  WhatsApp me
+                  <span>💬</span> WhatsApp me
                 </a>
                 <a 
                   href="https://linkedin.com/in/chetan-aitaraju" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#635BFF] hover:bg-[#4D44E0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#635BFF] hover:bg-[#4D44E0] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
                 >
                   Connect on LinkedIn
                 </a>
                 <Link 
                   href="/about" 
-                  className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-gray-200 hover:border-gray-400 transition-colors"
                 >
-                  Read more →
+                  Read full story →
                 </Link>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="px-4 sm:px-10 py-16 bg-gradient-to-r from-[#F4F3FF]0 to-[#4D44E0]">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
-              Apna dukan, apne haath mein.
+        {/* Final CTA — bold, confident closing */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-br from-[#635BFF] to-[#3530B8] relative overflow-hidden">
+          {/* Decorative blobs */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+          
+          <div className="relative max-w-4xl mx-auto text-center text-white">
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.05]">
+              Apna dukan,<br />
+              apne haath mein.
             </h2>
-            <p className="text-lg text-[#EFEEFF] mb-8">
+            <p className="text-xl sm:text-2xl text-white/80 mb-10 max-w-xl mx-auto">
               Start free. Send your first invoice in 2 minutes.
             </p>
+            
             <Link 
               href="/login" 
-              className="inline-block bg-white text-[#4D44E0] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#F4F3FF] transition-colors shadow-xl"
+              className="inline-block bg-white text-[#3530B8] px-10 py-5 rounded-2xl font-bold text-lg sm:text-xl hover:bg-[#F4F3FF] shadow-2xl transition-all"
             >
               Get Started Free →
             </Link>
-            <p className="text-sm text-[#EFEEFF] mt-4">
+            
+            <p className="text-sm sm:text-base text-white/70 mt-6">
               No credit card · 30 free invoices/month · Setup in 2 minutes
             </p>
-          </div>
-        </section>
-
-        {/* Closing tagline */}
-        <section className="px-4 py-12 bg-white">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-3xl font-bold text-gray-900 mb-2">Order. Bill. Done.</p>
-            <p className="text-gray-500">The Indian dukan's billing app.</p>
           </div>
         </section>
       </main>
