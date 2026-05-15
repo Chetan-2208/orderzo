@@ -67,6 +67,7 @@ export default function SupportPage() {
         </div>
 
         
+        <a
           href="https://wa.me/918466089662?text=Hi%20Orderzo%2C%20I%20need%20help"
           target="_blank"
           rel="noopener noreferrer"
