@@ -126,37 +126,12 @@ export default function LoginPage() {
                 </p>
 
                 <form onSubmit={handleSendOtp}>
-                  <div className="flex gap-2 mb-3">
-                    <button
-                      type="button"
-                      onClick={() => setCountry('in')}
-                      className={`flex-1 py-2 rounded-lg text-sm font-medium border-2 transition-all ${
-                        country === 'in'
-                          ? 'border-orange-500 bg-orange-50 text-orange-700'
-                          : 'border-gray-200 text-gray-600'
-                      }`}
-                    >
-                      🇮🇳 India (+91)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCountry('us')}
-                      className={`flex-1 py-2 rounded-lg text-sm font-medium border-2 transition-all ${
-                        country === 'us'
-                          ? 'border-orange-500 bg-orange-50 text-orange-700'
-                          : 'border-gray-200 text-gray-600'
-                      }`}
-                    >
-                      🇺🇸 USA (+1)
-                    </button>
-                  </div>
-
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Mobile number
                   </label>
                   <div className="flex gap-2 mb-2">
                     <div className="flex items-center px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 font-medium">
-                      {country === 'in' ? '+91' : '+1'}
+                      +91
                     </div>
                     <input
                       type="tel"
@@ -202,7 +177,7 @@ export default function LoginPage() {
                   We sent a 6-digit code to
                 </p>
                 <p className="font-medium text-gray-900 mb-6">
-                  {country === 'in' ? '+91' : '+1'} {phone}
+                  +91 {phone}
                 </p>
 
                 {success && (

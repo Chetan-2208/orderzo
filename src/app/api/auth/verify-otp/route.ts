@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server'
-import twilio from 'twilio'
+
+// ⚠️ STUB MODE: Real OTP verification DISABLED
+// ⚠️ The ONLY valid OTP is: 123456
+// ⚠️ TODO: Replace with real provider when DLT is approved
+
+const STUB_OTP = '123456'
 
 export async function POST(request: Request) {
   try {
-    const { phone, otp, country } = await request.json()
+    const { phone, otp } = await request.json()
 
     if (!phone || !otp) {
       return NextResponse.json({ error: 'Phone and OTP required' }, { status: 400 })
@@ -14,54 +19,25 @@ export async function POST(request: Request) {
     }
 
     const cleanPhone = phone.replace(/\D/g, '')
-    const countryCode = country === 'us' ? '+1' : '+91'
-    const fullPhone = `${countryCode}${cleanPhone}`
+    const fullPhone = `+91${cleanPhone}`
 
-    const accountSid = process.env.TWILIO_ACCOUNT_SID
-    const authToken = process.env.TWILIO_AUTH_TOKEN
-    const verifySid = process.env.TWILIO_VERIFY_SID
-
-    if (!accountSid || !authToken || !verifySid) {
-      return NextResponse.json({ error: 'OTP service not configured' }, { status: 500 })
-    }
-
-    const client = twilio(accountSid, authToken)
-
-    const verificationCheck = await client.verify.v2
-      .services(verifySid)
-      .verificationChecks.create({
-        to: fullPhone,
-        code: otp,
-      })
-
-    console.log(`OTP verification for ${fullPhone}: ${verificationCheck.status}`)
-
-    if (verificationCheck.status === 'approved') {
+    if (otp !== STUB_OTP) {
+      console.log(`[STUB] Wrong OTP for ${fullPhone}: got ${otp}, expected ${STUB_OTP}`)
       return NextResponse.json({
-        success: true,
-        verified: true,
-        phone: cleanPhone,
-      })
-    } else {
-      return NextResponse.json({
-        success: false,
+        error: 'Wrong OTP. Use 123456 in test mode.',
         verified: false,
-        error: 'Wrong OTP. Please try again.',
-      }, { status: 400 })
+      }, { status: 401 })
     }
+
+    console.log(`[STUB] OTP verified for ${fullPhone}`)
+
+    return NextResponse.json({
+      verified: true,
+      phone: cleanPhone,
+      message: 'Test mode login successful',
+    })
   } catch (error: any) {
     console.error('Verify OTP error:', error)
-    
-    let userMessage = 'Could not verify OTP. Please try again.'
-    
-    if (error.code === 60200) {
-      userMessage = 'Invalid OTP format'
-    } else if (error.code === 20404) {
-      userMessage = 'OTP expired. Request a new one.'
-    } else if (error.code === 60202) {
-      userMessage = 'Too many attempts. Request a new OTP.'
-    }
-
-    return NextResponse.json({ error: userMessage, code: error.code }, { status: 500 })
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }
