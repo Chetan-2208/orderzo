@@ -208,7 +208,7 @@ function NewFastContent() {
   }
 
   return (
-    <div className="min-h-screen bg-orange-50/30 pb-12">
+    <div className="min-h-screen bg-[#F4F3FF]/30 pb-12">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10">
         <div className="flex items-center gap-3 max-w-2xl mx-auto">
@@ -224,7 +224,7 @@ function NewFastContent() {
         {/* FIELD 1: Customer */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            <span className="text-orange-500">1.</span> Phone or name
+            <span className="text-[#635BFF]">1.</span> Phone or name
           </label>
           <div className="relative">
             <input
@@ -235,7 +235,7 @@ function NewFastContent() {
                 if (selectedCustomer) setSelectedCustomer(null)
               }}
               placeholder="e.g. 9876543210 or Mr. Sharma"
-              className="w-full px-4 py-3.5 text-base border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+              className="w-full px-4 py-3.5 text-base border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
               autoFocus
             />
             {selectedCustomer && (
@@ -256,7 +256,7 @@ function NewFastContent() {
                 <button
                   key={c.id}
                   onClick={() => handleSelectCustomer(c)}
-                  className="w-full text-left px-4 py-3 hover:bg-orange-50 border-b border-gray-100 last:border-b-0"
+                  className="w-full text-left px-4 py-3 hover:bg-[#F4F3FF] border-b border-gray-100 last:border-b-0"
                 >
                   <p className="font-medium text-gray-900">{c.name}</p>
                   {c.phone && <p className="text-xs text-gray-500">+91 {c.phone}</p>}
@@ -269,14 +269,14 @@ function NewFastContent() {
         {/* FIELD 2: What */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            <span className="text-orange-500">2.</span> What did they buy?
+            <span className="text-[#635BFF]">2.</span> What did they buy?
           </label>
           <input
             type="text"
             value={whatBought}
             onChange={(e) => setWhatBought(e.target.value)}
             placeholder="e.g. 2 idli sambar, 1 dosa"
-            className="w-full px-4 py-3.5 text-base border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+            className="w-full px-4 py-3.5 text-base border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
           />
           {itemSuggestions.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-2">
@@ -284,9 +284,9 @@ function NewFastContent() {
                 <button
                   key={item.id}
                   onClick={() => handlePickItem(item)}
-                  className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-full hover:border-orange-300 hover:bg-orange-50"
+                  className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-full hover:border-[#BDB9FF] hover:bg-[#F4F3FF]"
                 >
-                  {item.name} <span className="text-orange-600 font-semibold">₹{item.price}</span>
+                  {item.name} <span className="text-[#4D44E0] font-semibold">₹{item.price}</span>
                 </button>
               ))}
             </div>
@@ -296,7 +296,7 @@ function NewFastContent() {
         {/* FIELD 3: Amount */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            <span className="text-orange-500">3.</span> How much?
+            <span className="text-[#635BFF]">3.</span> How much?
           </label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl font-medium">₹</span>
@@ -306,7 +306,7 @@ function NewFastContent() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0"
-              className="w-full pl-10 pr-4 py-3.5 text-2xl font-bold border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+              className="w-full pl-10 pr-4 py-3.5 text-2xl font-bold border border-gray-300 rounded-2xl bg-white focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
             />
           </div>
         </div>
@@ -314,41 +314,41 @@ function NewFastContent() {
         {/* FIELD 4: Pay method */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            <span className="text-orange-500">4.</span> How to pay?
+            <span className="text-[#635BFF]">4.</span> How to pay?
           </label>
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setPayMethod('upi')}
               className={`py-4 px-2 rounded-2xl border-2 transition-all ${
                 payMethod === 'upi'
-                  ? 'border-orange-500 bg-orange-50 shadow-md'
+                  ? 'border-[#635BFF] bg-[#F4F3FF] shadow-md'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
               <div className="text-2xl mb-1">📱</div>
-              <div className={`text-sm font-medium ${payMethod === 'upi' ? 'text-orange-700' : 'text-gray-700'}`}>UPI</div>
+              <div className={`text-sm font-medium ${payMethod === 'upi' ? 'text-[#3530B8]' : 'text-gray-700'}`}>UPI</div>
             </button>
             <button
               onClick={() => setPayMethod('cash')}
               className={`py-4 px-2 rounded-2xl border-2 transition-all ${
                 payMethod === 'cash'
-                  ? 'border-orange-500 bg-orange-50 shadow-md'
+                  ? 'border-[#635BFF] bg-[#F4F3FF] shadow-md'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
               <div className="text-2xl mb-1">💵</div>
-              <div className={`text-sm font-medium ${payMethod === 'cash' ? 'text-orange-700' : 'text-gray-700'}`}>Cash</div>
+              <div className={`text-sm font-medium ${payMethod === 'cash' ? 'text-[#3530B8]' : 'text-gray-700'}`}>Cash</div>
             </button>
             <button
               onClick={() => setPayMethod('later')}
               className={`py-4 px-2 rounded-2xl border-2 transition-all ${
                 payMethod === 'later'
-                  ? 'border-orange-500 bg-orange-50 shadow-md'
+                  ? 'border-[#635BFF] bg-[#F4F3FF] shadow-md'
                   : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
               <div className="text-2xl mb-1">⏳</div>
-              <div className={`text-sm font-medium ${payMethod === 'later' ? 'text-orange-700' : 'text-gray-700'}`}>Later</div>
+              <div className={`text-sm font-medium ${payMethod === 'later' ? 'text-[#3530B8]' : 'text-gray-700'}`}>Later</div>
             </button>
           </div>
         </div>
@@ -357,7 +357,7 @@ function NewFastContent() {
         <button
           onClick={handleSend}
           disabled={sending}
-          className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-orange-500/30 transition-all active:scale-[0.99]"
+          className="w-full bg-[#635BFF] hover:bg-[#4D44E0] disabled:bg-[#BDB9FF] text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-[#635BFF]/30 transition-all active:scale-[0.99]"
         >
           {sending ? 'Sending...' : '📤 Send via WhatsApp'}
         </button>

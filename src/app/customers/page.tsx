@@ -220,7 +220,7 @@ export default function CustomersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F3FF] flex items-center justify-center">
         <Logo size={64} />
       </div>
     )
@@ -251,13 +251,13 @@ export default function CustomersPage() {
           </div>
           <div className="bg-white rounded-xl p-3 border border-gray-200 text-center">
             <p className="text-xs text-gray-500 mb-1">Pending</p>
-            <p className="text-lg font-bold text-orange-500">₹{totalPending.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-bold text-[#635BFF]">₹{totalPending.toLocaleString('en-IN')}</p>
           </div>
         </div>
 
         {/* Add customer */}
         {showAddCustomer ? (
-          <div className="bg-white rounded-2xl p-5 border-2 border-orange-300 shadow-lg shadow-orange-500/10 mb-4">
+          <div className="bg-white rounded-2xl p-5 border-2 border-[#BDB9FF] shadow-lg shadow-blue-600/10 mb-4">
             <h3 className="font-semibold text-gray-900 mb-3">Add new customer</h3>
             <div className="space-y-3">
               <input
@@ -265,7 +265,7 @@ export default function CustomersPage() {
                 placeholder="Customer name"
                 value={newCustomerName}
                 onChange={(e) => setNewCustomerName(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
                 autoFocus
               />
               <div className="flex gap-2">
@@ -276,12 +276,12 @@ export default function CustomersPage() {
                   placeholder="Phone (optional)"
                   value={newCustomerPhone}
                   onChange={(e) => setNewCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="flex gap-2">
-                <button onClick={handleAddCustomer} className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium hover:bg-orange-600">Add</button>
+                <button onClick={handleAddCustomer} className="flex-1 bg-[#635BFF] text-white py-2.5 rounded-xl font-medium hover:bg-[#4D44E0]">Add</button>
                 <button onClick={() => { setShowAddCustomer(false); setNewCustomerName(''); setNewCustomerPhone(''); setError('') }} className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl">Cancel</button>
               </div>
             </div>
@@ -289,7 +289,7 @@ export default function CustomersPage() {
         ) : (
           <button
             onClick={() => setShowAddCustomer(true)}
-            className="w-full bg-orange-500 text-white py-3 rounded-xl font-medium shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors mb-3"
+            className="w-full bg-[#635BFF] text-white py-3 rounded-xl font-medium shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] transition-colors mb-3"
           >
             + Add new customer
           </button>
@@ -301,7 +301,7 @@ export default function CustomersPage() {
           placeholder="🔍 Search by name or phone..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF] mb-3"
         />
 
         {/* Filter chips */}
@@ -317,8 +317,8 @@ export default function CustomersPage() {
               onClick={() => setFilterType(key as any)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
                 filterType === key
-                  ? 'bg-orange-500 text-white border-orange-500 shadow-md'
-                  : 'bg-white text-gray-700 border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+                  ? 'bg-[#635BFF] text-white border-[#635BFF] shadow-md'
+                  : 'bg-white text-gray-700 border-gray-200 hover:border-[#BDB9FF] hover:bg-[#F4F3FF]'
               }`}
             >
               <span className="mr-1">{emoji}</span>
@@ -345,7 +345,7 @@ export default function CustomersPage() {
               onClick={() => setSortBy(key)}
               className={`flex-1 py-2 rounded-xl font-medium transition-all ${
                 sortBy === key
-                  ? 'bg-orange-500 text-white shadow-md'
+                  ? 'bg-[#635BFF] text-white shadow-md'
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
@@ -376,7 +376,7 @@ export default function CustomersPage() {
                 if (target.closest('button') || target.closest('a')) return
                 router.push(`/customers/${customer.id}`)
               }}
-              className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm hover:border-orange-300 hover:shadow-md transition-all cursor-pointer">
+              className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm hover:border-[#BDB9FF] hover:shadow-md transition-all cursor-pointer">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -384,7 +384,7 @@ export default function CustomersPage() {
                         <span className={`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ${
                           idx === 0 ? 'bg-yellow-100 text-yellow-700' :
                           idx === 1 ? 'bg-gray-200 text-gray-700' :
-                          'bg-orange-100 text-orange-700'
+                          'bg-[#EFEEFF] text-[#3530B8]'
                         }`}>
                           {idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉'}
                         </span>
@@ -396,7 +396,7 @@ export default function CustomersPage() {
                     )}
                   </div>
                   <div className="text-right ml-2">
-                    <p className="text-xl font-bold text-orange-500">₹{customer.total_spent.toLocaleString('en-IN')}</p>
+                    <p className="text-xl font-bold text-[#635BFF]">₹{customer.total_spent.toLocaleString('en-IN')}</p>
                     <p className="text-xs text-gray-400">total spent</p>
                   </div>
                 </div>
@@ -406,12 +406,12 @@ export default function CustomersPage() {
                     <p className="text-lg font-bold text-gray-900">{customer.total_orders}</p>
                     <p className="text-xs text-gray-500">orders</p>
                   </div>
-                  <div className="text-center bg-orange-50 rounded-lg py-2">
-                    <p className="text-lg font-bold text-orange-600">₹{customer.total_pending.toLocaleString('en-IN')}</p>
+                  <div className="text-center bg-[#F4F3FF] rounded-lg py-2">
+                    <p className="text-lg font-bold text-[#4D44E0]">₹{customer.total_pending.toLocaleString('en-IN')}</p>
                     <p className="text-xs text-gray-500">pending</p>
                   </div>
-                  <div className="text-center bg-blue-50 rounded-lg py-2">
-                    <p className="text-sm font-bold text-blue-700">{formatTimeAgo(customer.last_order_date)}</p>
+                  <div className="text-center bg-[#F4F3FF] rounded-lg py-2">
+                    <p className="text-sm font-bold text-[#4D44E0]">{formatTimeAgo(customer.last_order_date)}</p>
                     <p className="text-xs text-gray-500">last visit</p>
                   </div>
                 </div>
@@ -440,7 +440,7 @@ export default function CustomersPage() {
       {/* Floating + button to add new order */}
       <button
         onClick={() => router.push('/new?mode=order')}
-        className="fixed bottom-24 right-6 w-16 h-16 bg-orange-500 text-white rounded-2xl shadow-2xl shadow-orange-500/40 hover:bg-orange-600 transition-colors flex items-center justify-center text-3xl font-light z-20"
+        className="fixed bottom-24 right-6 w-16 h-16 bg-[#635BFF] text-white rounded-2xl shadow-2xl shadow-[#635BFF]/40 hover:bg-[#4D44E0] transition-colors flex items-center justify-center text-3xl font-light z-20"
       >
         +
       </button>

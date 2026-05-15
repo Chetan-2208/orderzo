@@ -144,7 +144,7 @@ export default function SetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FF] via-white to-[#F4F3FF] px-4 py-8">
       <div className="max-w-md mx-auto">
         <div className="text-center mb-6">
           <Logo size={56} />
@@ -167,19 +167,19 @@ export default function SetupPage() {
           {/* Logo upload - the killer feature */}
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-2">
-              Your business logo <span className="text-orange-500 text-xs font-normal">⭐ recommended</span>
+              Your business logo <span className="text-[#635BFF] text-xs font-normal">⭐ recommended</span>
             </label>
             
             {logoUrl ? (
               <div className="flex items-center gap-3">
-                <div className="w-20 h-20 rounded-2xl border-2 border-orange-200 bg-white flex items-center justify-center overflow-hidden shadow-sm">
+                <div className="w-20 h-20 rounded-2xl border-2 border-[#DAD8FF] bg-white flex items-center justify-center overflow-hidden shadow-sm">
                   <img src={logoUrl} alt="Logo" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 font-medium">Logo uploaded</p>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="text-xs text-orange-500 hover:underline"
+                    className="text-xs text-[#635BFF] hover:underline"
                   >
                     Change logo
                   </button>
@@ -196,11 +196,11 @@ export default function SetupPage() {
               <button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={logoUploading}
-                className="w-full bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-dashed border-orange-300 rounded-2xl p-5 text-center hover:border-orange-500 transition-colors disabled:opacity-50"
+                className="w-full bg-gradient-to-br from-[#F4F3FF] to-[#EFEEFF] border-2 border-dashed border-[#BDB9FF] rounded-2xl p-5 text-center hover:border-[#635BFF] transition-colors disabled:opacity-50"
               >
                 {logoUploading ? (
                   <>
-                    <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                    <div className="w-10 h-10 border-4 border-[#635BFF] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                     <p className="text-sm text-gray-700">Uploading...</p>
                   </>
                 ) : (
@@ -233,7 +233,7 @@ export default function SetupPage() {
               placeholder="e.g., Padma's Kitchen"
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
             />
           </div>
 
@@ -248,7 +248,7 @@ export default function SetupPage() {
               value={tagline}
               onChange={(e) => setTagline(e.target.value.slice(0, 60))}
               maxLength={60}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
             />
             <p className="text-xs text-gray-500 mt-1">A short line that describes your business · {60 - tagline.length} characters left</p>
           </div>
@@ -261,7 +261,7 @@ export default function SetupPage() {
             <select
               value={businessType}
               onChange={(e) => setBusinessType(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-[#635BFF]"
             >
               <option value="cloud_kitchen">🍳 Cloud Kitchen / Restaurant</option>
                   <option value="tiffin">🍱 Tiffin / Food Service</option>
@@ -284,7 +284,7 @@ export default function SetupPage() {
               placeholder="e.g., chaitu.33@ybl"
               value={upiId}
               onChange={(e) => setUpiId(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
             />
             <p className="text-xs text-gray-500 mt-1">Where customer payments will go</p>
           </div>
@@ -299,7 +299,7 @@ export default function SetupPage() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               rows={2}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 resize-none"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] resize-none"
             />
             <p className="text-xs text-gray-500 mt-1">Appears on invoices · Builds customer trust</p>
           </div>
@@ -314,7 +314,7 @@ export default function SetupPage() {
               placeholder="e.g., padma@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF]"
             />
             <p className="text-xs text-gray-500 mt-1">For receipts and account recovery</p>
           </div>
@@ -329,25 +329,25 @@ export default function SetupPage() {
               placeholder="15-character GST number"
               value={gstin}
               onChange={(e) => setGstin(e.target.value.toUpperCase().slice(0, 15))}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 font-mono"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] font-mono"
             />
             <p className="text-xs text-gray-500 mt-1">Only if your business is GST-registered</p>
           </div>
 
           {/* Terms */}
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-3">
+          <div className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-3">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={termsAccepted}
                 onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="mt-1 w-5 h-5 accent-orange-500 cursor-pointer flex-shrink-0"
+                className="mt-1 w-5 h-5 accent-[#635BFF] cursor-pointer flex-shrink-0"
               />
               <span className="text-sm text-gray-700">
                 I agree to Orderzo's{' '}
-                <Link href="/terms" target="_blank" className="text-orange-600 underline font-medium">Terms of Service</Link>
+                <Link href="/terms" target="_blank" className="text-[#4D44E0] underline font-medium">Terms of Service</Link>
                 {' '}and{' '}
-                <Link href="/privacy" target="_blank" className="text-orange-600 underline font-medium">Privacy Policy</Link>
+                <Link href="/privacy" target="_blank" className="text-[#4D44E0] underline font-medium">Privacy Policy</Link>
               </span>
             </label>
           </div>
@@ -361,7 +361,7 @@ export default function SetupPage() {
           <button
             onClick={handleSubmit}
             disabled={loading || !termsAccepted}
-            className="w-full bg-orange-500 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#635BFF] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? 'Saving...' : (isEdit ? 'Save changes' : 'Continue to dashboard →')}
           </button>

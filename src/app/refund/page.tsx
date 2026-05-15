@@ -13,7 +13,7 @@ export default function RefundPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -25,7 +25,7 @@ export default function RefundPage() {
         </div>
 
         <div className="space-y-6 text-gray-700 leading-relaxed">
-          <section className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+          <section className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-4">
             <p className="text-sm">
               <strong>In simple words:</strong> You can cancel your subscription anytime. Refunds are processed within 5-7 business days. Free plan has no fees, so no refunds apply.
             </p>
@@ -59,7 +59,7 @@ export default function RefundPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">4. How to request a refund</h2>
-            <p>Email us at <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a> with:</p>
+            <p>Email us at <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a> with:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li>Subject line: "Refund Request"</li>
               <li>Your registered phone number</li>
@@ -75,7 +75,7 @@ export default function RefundPage() {
             <p>You can cancel your subscription at any time:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li>From the Settings tab in your account</li>
-              <li>Or by emailing <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a></li>
+              <li>Or by emailing <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></li>
             </ul>
             <p className="mt-3">After cancellation, you can continue using paid features until the end of your current billing cycle. Your account will revert to the Free Plan after that.</p>
           </section>
@@ -95,7 +95,7 @@ export default function RefundPage() {
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">7. Non-refundable cases</h2>
             <p>Refunds will not be processed in the following cases:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
-              <li>Account terminated due to violation of <Link href="/terms" className="text-orange-600 underline">Terms of Service</Link></li>
+              <li>Account terminated due to violation of <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service</Link></li>
               <li>Refund request made after 7 days for the initial purchase (only pro-rated allowed)</li>
               <li>Misuse of the service or fraudulent activity detected</li>
               <li>Free plan usage</li>
@@ -115,8 +115,8 @@ export default function RefundPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">9. Disputes</h2>
-            <p>If you have a dispute about a charge or refund, contact us first at <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a>. We aim to resolve all disputes within 15 days.</p>
-            <p className="mt-2">If unresolved, refer to our grievance redressal process in our <Link href="/terms" className="text-orange-600 underline">Terms of Service</Link>.</p>
+            <p>If you have a dispute about a charge or refund, contact us first at <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a>. We aim to resolve all disputes within 15 days.</p>
+            <p className="mt-2">If unresolved, refer to our grievance redressal process in our <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service</Link>.</p>
           </section>
 
           <section>
@@ -129,7 +129,7 @@ export default function RefundPage() {
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
               <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
-              <p className="mt-2">Refund inquiries: <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a></p>
+              <p className="mt-2">Refund inquiries: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
               <p>Response within 24 hours during business hours (Mon-Sat, 9 AM - 9 PM IST)</p>
             </div>
           </section>

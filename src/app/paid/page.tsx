@@ -92,13 +92,13 @@ function PaidContent() {
         <Logo size={64} />
         <h1 className="text-2xl font-bold text-gray-900 mt-6 mb-2">Order not found</h1>
         <p className="text-gray-600 mb-6 text-center">The order you're looking for could not be found.</p>
-        <Link href="/" className="bg-orange-500 text-white px-6 py-3 rounded-xl font-medium">Back to home</Link>
+        <Link href="/" className="bg-[#635BFF] text-white px-6 py-3 rounded-xl font-medium">Back to home</Link>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 flex flex-col items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FF] via-white to-green-50 flex flex-col items-center justify-center px-4 py-8">
       <div className="max-w-md w-full mx-auto">
         <div className="text-center mb-6">
           <Logo size={48} variant="lockup" />
@@ -151,8 +151,8 @@ function PaidContent() {
           </div>
         ) : polling ? (
           <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-lg text-center">
-            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-16 h-16 bg-[#EFEEFF] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-10 h-10 border-4 border-[#635BFF] border-t-transparent rounded-full animate-spin" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Confirming payment...</h1>
             <p className="text-gray-600 mb-2">Hold tight, this usually takes a few seconds</p>
@@ -160,15 +160,15 @@ function PaidContent() {
           </div>
         ) : (
           <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-lg text-center">
-            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-[#EFEEFF] rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">⏳</span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment Pending</h1>
             <p className="text-gray-600 mb-4">We haven't confirmed your payment yet. If you've already paid, it may take a moment.</p>
             
-            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6">
-              <p className="text-sm text-orange-700 mb-1">Amount</p>
-              <p className="text-3xl font-bold text-orange-700">Rs.{order.total}</p>
+            <div className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-4 mb-6">
+              <p className="text-sm text-[#3530B8] mb-1">Amount</p>
+              <p className="text-3xl font-bold text-[#3530B8]">Rs.{order.total}</p>
               <p className="text-sm text-gray-600 mt-1">to {order.business_name}</p>
             </div>
 
@@ -183,7 +183,7 @@ function PaidContent() {
               )}
               <button
                 onClick={() => { setPolling(true); loadOrder() }}
-                className="w-full bg-orange-500 text-white py-3 rounded-xl font-medium hover:bg-orange-600 transition-colors"
+                className="w-full bg-[#635BFF] text-white py-3 rounded-xl font-medium hover:bg-[#4D44E0] transition-colors"
               >
                 Check again
               </button>

@@ -168,7 +168,7 @@ export default function ItemsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F3FF] flex items-center justify-center">
         <Logo size={64} />
       </div>
     )
@@ -197,7 +197,7 @@ export default function ItemsPage() {
 
         {/* Add new item form */}
         {showAddForm ? (
-          <div className="bg-white rounded-2xl p-5 border-2 border-orange-300 shadow-lg shadow-orange-500/10 mb-4">
+          <div className="bg-white rounded-2xl p-5 border-2 border-[#BDB9FF] shadow-lg shadow-blue-600/10 mb-4">
             <h3 className="font-semibold text-gray-900 mb-3">Add new item</h3>
             <form onSubmit={handleAddItem} className="space-y-3">
               <div>
@@ -207,7 +207,7 @@ export default function ItemsPage() {
                   placeholder="e.g., Tiffin, Cotton Shirt"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
                   autoFocus
                 />
               </div>
@@ -219,13 +219,13 @@ export default function ItemsPage() {
                   placeholder="0"
                   value={newPrice}
                   onChange={(e) => setNewPrice(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-orange-500 text-white py-2.5 rounded-xl font-medium hover:bg-orange-600 transition-colors"
+                  className="flex-1 bg-[#635BFF] text-white py-2.5 rounded-xl font-medium hover:bg-[#4D44E0] transition-colors"
                 >
                   Add Item
                 </button>
@@ -242,7 +242,7 @@ export default function ItemsPage() {
         ) : (
           <button
             onClick={() => setShowAddForm(true)}
-            className="w-full bg-orange-500 text-white py-3 rounded-xl font-medium shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors mb-4"
+            className="w-full bg-[#635BFF] text-white py-3 rounded-xl font-medium shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] transition-colors mb-4"
           >
             + Add new item
           </button>
@@ -266,18 +266,18 @@ export default function ItemsPage() {
                       type="text"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-[#635BFF]"
                     />
                     <input
                       type="number"
                       value={editPrice}
                       onChange={(e) => setEditPrice(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-orange-500"
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-[#635BFF]"
                     />
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleSaveEdit(item.id)}
-                        className="flex-1 bg-orange-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-orange-600"
+                        className="flex-1 bg-[#635BFF] text-white py-2 rounded-lg text-sm font-medium hover:bg-[#4D44E0]"
                       >
                         Save
                       </button>
@@ -293,12 +293,12 @@ export default function ItemsPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-900">{item.name}</h4>
-                      <p className="text-orange-500 font-semibold">₹{item.price}</p>
+                      <p className="text-[#635BFF] font-semibold">₹{item.price}</p>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleStartEdit(item)}
-                        className="text-sm text-gray-500 hover:text-orange-500 px-3 py-1"
+                        className="text-sm text-gray-500 hover:text-[#635BFF] px-3 py-1"
                       >
                         Edit
                       </button>

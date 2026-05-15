@@ -13,7 +13,7 @@ export default function AboutPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/pricing" className="text-gray-600 hover:text-gray-900">Pricing</Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -21,7 +21,7 @@ export default function AboutPage() {
       <main className="flex-1 max-w-3xl mx-auto px-4 py-12">
         {/* Page intro */}
         <div className="text-center mb-12">
-          <p className="text-orange-600 font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
+          <p className="text-[#4D44E0] font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why Orderzo exists</h1>
           <p className="text-xl text-gray-600">We're building the phone-first billing platform for Indian micro-businesses.</p>
         </div>
@@ -58,9 +58,9 @@ export default function AboutPage() {
           {/* The Founder */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">The Founder</h2>
-            <div className="bg-gradient-to-br from-orange-50 to-white border border-orange-200 rounded-2xl p-6 my-4">
+            <div className="bg-gradient-to-br from-[#F4F3FF] to-white border border-[#DAD8FF] rounded-2xl p-6 my-4">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                <div className="w-12 h-12 bg-[#635BFF] text-white rounded-full flex items-center justify-center font-bold text-lg">
                   C
                 </div>
                 <div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
                   href="https://linkedin.com/in/chetan-aitaraju" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#635BFF] hover:bg-[#4D44E0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
                   Connect on LinkedIn
                 </a>
@@ -114,11 +114,11 @@ export default function AboutPage() {
           </section>
 
           {/* CTA */}
-          <section className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-8 text-white mt-12 text-center">
-            <p className="font-bold italic text-lg text-orange-100 mb-2">"Apna dukan, apne haath mein."</p>
+          <section className="bg-gradient-to-r from-[#F4F3FF]0 to-[#4D44E0] rounded-3xl p-8 text-white mt-12 text-center">
+            <p className="font-bold italic text-lg text-[#EFEEFF] mb-2">"Apna dukan, apne haath mein."</p>
             <h2 className="text-2xl md:text-3xl font-bold mb-3">Throw away your billing computer.</h2>
-            <p className="text-orange-100 mb-6">Start free. Send your first invoice in 2 minutes.</p>
-            <Link href="/login" className="inline-block bg-white text-orange-600 px-8 py-3 rounded-xl font-bold hover:bg-orange-50 transition-colors">Get Started Free</Link>
+            <p className="text-[#EFEEFF] mb-6">Start free. Send your first invoice in 2 minutes.</p>
+            <Link href="/login" className="inline-block bg-white text-[#4D44E0] px-8 py-3 rounded-xl font-bold hover:bg-[#F4F3FF] transition-colors">Get Started Free</Link>
           </section>
         </div>
       </main>

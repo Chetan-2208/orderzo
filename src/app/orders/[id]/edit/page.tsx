@@ -190,7 +190,7 @@ export default function EditOrderPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F3FF] flex items-center justify-center">
         <Logo size={64} />
       </div>
     )
@@ -224,7 +224,7 @@ export default function EditOrderPage() {
                 placeholder="Search customers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-orange-500"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-[#635BFF]"
                 autoFocus
               />
               <button
@@ -248,12 +248,12 @@ export default function EditOrderPage() {
               <button onClick={() => setShowCustomerPicker(false)} className="text-gray-500 text-sm">Cancel</button>
             </div>
           ) : (
-            <div className="flex items-center justify-between bg-orange-50 border-2 border-orange-200 rounded-xl p-3">
+            <div className="flex items-center justify-between bg-[#F4F3FF] border-2 border-[#DAD8FF] rounded-xl p-3">
               <div>
                 <p className="font-semibold text-gray-900">{selectedCustomer?.name}</p>
                 {selectedCustomer?.phone && <p className="text-xs text-gray-500">+91 {selectedCustomer.phone}</p>}
               </div>
-              <button onClick={() => setShowCustomerPicker(true)} className="text-orange-500 text-sm font-medium">Change</button>
+              <button onClick={() => setShowCustomerPicker(true)} className="text-[#635BFF] text-sm font-medium">Change</button>
             </div>
           )}
         </div>
@@ -266,10 +266,10 @@ export default function EditOrderPage() {
               <button
                 key={item.id}
                 onClick={() => handleAddItem(item)}
-                className="text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 hover:border-orange-300 rounded-xl p-3 transition-all"
+                className="text-left bg-gray-50 hover:bg-[#F4F3FF] border border-gray-200 hover:border-[#BDB9FF] rounded-xl p-3 transition-all"
               >
                 <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
-                <p className="text-xs text-orange-500 font-bold">Rs.{item.price}</p>
+                <p className="text-xs text-[#635BFF] font-bold">Rs.{item.price}</p>
               </button>
             ))}
           </div>
@@ -289,16 +289,16 @@ export default function EditOrderPage() {
                   <div className="flex items-center gap-2 mx-2">
                     <button onClick={() => handleQtyChange(idx, -1)} className="w-7 h-7 bg-gray-200 rounded-full text-gray-700 font-bold">-</button>
                     <span className="font-semibold w-6 text-center">{oi.quantity}</span>
-                    <button onClick={() => handleQtyChange(idx, 1)} className="w-7 h-7 bg-orange-500 rounded-full text-white font-bold">+</button>
+                    <button onClick={() => handleQtyChange(idx, 1)} className="w-7 h-7 bg-[#635BFF] rounded-full text-white font-bold">+</button>
                   </div>
-                  <p className="font-bold text-orange-500 w-16 text-right text-sm">Rs.{oi.price * oi.quantity}</p>
+                  <p className="font-bold text-[#635BFF] w-16 text-right text-sm">Rs.{oi.price * oi.quantity}</p>
                   <button onClick={() => handleRemoveItem(idx)} className="ml-2 text-red-500 text-lg">🗑️</button>
                 </div>
               ))}
             </div>
             <div className="mt-3 pt-3 border-t border-gray-200 flex justify-between items-center">
               <span className="font-semibold text-gray-900">TOTAL</span>
-              <span className="text-2xl font-bold text-orange-500">Rs.{total}</span>
+              <span className="text-2xl font-bold text-[#635BFF]">Rs.{total}</span>
             </div>
           </div>
         )}
@@ -310,7 +310,7 @@ export default function EditOrderPage() {
             <button
               onClick={() => setPaymentMethod('upi')}
               className={`p-3 rounded-xl border-2 transition-all ${
-                paymentMethod === 'upi' ? 'border-orange-500 bg-orange-50' : 'border-gray-200 bg-white'
+                paymentMethod === 'upi' ? 'border-[#635BFF] bg-[#F4F3FF]' : 'border-gray-200 bg-white'
               }`}
             >
               <div className="text-2xl mb-1">📱</div>
@@ -319,7 +319,7 @@ export default function EditOrderPage() {
             <button
               onClick={() => setPaymentMethod('cash')}
               className={`p-3 rounded-xl border-2 transition-all ${
-                paymentMethod === 'cash' ? 'border-orange-500 bg-orange-50' : 'border-gray-200 bg-white'
+                paymentMethod === 'cash' ? 'border-[#635BFF] bg-[#F4F3FF]' : 'border-gray-200 bg-white'
               }`}
             >
               <div className="text-2xl mb-1">💵</div>
@@ -346,7 +346,7 @@ export default function EditOrderPage() {
               onClick={() => setStatus('sent')}
               className={`p-3 rounded-xl border-2 transition-all text-sm font-semibold ${
                 status === 'sent' || status === 'new'
-                  ? 'border-orange-500 bg-orange-50 text-orange-700'
+                  ? 'border-[#635BFF] bg-[#F4F3FF] text-[#3530B8]'
                   : 'border-gray-200 bg-white text-gray-600'
               }`}
             >
@@ -369,7 +369,7 @@ export default function EditOrderPage() {
           <button
             onClick={handleSave}
             disabled={saving || orderItems.length === 0}
-            className="flex-1 bg-orange-500 text-white py-4 rounded-xl font-bold shadow-lg shadow-orange-500/30 hover:bg-orange-600 disabled:bg-gray-300"
+            className="flex-1 bg-[#635BFF] text-white py-4 rounded-xl font-bold shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] disabled:bg-gray-300"
           >
             {saving ? 'Saving...' : `Save - Rs.${total}`}
           </button>

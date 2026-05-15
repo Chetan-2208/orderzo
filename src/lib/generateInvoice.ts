@@ -25,9 +25,9 @@ interface InvoiceData {
   paidAt?: Date
 }
 
-const ORANGE: [number, number, number] = [242, 117, 44]
-const ORANGE_LIGHT: [number, number, number] = [255, 247, 237]
-const ORANGE_DARK: [number, number, number] = [220, 100, 30]
+const ORANGE: [number, number, number] = [99, 91, 255]
+const ORANGE_LIGHT: [number, number, number] = [244, 243, 255]
+const ORANGE_DARK: [number, number, number] = [77, 68, 224]
 const GREEN: [number, number, number] = [22, 163, 74]
 const GREEN_LIGHT: [number, number, number] = [220, 252, 231]
 
@@ -139,7 +139,7 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
   doc.text('Save us in your contacts: +91 ' + businessPhone, pageWidth / 2, footerY + 5, { align: 'center' })
 
   const brandY = pageHeight - 18
-  doc.setFillColor(255, 247, 237)
+  doc.setFillColor(244, 243, 255)
   doc.rect(0, brandY - 6, pageWidth, 14, 'F')
 
   doc.setTextColor(...ORANGE)

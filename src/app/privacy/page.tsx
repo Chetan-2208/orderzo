@@ -13,7 +13,7 @@ export default function PrivacyPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -25,9 +25,9 @@ export default function PrivacyPage() {
         </div>
 
         <div className="space-y-6 text-gray-700 leading-relaxed">
-          <section className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+          <section className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-4">
             <p className="text-sm">
-              <strong>In simple words:</strong> We collect only what we need to run your shop's order book. We don't sell your data. We follow Indian data protection law (DPDP Act 2023). You can ask us to delete everything anytime by emailing <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a>.
+              <strong>In simple words:</strong> We collect only what we need to run your shop's order book. We don't sell your data. We follow Indian data protection law (DPDP Act 2023). You can ask us to delete everything anytime by emailing <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a>.
             </p>
           </section>
 
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
               Nagole, Hyderabad - 500068<br />
               Telangana, India
             </address>
-            <p className="mt-3">For privacy concerns or data requests, contact us at <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a> with subject "DPDPA Request".</p>
+            <p className="mt-3">For privacy concerns or data requests, contact us at <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> with subject "DPDPA Request".</p>
           </section>
 
           <section>
@@ -144,12 +144,12 @@ export default function PrivacyPage() {
               <li><strong>Grievance redressal</strong> — contact us first; if unsatisfied, escalate to the Data Protection Board of India</li>
               <li><strong>Nominate</strong> — designate someone to exercise rights on your behalf</li>
             </ul>
-            <p className="mt-3">To exercise any of these rights, email <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a> with subject "DPDPA Request" and your registered phone number. We will respond within 30 days.</p>
+            <p className="mt-3">To exercise any of these rights, email <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> with subject "DPDPA Request" and your registered phone number. We will respond within 30 days.</p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">9. Children's privacy</h2>
-            <p>Orderzo is built for businesses run by adults (18+). We do not knowingly collect data from anyone under 18. If you believe we have inadvertently collected data from a minor, contact us at <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a> and we will delete it.</p>
+            <p>Orderzo is built for businesses run by adults (18+). We do not knowingly collect data from anyone under 18. If you believe we have inadvertently collected data from a minor, contact us at <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> and we will delete it.</p>
           </section>
 
           <section>
@@ -177,8 +177,8 @@ export default function PrivacyPage() {
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
               <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
-              <p className="mt-2">Privacy / DPDPA inquiries: <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a></p>
-              <p>Customer support: <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a></p>
+              <p className="mt-2">Privacy / DPDPA inquiries: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a></p>
+              <p>Customer support: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
             </div>
           </section>
         </div>

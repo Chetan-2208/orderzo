@@ -185,7 +185,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F3FF] flex items-center justify-center">
         <Logo size={64} />
       </div>
     )
@@ -236,7 +236,7 @@ export default function DashboardPage() {
             {stats.totalOrders === 0 && (
               <>
                 {/* Festive blessing card */}
-                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-5 mb-5 border border-orange-100">
+                <div className="bg-gradient-to-br from-[#F4F3FF] to-amber-50 rounded-3xl p-5 mb-5 border border-[#EFEEFF]">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">💬</span>
                     <div>
@@ -249,13 +249,13 @@ export default function DashboardPage() {
                 {/* Big primary action */}
                 <button
                   onClick={() => router.push('/new?mode=order')}
-                  className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.99] transition-all text-white rounded-3xl p-6 mb-5 shadow-lg shadow-orange-500/30"
+                  className="w-full bg-[#635BFF] hover:bg-[#4D44E0] active:scale-[0.99] transition-all text-white rounded-3xl p-6 mb-5 shadow-lg shadow-[#635BFF]/30"
                 >
                   <div className="flex items-center justify-center gap-3 mb-1">
                     <span className="text-3xl">➕</span>
                     <span className="text-xl font-bold">Note your first sale</span>
                   </div>
-                  <p className="text-sm text-orange-50">Takes just 10 seconds</p>
+                  <p className="text-sm text-[#F4F3FF]">Takes just 10 seconds</p>
                 </button>
 
                 {/* Setup tips */}
@@ -305,7 +305,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Festive nudge */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                <div className="bg-gradient-to-br from-yellow-50 to-[#F4F3FF] rounded-2xl p-4 border border-yellow-200">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🎉</span>
                     <div>
@@ -323,7 +323,7 @@ export default function DashboardPage() {
             {stats.totalOrders > 0 && stats.totalOrders <= 30 && (
               <>
                 {/* Festive blessing */}
-                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-5 mb-5 border border-orange-100">
+                <div className="bg-gradient-to-br from-[#F4F3FF] to-amber-50 rounded-3xl p-5 mb-5 border border-[#EFEEFF]">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">💬</span>
                     <div>
@@ -370,7 +370,7 @@ export default function DashboardPage() {
                 {/* Quick action */}
                 <button
                   onClick={() => router.push('/new?mode=order')}
-                  className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.99] transition-all text-white rounded-3xl p-5 mb-5 shadow-lg shadow-orange-500/30"
+                  className="w-full bg-[#635BFF] hover:bg-[#4D44E0] active:scale-[0.99] transition-all text-white rounded-3xl p-5 mb-5 shadow-lg shadow-[#635BFF]/30"
                 >
                   <div className="flex items-center justify-center gap-3">
                     <span className="text-2xl">➕</span>
@@ -379,7 +379,7 @@ export default function DashboardPage() {
                 </button>
 
                 {/* Festive nudge */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                <div className="bg-gradient-to-br from-yellow-50 to-[#F4F3FF] rounded-2xl p-4 border border-yellow-200">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🎉</span>
                     <div>
@@ -477,7 +477,7 @@ export default function DashboardPage() {
                 )}
 
                 {/* Festive nudge */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-4 border border-yellow-200">
+                <div className="bg-gradient-to-br from-yellow-50 to-[#F4F3FF] rounded-2xl p-4 border border-yellow-200">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">💡</span>
                     <div>
@@ -498,7 +498,7 @@ export default function DashboardPage() {
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900">Business Info</h3>
-                <Link href="/setup" className="text-sm text-orange-500 font-medium hover:text-orange-600">Edit →</Link>
+                <Link href="/setup" className="text-sm text-[#635BFF] font-medium hover:text-[#4D44E0]">Edit →</Link>
               </div>
               <div className="space-y-3 text-sm">
                 <div><p className="text-gray-500 text-xs mb-1">Business Name</p><p className="text-gray-900 font-medium">{business?.business_name}</p></div>
@@ -514,7 +514,7 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-gray-900 mb-1">📋 All Orders</h3>
                   <p className="text-sm text-gray-500">View, search, and manage all orders</p>
                 </div>
-                <span className="text-orange-500 text-2xl">→</span>
+                <span className="text-[#635BFF] text-2xl">→</span>
               </div>
             </Link>
 
@@ -524,7 +524,7 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-gray-900 mb-1">📦 Menu / Items</h3>
                   <p className="text-sm text-gray-500">Manage your products and prices</p>
                 </div>
-                <span className="text-orange-500 text-2xl">→</span>
+                <span className="text-[#635BFF] text-2xl">→</span>
               </div>
             </Link>
 
@@ -534,18 +534,18 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-gray-900 mb-1">🙏 Help & Support</h3>
                   <p className="text-sm text-gray-500">FAQ, email, report a problem</p>
                 </div>
-                <span className="text-orange-500 text-2xl">→</span>
+                <span className="text-[#635BFF] text-2xl">→</span>
               </div>
             </Link>
 
-            <Link href="/pricing" className="block bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-orange-300 transition-all">
+            <Link href="/pricing" className="block bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-[#BDB9FF] transition-all">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">💎 Subscription</h3>
                   <p className="text-sm text-gray-500 mb-1">Free Plan · 5 transactions/day</p>
-                  <p className="text-xs text-orange-600 font-medium">Tap to upgrade to Pro →</p>
+                  <p className="text-xs text-[#4D44E0] font-medium">Tap to upgrade to Pro →</p>
                 </div>
-                <span className="text-orange-500 text-2xl">→</span>
+                <span className="text-[#635BFF] text-2xl">→</span>
               </div>
             </Link>
 
@@ -557,7 +557,7 @@ export default function DashboardPage() {
       {activeTab === 'orders' && (
         <button
           onClick={() => router.push('/new?mode=order')}
-          className="fixed bottom-24 right-6 w-16 h-16 bg-orange-500 text-white rounded-2xl shadow-2xl shadow-orange-500/40 hover:bg-orange-600 transition-colors flex items-center justify-center text-3xl font-light z-20"
+          className="fixed bottom-24 right-6 w-16 h-16 bg-[#635BFF] text-white rounded-2xl shadow-2xl shadow-[#635BFF]/40 hover:bg-[#4D44E0] transition-colors flex items-center justify-center text-3xl font-light z-20"
         >
           +
         </button>
@@ -571,24 +571,24 @@ export default function DashboardPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">What do you want to do?</h3>
             <p className="text-sm text-gray-500 text-center mb-6">Pick how you are capturing this transaction</p>
             <div className="space-y-3">
-              <button onClick={() => handleModeSelect('order')} className="w-full bg-orange-50 border-2 border-orange-200 hover:border-orange-500 rounded-2xl p-4 text-left transition-all">
+              <button onClick={() => handleModeSelect('order')} className="w-full bg-[#F4F3FF] border-2 border-[#DAD8FF] hover:border-[#635BFF] rounded-2xl p-4 text-left transition-all">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-2xl">📦</div>
+                  <div className="w-12 h-12 bg-[#635BFF] rounded-xl flex items-center justify-center text-2xl">📦</div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900">New Order</h4>
                     <p className="text-xs text-gray-600">Customer ordered remotely (WhatsApp, phone, etc.)</p>
                   </div>
-                  <span className="text-orange-500 text-xl">→</span>
+                  <span className="text-[#635BFF] text-xl">→</span>
                 </div>
               </button>
-              <button onClick={() => handleModeSelect('bill')} className="w-full bg-orange-50 border-2 border-orange-200 hover:border-orange-500 rounded-2xl p-4 text-left transition-all">
+              <button onClick={() => handleModeSelect('bill')} className="w-full bg-[#F4F3FF] border-2 border-[#DAD8FF] hover:border-[#635BFF] rounded-2xl p-4 text-left transition-all">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-2xl">🧾</div>
+                  <div className="w-12 h-12 bg-[#635BFF] rounded-xl flex items-center justify-center text-2xl">🧾</div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900">New Bill</h4>
                     <p className="text-xs text-gray-600">Customer is at your shop / counter</p>
                   </div>
-                  <span className="text-orange-500 text-xl">→</span>
+                  <span className="text-[#635BFF] text-xl">→</span>
                 </div>
               </button>
             </div>
@@ -599,13 +599,13 @@ export default function DashboardPage() {
 
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-10">
         <div className="max-w-2xl mx-auto flex">
-          <button onClick={() => setActiveTab('orders')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'orders' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
+          <button onClick={() => setActiveTab('orders')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'orders' ? 'text-[#635BFF]' : 'text-gray-400 hover:text-gray-600'}`}>
             <span className="text-2xl">📊</span><span className="text-xs font-medium">Today</span>
           </button>
           <button onClick={() => router.push('/customers')} className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-600">
             <span className="text-2xl">👥</span><span className="text-xs font-medium">Customers</span>
           </button>
-          <button onClick={() => setActiveTab('settings')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'settings' ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}>
+          <button onClick={() => setActiveTab('settings')} className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${activeTab === 'settings' ? 'text-[#635BFF]' : 'text-gray-400 hover:text-gray-600'}`}>
             <span className="text-2xl">👤</span><span className="text-xs font-medium">Me</span>
           </button>
         </div>

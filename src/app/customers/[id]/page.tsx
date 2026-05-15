@@ -66,7 +66,7 @@ export default function CustomerProfilePage() {
         <div className="text-center">
           <div className="text-5xl mb-4">😕</div>
           <h1 className="text-xl font-bold text-gray-900 mb-2">Customer not found</h1>
-          <button onClick={() => router.push('/customers')} className="text-orange-600 font-semibold">
+          <button onClick={() => router.push('/customers')} className="text-[#4D44E0] font-semibold">
             ← Back to customers
           </button>
         </div>
@@ -90,7 +90,7 @@ export default function CustomerProfilePage() {
   if (totalSpent >= 10000) { tier = 'VIP'; tierEmoji = '💎'; tierColor = 'bg-purple-100 text-purple-700' }
   else if (totalSpent >= 5000) { tier = 'Gold'; tierEmoji = '⭐'; tierColor = 'bg-yellow-100 text-yellow-700' }
   else if (totalSpent >= 2000) { tier = 'Silver'; tierEmoji = '🥈'; tierColor = 'bg-gray-100 text-gray-700' }
-  else if (totalVisits >= 3) { tier = 'Regular'; tierEmoji = '👋'; tierColor = 'bg-blue-100 text-blue-700' }
+  else if (totalVisits >= 3) { tier = 'Regular'; tierEmoji = '👋'; tierColor = 'bg-[#EFEEFF] text-[#4D44E0]' }
 
   const handleSaveNotes = async () => {
     if (!customer) return
@@ -139,7 +139,7 @@ export default function CustomerProfilePage() {
         {/* Customer info card */}
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-2xl font-bold text-orange-600">
+            <div className="w-16 h-16 rounded-full bg-[#EFEEFF] flex items-center justify-center text-2xl font-bold text-[#4D44E0]">
               {customer.name?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1">
@@ -174,7 +174,7 @@ export default function CustomerProfilePage() {
           </div>
           <div className="bg-white rounded-2xl border border-gray-100 p-4">
             <div className="text-xs text-gray-500 mb-1">Pending</div>
-            <div className={`text-xl font-bold ${pendingAmount > 0 ? 'text-orange-600' : 'text-gray-900'}`}>
+            <div className={`text-xl font-bold ${pendingAmount > 0 ? 'text-[#4D44E0]' : 'text-gray-900'}`}>
               Rs.{pendingAmount}
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function CustomerProfilePage() {
                   setNotesDraft(customer.notes || '')
                   setIsEditingNotes(true)
                 }}
-                className="text-sm text-orange-600 font-medium hover:text-orange-700"
+                className="text-sm text-[#4D44E0] font-medium hover:text-[#3530B8]"
               >
                 {customer.notes ? 'Edit' : '+ Add'}
               </button>
@@ -223,7 +223,7 @@ export default function CustomerProfilePage() {
                 value={notesDraft}
                 onChange={(e) => setNotesDraft(e.target.value)}
                 placeholder="e.g. Likes mango pickle. Pays via PhonePe. Allergic to peanuts."
-                className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
+                className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF] mb-3"
                 rows={4}
                 autoFocus
               />
@@ -240,7 +240,7 @@ export default function CustomerProfilePage() {
                         const newText = notesDraft ? `${notesDraft}\n${tag}` : tag
                         setNotesDraft(newText)
                       }}
-                      className="px-3 py-1.5 text-xs bg-gray-50 hover:bg-orange-50 hover:text-orange-700 border border-gray-200 rounded-full text-gray-700 transition-colors"
+                      className="px-3 py-1.5 text-xs bg-gray-50 hover:bg-[#F4F3FF] hover:text-[#3530B8] border border-gray-200 rounded-full text-gray-700 transition-colors"
                     >
                       {tag}
                     </button>
@@ -252,7 +252,7 @@ export default function CustomerProfilePage() {
                 <button
                   onClick={handleSaveNotes}
                   disabled={savingNotes}
-                  className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-2.5 rounded-xl font-medium transition-colors"
+                  className="flex-1 bg-[#635BFF] hover:bg-[#4D44E0] disabled:bg-[#BDB9FF] text-white py-2.5 rounded-xl font-medium transition-colors"
                 >
                   {savingNotes ? 'Saving...' : 'Save'}
                 </button>
@@ -274,8 +274,8 @@ export default function CustomerProfilePage() {
 
         {/* Customer journey */}
         {firstVisit && (
-          <div className="bg-orange-50 rounded-2xl border border-orange-100 p-4">
-            <div className="text-xs font-semibold text-orange-700 mb-2">📅 Customer journey</div>
+          <div className="bg-[#F4F3FF] rounded-2xl border border-[#EFEEFF] p-4">
+            <div className="text-xs font-semibold text-[#3530B8] mb-2">📅 Customer journey</div>
             <div className="text-sm text-gray-700">
               First order: <span className="font-semibold">{firstVisit.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
             </div>
@@ -298,7 +298,7 @@ export default function CustomerProfilePage() {
           </button>
           <button
             onClick={() => router.push(`/new?customer=${customerId}`)}
-            className="bg-orange-500 text-white rounded-2xl py-4 font-semibold hover:bg-orange-600 transition-all"
+            className="bg-[#635BFF] text-white rounded-2xl py-4 font-semibold hover:bg-[#4D44E0] transition-all"
           >
             ➕ New Order
           </button>
@@ -323,7 +323,7 @@ export default function CustomerProfilePage() {
                   <div
                     key={order.id}
                     onClick={() => router.push(`/orders/${order.id}/edit`)}
-                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50/30 transition-all cursor-pointer"
+                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-[#DAD8FF] hover:bg-[#F4F3FF]/30 transition-all cursor-pointer"
                   >
                     <div className="flex-1">
                       <div className="font-semibold text-gray-900 text-sm">
@@ -337,7 +337,7 @@ export default function CustomerProfilePage() {
                     <div className="text-right">
                       <div className="font-bold text-gray-900">Rs.{order.total}</div>
                       <div className={`text-xs font-semibold mt-0.5 ${
-                        isPaid ? 'text-green-600' : 'text-orange-600'
+                        isPaid ? 'text-green-600' : 'text-[#4D44E0]'
                       }`}>
                         {isPaid ? '✓ Paid' : '⏳ Pending'}
                       </div>

@@ -13,7 +13,7 @@ export default function TermsPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -25,7 +25,7 @@ export default function TermsPage() {
         </div>
 
         <div className="space-y-6 text-gray-700 leading-relaxed">
-          <section className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+          <section className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-4">
             <p className="text-sm">
               <strong>In simple words:</strong> By using Orderzo, you agree to use it lawfully, you stay responsible for your business data, we provide the service "as is" without guarantees of perfection, and any disputes go to courts in Hyderabad, Telangana.
             </p>
@@ -106,7 +106,7 @@ export default function TermsPage() {
               <li>Subscriptions are billed monthly in advance</li>
               <li>You authorize automatic renewal unless cancelled before next billing cycle</li>
               <li>Cancel anytime from your account settings</li>
-              <li>Refunds are governed by our <Link href="/refund" className="text-orange-600 underline">Refund Policy</Link></li>
+              <li>Refunds are governed by our <Link href="/refund" className="text-[#4D44E0] underline">Refund Policy</Link></li>
               <li>Failed payments will result in service suspension after 7 days grace period</li>
             </ul>
           </section>
@@ -115,7 +115,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">8. Your data and content</h2>
             <p>You own all data you input into Orderzo (customer info, orders, items, etc.). We store and process it on your behalf to deliver the service.</p>
             <p className="mt-2">By using Orderzo, you grant us a limited license to host, store, and process your data only as needed to operate the service.</p>
-            <p className="mt-2">For full details on data handling, see our <Link href="/privacy" className="text-orange-600 underline">Privacy Policy</Link>.</p>
+            <p className="mt-2">For full details on data handling, see our <Link href="/privacy" className="text-[#4D44E0] underline">Privacy Policy</Link>.</p>
           </section>
 
           <section>
@@ -160,8 +160,8 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">13. Termination</h2>
-            <p>You may terminate your account at any time through account settings or by emailing <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a>.</p>
-            <p className="mt-2">We may suspend or terminate your account if you violate these Terms. Upon termination, your data will be deleted per our <Link href="/privacy" className="text-orange-600 underline">Privacy Policy</Link>.</p>
+            <p>You may terminate your account at any time through account settings or by emailing <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a>.</p>
+            <p className="mt-2">We may suspend or terminate your account if you violate these Terms. Upon termination, your data will be deleted per our <Link href="/privacy" className="text-[#4D44E0] underline">Privacy Policy</Link>.</p>
           </section>
 
           <section>
@@ -188,7 +188,7 @@ export default function TermsPage() {
             <div className="bg-gray-50 rounded-xl p-4 text-sm mt-2">
               <p><strong>Chetan Aitaraju</strong></p>
               <p>Founder, Orderzo Technologies Pvt Ltd</p>
-              <p>Email: <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a> (Subject: "Grievance")</p>
+              <p>Email: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> (Subject: "Grievance")</p>
               <p>Response time: within 15 days of receipt</p>
             </div>
           </section>
@@ -198,8 +198,8 @@ export default function TermsPage() {
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
               <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
-              <p className="mt-2">General: <a href="mailto:info@orderzo.io" className="text-orange-600 underline">info@orderzo.io</a></p>
-              <p>Support: <a href="mailto:support@orderzo.io" className="text-orange-600 underline">support@orderzo.io</a></p>
+              <p className="mt-2">General: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a></p>
+              <p>Support: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
             </div>
           </section>
         </div>

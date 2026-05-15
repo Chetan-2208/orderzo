@@ -38,7 +38,7 @@ export default function Footer() {
                 href="https://linkedin.com/company/orderzo" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-9 h-9 bg-gray-800 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                className="inline-flex items-center justify-center w-9 h-9 bg-gray-800 hover:bg-[#4D44E0] text-white rounded-lg transition-colors"
                 aria-label="Orderzo on LinkedIn"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

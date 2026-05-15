@@ -104,7 +104,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FF] via-white to-[#F4F3FF] flex flex-col">
       <header className="px-6 py-6 sm:px-10">
         <Link href="/" className="flex items-center gap-2 w-fit">
           <Logo size={40} />
@@ -114,7 +114,7 @@ export default function LoginPage() {
 
       <main className="flex-1 flex items-center justify-center px-6 py-8">
         <div className="w-full max-w-md">
-          <div className="bg-white p-8 rounded-3xl shadow-xl shadow-orange-500/10 border border-orange-100">
+          <div className="bg-white p-8 rounded-3xl shadow-xl shadow-blue-600/10 border border-[#EFEEFF]">
             
             {step === 'phone' ? (
               <>
@@ -139,7 +139,7 @@ export default function LoginPage() {
                       placeholder={country === 'in' ? '9876543210' : '5551234567'}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                      className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                      className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF]"
                       autoFocus
                     />
                   </div>
@@ -151,7 +151,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading || phone.length !== 10}
-                    className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed mt-4"
+                    className="w-full bg-[#635BFF] text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] transition-colors disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed mt-4"
                   >
                     {loading ? 'Sending OTP...' : 'Send OTP →'}
                   </button>
@@ -196,7 +196,7 @@ export default function LoginPage() {
                     placeholder="000000"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-2xl tracking-widest text-center font-semibold text-gray-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-2"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-2xl tracking-widest text-center font-semibold text-gray-900 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF] mb-2"
                     autoFocus
                   />
 
@@ -207,7 +207,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading || otp.length !== 6}
-                    className="w-full bg-orange-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-colors disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed"
+                    className="w-full bg-[#635BFF] text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] transition-colors disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed"
                   >
                     {loading ? 'Verifying...' : 'Verify & Continue →'}
                   </button>
@@ -221,7 +221,7 @@ export default function LoginPage() {
                     await handleSendOtp(fakeEvent)
                   }}
                   disabled={loading}
-                  className="text-sm text-orange-500 hover:text-orange-600 mt-4 mx-auto block font-medium disabled:text-gray-400"
+                  className="text-sm text-[#635BFF] hover:text-[#4D44E0] mt-4 mx-auto block font-medium disabled:text-gray-400"
                 >
                   Resend OTP
                 </button>

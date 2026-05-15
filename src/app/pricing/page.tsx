@@ -13,7 +13,7 @@ export default function PricingPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -21,7 +21,7 @@ export default function PricingPage() {
       <main className="flex-1 max-w-5xl mx-auto px-4 py-12">
         {/* Hero */}
         <div className="text-center mb-12">
-          <p className="text-orange-600 font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
+          <p className="text-[#4D44E0] font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Simple, honest pricing.
           </h1>
@@ -83,23 +83,23 @@ export default function PricingPage() {
           </div>
 
           {/* PRO — Most Popular */}
-          <div className="bg-orange-500 text-white rounded-3xl p-8 flex flex-col relative shadow-2xl shadow-orange-500/40 transform md:scale-105">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-orange-500 text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          <div className="bg-[#635BFF] text-white rounded-3xl p-8 flex flex-col relative shadow-2xl shadow-[#635BFF]/40 transform md:scale-105">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-[#635BFF] text-xs font-bold px-3 py-1 rounded-full shadow-md">
               MOST POPULAR
             </div>
             
             <div className="mb-6">
               <div className="text-3xl mb-2">💎</div>
               <h3 className="text-2xl font-bold mb-1">Pro</h3>
-              <p className="text-sm text-orange-100 mb-4">For serious businesses</p>
+              <p className="text-sm text-[#EFEEFF] mb-4">For serious businesses</p>
               
               {/* Annual price (primary) */}
               <div className="flex items-baseline gap-1">
                 <span className="text-5xl font-bold">₹2,499</span>
-                <span className="text-orange-200">/year</span>
+                <span className="text-[#DAD8FF]">/year</span>
               </div>
-              <p className="text-sm text-orange-100 mt-1 font-semibold">Save ₹489 vs monthly</p>
-              <p className="text-xs text-orange-200 mt-2">Or ₹249/month</p>
+              <p className="text-sm text-[#EFEEFF] mt-1 font-semibold">Save ₹489 vs monthly</p>
+              <p className="text-xs text-[#DAD8FF] mt-2">Or ₹249/month</p>
             </div>
             
             <ul className="space-y-3 mb-6 flex-1">
@@ -137,14 +137,14 @@ export default function PricingPage() {
               </li>
             </ul>
 
-            <Link href="/login" className="block text-center bg-white text-orange-500 py-3 rounded-xl font-semibold hover:bg-orange-50 transition-colors">
+            <Link href="/login" className="block text-center bg-white text-[#635BFF] py-3 rounded-xl font-semibold hover:bg-[#F4F3FF] transition-colors">
               Get Pro →
             </Link>
           </div>
         </div>
 
         {/* What replaces */}
-        <div className="bg-gradient-to-br from-gray-50 to-orange-50 rounded-3xl p-8 mb-12">
+        <div className="bg-gradient-to-br from-gray-50 to-[#F4F3FF] rounded-3xl p-8 mb-12">
           <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">
             ₹249/month replaces:
           </h2>
@@ -227,7 +227,7 @@ export default function PricingPage() {
                 <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <p className="text-gray-600 text-sm mt-3">
-                Yes. Cancel from your dashboard anytime, no questions asked. You keep access until your billing period ends. For annual plans, see our <Link href="/refund" className="text-orange-500 hover:underline">Refund Policy</Link>.
+                Yes. Cancel from your dashboard anytime, no questions asked. You keep access until your billing period ends. For annual plans, see our <Link href="/refund" className="text-[#635BFF] hover:underline">Refund Policy</Link>.
               </p>
             </details>
             <details className="bg-white border border-gray-200 rounded-2xl p-5 group">
@@ -245,7 +245,7 @@ export default function PricingPage() {
                 <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <p className="text-gray-600 text-sm mt-3">
-                WhatsApp us at <strong>+91 84660 89662</strong> or email <a href="mailto:info@orderzo.io" className="text-orange-500 hover:underline">info@orderzo.io</a>. We're a small team — every message gets read.
+                WhatsApp us at <strong>+91 84660 89662</strong> or email <a href="mailto:info@orderzo.io" className="text-[#635BFF] hover:underline">info@orderzo.io</a>. We're a small team — every message gets read.
               </p>
             </details>
           </div>
@@ -253,8 +253,8 @@ export default function PricingPage() {
 
         {/* CTA */}
         <div className="text-center mt-12 mb-8">
-          <p className="text-orange-600 font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
-          <Link href="/login" className="inline-block bg-orange-500 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30">
+          <p className="text-[#4D44E0] font-bold italic text-lg mb-3">"Apna dukan, apne haath mein."</p>
+          <Link href="/login" className="inline-block bg-[#635BFF] text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#4D44E0] transition-colors shadow-lg shadow-[#635BFF]/30">
             Start Free →
           </Link>
           <p className="text-sm text-gray-500 mt-3">No credit card · 30 invoices/month free · Made in India 🇮🇳</p>

@@ -60,10 +60,10 @@ export default function SupportPage() {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-4">
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-6 text-white shadow-lg shadow-orange-500/30">
+        <div className="bg-gradient-to-r from-[#F4F3FF]0 to-[#4D44E0] rounded-3xl p-6 text-white shadow-lg shadow-[#635BFF]/30">
           <div className="text-4xl mb-2">🙏</div>
           <h2 className="text-xl font-bold mb-1">How can we help, {businessName ? businessName.split(' ')[0] : 'Founder'}?</h2>
-          <p className="text-orange-100 text-sm">We typically reply within 4 hours during business hours (9 AM - 9 PM IST)</p>
+          <p className="text-[#EFEEFF] text-sm">We typically reply within 4 hours during business hours (9 AM - 9 PM IST)</p>
         </div>
 
         
@@ -89,13 +89,13 @@ export default function SupportPage() {
           className="w-full bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-shadow text-left"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">📧</div>
+            <div className="w-12 h-12 bg-[#EFEEFF] rounded-xl flex items-center justify-center text-2xl">📧</div>
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 mb-1">Email Support</h3>
               <p className="text-sm text-gray-500">support@orderzo.io</p>
               <p className="text-xs text-gray-400 mt-1">Reply within 4 hours</p>
             </div>
-            <span className="text-orange-500 text-2xl">→</span>
+            <span className="text-[#635BFF] text-2xl">→</span>
           </div>
         </button>
 
@@ -112,12 +112,12 @@ export default function SupportPage() {
             value={issueText}
             onChange={(e) => setIssueText(e.target.value)}
             rows={4}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3 resize-none"
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF] mb-3 resize-none"
           />
           <button
             onClick={handleReportIssue}
             disabled={!issueText.trim() || issueSent}
-            className="w-full bg-orange-500 text-white py-3 rounded-xl font-medium hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#635BFF] text-white py-3 rounded-xl font-medium hover:bg-[#4D44E0] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
           >
             {issueSent ? 'Email opened' : 'Send Issue Report'}
           </button>

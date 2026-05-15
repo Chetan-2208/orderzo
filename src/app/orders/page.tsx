@@ -136,7 +136,7 @@ export default function OrdersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F3FF] flex items-center justify-center">
         <Logo size={64} />
       </div>
     )
@@ -160,7 +160,7 @@ export default function OrdersPage() {
           placeholder="Search by customer, item, or amount..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 mb-3"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#EFEEFF] mb-3"
         />
 
         <div className="bg-white rounded-2xl p-1 border border-gray-200 mb-3 flex gap-1">
@@ -170,7 +170,7 @@ export default function OrdersPage() {
               onClick={() => setDateFilter(range)}
               className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${
                 dateFilter === range
-                  ? 'bg-orange-500 text-white shadow-md'
+                  ? 'bg-[#635BFF] text-white shadow-md'
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
@@ -186,7 +186,7 @@ export default function OrdersPage() {
               onClick={() => setStatusFilter(s)}
               className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${
                 statusFilter === s
-                  ? 'bg-orange-500 text-white shadow-md'
+                  ? 'bg-[#635BFF] text-white shadow-md'
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
@@ -195,8 +195,8 @@ export default function OrdersPage() {
           ))}
         </div>
 
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 mb-4 text-center">
-          <p className="text-sm text-orange-700">
+        <div className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-3 mb-4 text-center">
+          <p className="text-sm text-[#3530B8]">
             <span className="font-bold">{filtered.length}</span> orders · Rs.<span className="font-bold">{totalAmount.toLocaleString('en-IN')}</span> total
           </p>
         </div>
@@ -217,7 +217,7 @@ export default function OrdersPage() {
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
                         order.status === 'paid' || order.status === 'done' 
                           ? 'bg-green-100 text-green-700' 
-                          : 'bg-orange-100 text-orange-700'
+                          : 'bg-[#EFEEFF] text-[#3530B8]'
                       }`}>
                         {order.status === 'paid' || order.status === 'done' ? 'Paid' : 'Pending'}
                       </span>
@@ -236,7 +236,7 @@ export default function OrdersPage() {
                     )}
                   </div>
                   <div className="text-right ml-3">
-                    <p className="text-xl font-bold text-orange-500">Rs.{order.total}</p>
+                    <p className="text-xl font-bold text-[#635BFF]">Rs.{order.total}</p>
                     <p className="text-xs text-gray-500">
                       {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                     </p>
@@ -252,7 +252,7 @@ export default function OrdersPage() {
                 <div className="flex flex-wrap gap-2">
                   <Link 
                     href={`/orders/${order.id}/edit`}
-                    className="flex-1 min-w-[100px] text-center bg-blue-50 text-blue-700 border border-blue-200 py-2 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
+                    className="flex-1 min-w-[100px] text-center bg-[#F4F3FF] text-[#4D44E0] border border-[#DAD8FF] py-2 rounded-lg text-sm font-medium hover:bg-[#EFEEFF] transition-colors"
                   >
                     ✏️ Edit
                   </Link>
@@ -268,7 +268,7 @@ export default function OrdersPage() {
                   {order.customer_phone && (order.status === 'sent' || order.status === 'new') && (
                     <button
                       onClick={() => handleResendWhatsApp(order)}
-                      className="flex-1 min-w-[100px] bg-orange-50 text-orange-700 border border-orange-200 py-2 rounded-lg text-sm font-medium hover:bg-orange-100 transition-colors"
+                      className="flex-1 min-w-[100px] bg-[#F4F3FF] text-[#3530B8] border border-[#DAD8FF] py-2 rounded-lg text-sm font-medium hover:bg-[#EFEEFF] transition-colors"
                     >
                       📱 Remind
                     </button>

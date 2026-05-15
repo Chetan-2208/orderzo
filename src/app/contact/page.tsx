@@ -15,7 +15,7 @@ export default function ContactPage() {
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
             <Link href="/pricing" className="text-gray-600 hover:text-gray-900">Pricing</Link>
-            <Link href="/login" className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600">Sign In</Link>
+            <Link href="/login" className="bg-[#635BFF] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4D44E0]">Sign In</Link>
           </nav>
         </div>
       </header>
@@ -23,7 +23,7 @@ export default function ContactPage() {
       <main className="flex-1 max-w-4xl mx-auto px-4 py-12">
         {/* Page intro */}
         <div className="text-center mb-12">
-          <p className="text-orange-600 font-bold italic text-lg mb-3">"Aapka business, hamari priority."</p>
+          <p className="text-[#4D44E0] font-bold italic text-lg mb-3">"Aapka business, hamari priority."</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get in touch</h1>
           <p className="text-xl text-gray-600">We're a small team. Every message gets read.</p>
         </div>
@@ -53,31 +53,31 @@ export default function ContactPage() {
         {/* Email options */}
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* General */}
-          <a href="mailto:info@orderzo.io" className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-orange-500 transition-all">
+          <a href="mailto:info@orderzo.io" className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-[#635BFF] transition-all">
             <div className="text-3xl mb-3">📧</div>
             <h3 className="font-bold text-gray-900 mb-1">General Inquiries</h3>
-            <p className="text-orange-500 font-semibold mb-2">info@orderzo.io</p>
+            <p className="text-[#635BFF] font-semibold mb-2">info@orderzo.io</p>
             <p className="text-sm text-gray-600">Sales, partnerships, press, general questions</p>
           </a>
 
           {/* Support */}
-          <a href="mailto:support@orderzo.io" className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-orange-500 transition-all">
+          <a href="mailto:support@orderzo.io" className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-[#635BFF] transition-all">
             <div className="text-3xl mb-3">🙏</div>
             <h3 className="font-bold text-gray-900 mb-1">Customer Support</h3>
-            <p className="text-orange-500 font-semibold mb-2">support@orderzo.io</p>
+            <p className="text-[#635BFF] font-semibold mb-2">support@orderzo.io</p>
             <p className="text-sm text-gray-600">Issues with your account, billing, technical help</p>
           </a>
         </div>
 
         {/* LinkedIn */}
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-6">
+        <div className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-2xl p-6 mb-6">
           <h3 className="font-bold text-gray-900 mb-3">🔗 Connect with us on LinkedIn</h3>
           <div className="flex flex-wrap gap-3">
             <a 
               href="https://linkedin.com/company/orderzo" 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-[#635BFF] hover:bg-[#4D44E0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -88,7 +88,7 @@ export default function ContactPage() {
               href="https://linkedin.com/in/chetan-aitaraju" 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white border border-blue-300 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-white border border-[#BDB9FF] hover:bg-[#EFEEFF] text-[#4D44E0] px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -99,7 +99,7 @@ export default function ContactPage() {
         </div>
 
         {/* Business hours */}
-        <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 mb-8">
+        <div className="bg-[#F4F3FF] border border-[#DAD8FF] rounded-2xl p-6 mb-8">
           <h3 className="font-bold text-gray-900 mb-2">⏰ Business Hours</h3>
           <p className="text-gray-700">Monday – Saturday: 9:00 AM – 9:00 PM IST</p>
           <p className="text-gray-700">Sunday: 10:00 AM – 6:00 PM IST</p>
@@ -124,31 +124,31 @@ export default function ContactPage() {
           <h3 className="font-bold text-gray-900 mb-4">Need help with something specific?</h3>
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
-              <span className="text-orange-500">→</span>
+              <span className="text-[#635BFF]">→</span>
               <div>
                 <p className="font-semibold text-gray-900">Account & billing issues</p>
-                <p className="text-gray-600">Email <a href="mailto:support@orderzo.io" className="text-orange-500 hover:underline">support@orderzo.io</a> with your registered phone number, or WhatsApp us directly.</p>
+                <p className="text-gray-600">Email <a href="mailto:support@orderzo.io" className="text-[#635BFF] hover:underline">support@orderzo.io</a> with your registered phone number, or WhatsApp us directly.</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-orange-500">→</span>
+              <span className="text-[#635BFF]">→</span>
               <div>
                 <p className="font-semibold text-gray-900">Privacy & data requests</p>
-                <p className="text-gray-600">Email <a href="mailto:info@orderzo.io" className="text-orange-500 hover:underline">info@orderzo.io</a> with subject "DPDPA Request"</p>
+                <p className="text-gray-600">Email <a href="mailto:info@orderzo.io" className="text-[#635BFF] hover:underline">info@orderzo.io</a> with subject "DPDPA Request"</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-orange-500">→</span>
+              <span className="text-[#635BFF]">→</span>
               <div>
                 <p className="font-semibold text-gray-900">Refunds & cancellations</p>
-                <p className="text-gray-600">See our <Link href="/refund" className="text-orange-500 hover:underline">Refund Policy</Link>, or email <a href="mailto:support@orderzo.io" className="text-orange-500 hover:underline">support@orderzo.io</a></p>
+                <p className="text-gray-600">See our <Link href="/refund" className="text-[#635BFF] hover:underline">Refund Policy</Link>, or email <a href="mailto:support@orderzo.io" className="text-[#635BFF] hover:underline">support@orderzo.io</a></p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-orange-500">→</span>
+              <span className="text-[#635BFF]">→</span>
               <div>
                 <p className="font-semibold text-gray-900">Press & media</p>
-                <p className="text-gray-600">Email <a href="mailto:info@orderzo.io" className="text-orange-500 hover:underline">info@orderzo.io</a> with subject "Press"</p>
+                <p className="text-gray-600">Email <a href="mailto:info@orderzo.io" className="text-[#635BFF] hover:underline">info@orderzo.io</a> with subject "Press"</p>
               </div>
             </div>
           </div>
