@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import Footer from '@/components/Footer'
+import ModesShowcase from '@/components/ModesShowcase'
 
 export default function Home() {
   return (
@@ -671,84 +672,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The 3 Modes — Split layout */}
-        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white">
-          <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* LEFT: Big headline + supporting copy */}
-            <div className="lg:col-span-5 lg:sticky lg:top-24">
-              <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">One app, three modes</p>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-[1.05]">
-                Built for the way<br />
-                <span className="text-[#635BFF]">your business</span><br />
-                actually works.
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Tell us how customers reach you. Orderzo shapes itself around your reality — not the other way around.
-              </p>
-              <div className="inline-flex items-center gap-2 bg-[#EFEEFF] text-[#3530B8] rounded-full px-4 py-2 text-sm font-semibold">
-                <span>👉</span>
-                <span>Pick your mode at signup. Change anytime.</span>
-              </div>
-            </div>
-
-            {/* RIGHT: Stacked mode cards */}
-            <div className="lg:col-span-7 space-y-4">
-              
-              {/* Mode 1: Online */}
-              <div className="group bg-gradient-to-br from-[#EFEEFF] to-white border-2 border-[#DAD8FF] rounded-3xl p-6 sm:p-7 hover:shadow-xl hover:border-[#635BFF] transition-all">
-                <div className="flex items-start gap-5">
-                  <div className="flex-shrink-0 w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm">
-                    📱
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <h3 className="text-xl font-bold text-gray-900">Online orders</h3>
-                      <span className="text-xs font-semibold text-[#635BFF] bg-white px-2 py-1 rounded-full border border-[#DAD8FF]">WhatsApp-first</span>
-                    </div>
-                    <p className="text-[#4D44E0] font-bold italic text-base mb-3">"Order milte hi, bill bhej do."</p>
-                    <p className="text-gray-700 leading-relaxed">Orderzo turns a WhatsApp message into a professional invoice + UPI link in 10 seconds. Customer pays. You move on.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Mode 2: Offline */}
-              <div className="group bg-gradient-to-br from-green-50 to-white border-2 border-green-200 rounded-3xl p-6 sm:p-7 hover:shadow-xl hover:border-green-500 transition-all">
-                <div className="flex items-start gap-5">
-                  <div className="flex-shrink-0 w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm">
-                    🏪
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <h3 className="text-xl font-bold text-gray-900">Walk-in counter</h3>
-                      <span className="text-xs font-semibold text-green-700 bg-white px-2 py-1 rounded-full border border-green-200">Counter sales</span>
-                    </div>
-                    <p className="text-green-800 font-bold italic text-base mb-3">"Computer hatao. Phone uthao."</p>
-                    <p className="text-gray-700 leading-relaxed">Your phone is now your billing machine. 10-second bills. Cash, UPI, or card — Orderzo tracks every rupee.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Mode 3: Both */}
-              <div className="group bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-3xl p-6 sm:p-7 hover:shadow-xl hover:border-purple-500 transition-all">
-                <div className="flex items-start gap-5">
-                  <div className="flex-shrink-0 w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm">
-                    🔄
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <h3 className="text-xl font-bold text-gray-900">Both modes</h3>
-                      <span className="text-xs font-semibold text-purple-700 bg-white px-2 py-1 rounded-full border border-purple-200">Best of both</span>
-                    </div>
-                    <p className="text-purple-800 font-bold italic text-base mb-3">"Kabhi WhatsApp, kabhi counter."</p>
-                    <p className="text-gray-700 leading-relaxed">Many Indian businesses run both modes daily. Orderzo doesn't make you choose. Both modes. One app. One dashboard.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
+        {/* The 3 Modes — Interactive mode showcase */}
+        <ModesShowcase />
 
         {/* What replaces — OLD vs ORDERZO comparison */}
         <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-gray-50 to-white">

@@ -13,7 +13,7 @@ export default function ModesShowcase() {
       label: 'Online orders',
       pill: 'WhatsApp-first',
       tagline: '"Order milte hi, bill bhej do."',
-      desc: 'Orderzo turns a WhatsApp message into a professional invoice + UPI link in 10 seconds. Customer pays. You move on.',
+      desc: 'Orderzo turns a WhatsApp message into a professional invoice + UPI link in 10 seconds.',
       accent: '#635BFF',
       bgGradient: 'from-[#EFEEFF] to-white',
       borderColor: 'border-[#DAD8FF]',
@@ -24,10 +24,10 @@ export default function ModesShowcase() {
         { value: '1-tap', label: 'UPI pay' },
       ],
       features: [
-        'WhatsApp-native invoice with shop branding',
-        'One-tap UPI link auto-attached',
-        'Customer pays from any UPI app',
-        'Auto-confirmation message sent back',
+        { icon: '💬', text: 'WhatsApp-native invoice with shop branding' },
+        { icon: '🔗', text: 'One-tap UPI link auto-attached' },
+        { icon: '💳', text: 'Customer pays from any UPI app' },
+        { icon: '✓', text: 'Auto-confirmation message sent back' },
       ],
     },
     offline: {
@@ -35,7 +35,7 @@ export default function ModesShowcase() {
       label: 'Walk-in counter',
       pill: 'Counter sales',
       tagline: '"Computer hatao. Phone uthao."',
-      desc: 'Your phone is now your billing machine. 10-second bills. Cash, UPI, or card — Orderzo tracks every rupee.',
+      desc: 'Your phone is now your billing machine. 10-second bills. Cash, UPI, or card.',
       accent: '#16a34a',
       bgGradient: 'from-green-50 to-white',
       borderColor: 'border-green-200',
@@ -46,10 +46,10 @@ export default function ModesShowcase() {
         { value: '₹0', label: 'Hardware' },
       ],
       features: [
-        'Quick Sale form — phone optional, items + amount',
-        'Cash / UPI / Card payment tracking',
-        'Auto-totals at end of day',
-        'No thermal printer, no Tally, no PC',
+        { icon: '⚡', text: 'Quick Sale — items + amount, phone optional' },
+        { icon: '💵', text: 'Cash / UPI / Card payment tracking' },
+        { icon: '📊', text: 'Auto-totals at end of day' },
+        { icon: '🚫', text: 'No thermal printer, no Tally, no PC' },
       ],
     },
     both: {
@@ -57,7 +57,7 @@ export default function ModesShowcase() {
       label: 'Both modes',
       pill: 'Best of both',
       tagline: '"Kabhi WhatsApp, kabhi counter."',
-      desc: 'Many Indian businesses run both modes daily. Orderzo does not make you choose. Both modes. One app. One dashboard.',
+      desc: 'Many Indian businesses run both daily. One app. One dashboard. Switch on the fly.',
       accent: '#9333ea',
       bgGradient: 'from-purple-50 to-white',
       borderColor: 'border-purple-200',
@@ -68,10 +68,10 @@ export default function ModesShowcase() {
         { value: '∞', label: 'Customers' },
       ],
       features: [
-        'Single unified dashboard for all orders',
-        'WhatsApp orders + counter sales in one view',
-        'Daily summary split by source',
-        'Switch modes on the fly — no setup change',
+        { icon: '📊', text: 'Single unified dashboard for all orders' },
+        { icon: '🔀', text: 'WhatsApp + counter sales in one view' },
+        { icon: '📈', text: 'Daily summary split by source' },
+        { icon: '🔄', text: 'Switch modes on the fly — no setup change' },
       ],
     },
   }
@@ -122,7 +122,7 @@ export default function ModesShowcase() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
 
           <div className="flex justify-center order-2 lg:order-1">
             <div className="relative w-72 sm:w-80">
@@ -281,7 +281,7 @@ export default function ModesShowcase() {
             </div>
           </div>
 
-          <div className={'relative order-1 lg:order-2 bg-gradient-to-br ' + current.bgGradient + ' border-2 ' + current.borderColor + ' rounded-3xl p-7 sm:p-9 lg:p-10 transition-all shadow-2xl overflow-hidden'}>
+          <div className={'relative order-1 lg:order-2 bg-gradient-to-br ' + current.bgGradient + ' border-2 ' + current.borderColor + ' rounded-3xl p-6 sm:p-8 transition-all shadow-2xl overflow-hidden'}>
 
             <div
               className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-20 -translate-y-12 translate-x-12 pointer-events-none"
@@ -292,57 +292,57 @@ export default function ModesShowcase() {
               style={{ background: current.accent }}
             ></div>
 
-            <div className="relative flex items-center gap-2 mb-6">
+            <div className="relative flex items-center gap-2 mb-4">
               <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white shadow-sm">
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: current.accent }}></span>
                 <span className="text-xs font-bold uppercase tracking-wider" style={{ color: current.accent }}>{current.pill}</span>
               </div>
             </div>
 
-            <div className="relative flex items-center gap-4 mb-5">
+            <div className="relative flex items-center gap-3 mb-3">
               <div className="relative">
                 <div className="absolute inset-0 rounded-2xl blur-md opacity-40" style={{ background: current.accent }}></div>
-                <div className="relative w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-lg ring-2 ring-white">
+                <div className="relative w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-lg ring-2 ring-white">
                   {current.emoji}
                 </div>
               </div>
-              <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">{current.label}</h3>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">{current.label}</h3>
             </div>
 
-            <p className={'relative font-bold italic text-lg sm:text-xl mb-6 ' + current.taglineColor}>
+            <p className={'relative font-bold italic text-base sm:text-lg mb-3 ' + current.taglineColor}>
               {current.tagline}
             </p>
 
-            <p className="relative text-base sm:text-lg text-gray-700 leading-relaxed mb-7">
+            <p className="relative text-sm sm:text-base text-gray-700 leading-relaxed mb-5">
               {current.desc}
             </p>
 
-            <div className="relative grid grid-cols-3 gap-3 mb-7">
+            <div className="relative flex flex-wrap items-center gap-x-4 gap-y-2 mb-5 pb-5 border-b border-white/40">
               {current.stats.map((stat, i) => (
-                <div key={i} className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-white shadow-sm text-center">
-                  <p className="text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: current.accent }}>{stat.value}</p>
-                  <p className="text-[10px] sm:text-xs font-semibold text-gray-600 uppercase tracking-wider mt-0.5">{stat.label}</p>
+                <div key={i} className="flex items-baseline gap-1.5">
+                  <span className="text-xl sm:text-2xl font-extrabold tracking-tight" style={{ color: current.accent }}>{stat.value}</span>
+                  <span className="text-xs font-semibold text-gray-600">{stat.label}</span>
+                  {i < current.stats.length - 1 && <span className="text-gray-300 mx-1">·</span>}
                 </div>
               ))}
             </div>
 
-            <div className="relative mb-7">
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">What you get</p>
-              <ul className="space-y-2">
+            <div className="relative mb-5">
+              <ul className="space-y-2.5">
                 {current.features.map((feat, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm sm:text-base text-gray-800">
+                  <li key={i} className="flex items-start gap-3 text-sm sm:text-base text-gray-800">
                     <div
-                      className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5 shadow-sm"
-                      style={{ background: current.accent }}
-                    >✓</div>
-                    <span className="leading-relaxed">{feat}</span>
+                      className="flex-shrink-0 w-7 h-7 rounded-lg bg-white shadow-sm flex items-center justify-center text-base"
+                      style={{ border: '1px solid ' + current.accent + '30' }}
+                    >{feat.icon}</div>
+                    <span className="leading-snug pt-1">{feat.text}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className="relative flex flex-wrap items-center gap-3">
-              <a href="/login" className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold text-sm transition-colors shadow-lg">
+              <a href="/login" className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-lg">
                 Start with this mode →
               </a>
               <span className="text-xs text-gray-600">
