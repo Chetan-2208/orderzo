@@ -193,14 +193,22 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-28">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-4 sticky top-0 z-10 shadow-sm">
+      {/* Header — matches marketing mockup */}
+      <header className="bg-white border-b border-gray-100 px-4 sm:px-6 py-3 sticky top-0 z-10 backdrop-blur-sm bg-white/95">
         <div className="flex items-center justify-between max-w-2xl mx-auto">
-          <div className="flex items-center gap-3">
-            <Logo size={36} />
-            <div>
-              <h1 className="font-bold text-gray-900 leading-tight">{business?.business_name}</h1>
-              <p className="text-xs text-gray-500">+91 {phone}</p>
+          <div>
+            <p className="text-xs text-gray-500 font-medium">
+              {new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+            </p>
+            <h1 className="text-lg sm:text-xl font-extrabold text-gray-900 leading-tight">Today</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="text-right hidden sm:block">
+              <p className="text-xs text-gray-500 leading-tight">{business?.business_name}</p>
+              <p className="text-[10px] text-gray-400">+91 {phone}</p>
+            </div>
+            <div className="w-10 h-10 bg-[#635BFF] text-white rounded-full flex items-center justify-center font-bold shadow-md">
+              {business?.business_name?.charAt(0).toUpperCase() || 'O'}
             </div>
           </div>
         </div>
@@ -217,19 +225,34 @@ export default function DashboardPage() {
                 - Mature (30+ invoices total)
             ═══════════════════════════════════════════════════ */}
 
-            {/* GREETING — same across all modes */}
+            {/* HERO EARNINGS CARD — matches marketing mockup */}
             <div className="mb-6 pt-2">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-2xl">
-                  {new Date().getHours() < 12 ? '☀️' : new Date().getHours() < 17 ? '🌤️' : '🌙'}
-                </span>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 17 ? 'Good afternoon' : 'Good evening'}, {business?.business_name}
-                </h1>
+              <div className="bg-gradient-to-br from-[#F4F3FF] via-white to-[#EFEEFF] rounded-3xl p-6 sm:p-7 border border-[#EFEEFF] shadow-sm">
+                <p className="text-xs sm:text-sm text-gray-500 font-semibold mb-2 uppercase tracking-wider">
+                  Today&apos;s earnings
+                </p>
+                <p className="text-5xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-2 leading-none">
+                  &#8377;{stats.totalCollected.toLocaleString('en-IN')}
+                </p>
+                {stats.totalOrders > 0 ? (
+                  <div className="flex items-center gap-2 mt-3">
+                    <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-bold">
+                      <span>&#9679;</span>
+                      <span>{stats.paidOrders} paid</span>
+                    </span>
+                    {stats.pendingOrders > 0 && (
+                      <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-bold">
+                        <span>&#9679;</span>
+                        <span>{stats.pendingOrders} pending</span>
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Send your first invoice to start tracking &#8594;
+                  </p>
+                )}
               </div>
-              <p className="text-sm text-gray-500 ml-9">
-                {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}
-              </p>
             </div>
 
             {/* ─────────────── EMPTY MODE (0 total orders) ─────────────── */}

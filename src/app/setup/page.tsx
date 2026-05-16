@@ -147,15 +147,40 @@ export default function SetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FF] via-white to-[#F4F3FF] px-4 py-8">
-      <div className="max-w-md mx-auto">
-        <div className="text-center mb-6">
-          <Logo size={56} />
-          <h1 className="text-2xl font-bold text-gray-900 mt-4 mb-1">
-            {isEdit ? 'Edit your business' : 'Build your business profile'}
-          </h1>
-          <p className="text-sm text-gray-600">Make your shop look like a real brand</p>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 flex flex-col">
+      
+      <header className="bg-white border-b border-gray-100 px-4 sm:px-6 py-4 sticky top-0 z-10 backdrop-blur-sm bg-white/95">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Logo size={32} />
+            <span className="text-lg font-bold text-gray-900">Orderzo</span>
+          </Link>
+          <div className="text-sm text-gray-600 font-medium">
+            <span className="hidden sm:inline">Setup</span>
+            <span className="text-gray-300 mx-2 hidden sm:inline">/</span>
+            <span className="text-[#635BFF] font-bold">Step 2 of 2</span>
+          </div>
         </div>
+      </header>
+
+      <main className="flex-1 px-4 sm:px-6 py-10 sm:py-14">
+        <div className="max-w-2xl mx-auto">
+
+          <div className="text-center mb-10">
+            <div className="inline-block bg-[#EFEEFF] text-[#3530B8] px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5">
+              {isEdit ? 'Edit your shop' : 'Final step — almost done'}
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-4">
+              {isEdit ? (
+                <>Edit your<br /><span className="text-[#635BFF]">business profile.</span></>
+              ) : (
+                <>Build your<br /><span className="text-[#635BFF]">business profile.</span></>
+              )}
+            </h1>
+            <p className="text-base sm:text-lg text-gray-600 max-w-lg mx-auto leading-relaxed">
+              Make your shop look like a real brand. Logo, name, UPI, done. 2 minutes total.
+            </p>
+          </div>
 
         {/* Phone verified badge */}
         <div className="bg-green-50 border border-green-200 rounded-xl p-3 mb-4 flex items-center gap-3">
@@ -453,10 +478,11 @@ export default function SetupPage() {
           </button>
         </div>
 
-        <p className="text-center text-xs text-gray-500 mt-4">
-          Your data is securely stored in Mumbai · DPDP Act compliant
-        </p>
-      </div>
+          <p className="text-center text-xs text-gray-500 mt-6">
+            Your data is securely stored in Mumbai · DPDP Act compliant
+          </p>
+        </div>
+      </main>
     </div>
   )
 }
