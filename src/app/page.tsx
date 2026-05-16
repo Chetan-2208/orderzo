@@ -181,6 +181,245 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Works on phone + laptop — proof of real product on multiple devices */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            
+            {/* Section header */}
+            <div className="text-center mb-16">
+              <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">Works everywhere you do</p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-4">
+                Phone in the field.<br />
+                <span className="text-[#635BFF]">Laptop in the office.</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Built phone-first. Works seamlessly on any device with a browser. No app store install needed.
+              </p>
+            </div>
+
+            {/* Devices showcase */}
+            <div className="relative max-w-5xl mx-auto">
+              
+              {/* Decorative gradient blob behind devices */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/10 via-purple-100/30 to-[#EFEEFF]/40 blur-3xl rounded-full"></div>
+
+              {/* LAPTOP MOCKUP */}
+              <div className="relative">
+                {/* Outer laptop body (silver bezel) */}
+                <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-t-2xl p-2 shadow-2xl">
+                  {/* Screen border (black bezel) */}
+                  <div className="bg-gray-900 rounded-t-xl p-3">
+                    {/* Browser window */}
+                    <div className="bg-white rounded-lg overflow-hidden shadow-inner">
+                      
+                      {/* Browser chrome (URL bar + traffic lights) */}
+                      <div className="bg-gray-100 border-b border-gray-200 px-3 py-2 flex items-center gap-2">
+                        <div className="flex gap-1.5">
+                          <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                          <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                          <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                        </div>
+                        <div className="flex-1 mx-3">
+                          <div className="bg-white rounded px-3 py-1 text-xs text-gray-500 border border-gray-200 flex items-center gap-2">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                            <span>app.orderzo.io</span>
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-400">↻</div>
+                      </div>
+
+                      {/* Dashboard content */}
+                      <div className="flex" style={{minHeight: '380px'}}>
+                        
+                        {/* Sidebar */}
+                        <div className="w-48 bg-white border-r border-gray-100 py-4 flex-shrink-0">
+                          {/* Logo */}
+                          <div className="px-4 mb-6">
+                            <div className="flex items-center gap-2">
+                              <div className="w-7 h-7 bg-[#635BFF] rounded-lg flex items-center justify-center text-white font-bold text-xs">O</div>
+                              <span className="font-bold text-gray-900 text-sm">Orderzo</span>
+                            </div>
+                          </div>
+                          
+                          {/* Nav */}
+                          <div className="space-y-1 px-2">
+                            <div className="px-3 py-2 bg-[#F4F3FF] text-[#635BFF] rounded-lg text-sm font-semibold flex items-center gap-2">
+                              <span>📊</span> Today
+                            </div>
+                            <div className="px-3 py-2 text-gray-600 rounded-lg text-sm flex items-center gap-2">
+                              <span>📦</span> Orders
+                            </div>
+                            <div className="px-3 py-2 text-gray-600 rounded-lg text-sm flex items-center gap-2">
+                              <span>👥</span> Customers
+                            </div>
+                            <div className="px-3 py-2 text-gray-600 rounded-lg text-sm flex items-center gap-2">
+                              <span>📝</span> Items
+                            </div>
+                            <div className="px-3 py-2 text-gray-600 rounded-lg text-sm flex items-center gap-2">
+                              <span>⚙️</span> Me
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Main content */}
+                        <div className="flex-1 p-6 bg-gradient-to-br from-gray-50 to-white">
+                          {/* Top bar */}
+                          <div className="flex items-center justify-between mb-6">
+                            <div>
+                              <p className="text-xs text-gray-500 mb-1">Mon, 15 May 2026</p>
+                              <h3 className="text-2xl font-extrabold text-gray-900">Today</h3>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1.5">
+                              <div className="w-6 h-6 bg-[#635BFF] text-white rounded-full flex items-center justify-center text-xs font-bold">P</div>
+                              <span className="text-xs font-semibold text-gray-700">Padma's Kitchen</span>
+                            </div>
+                          </div>
+
+                          {/* Stats row */}
+                          <div className="grid grid-cols-3 gap-3 mb-5">
+                            <div className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Earnings</p>
+                              <p className="text-xl font-extrabold text-gray-900">₹4,250</p>
+                              <p className="text-[10px] text-[#635BFF] font-bold mt-0.5">+18% vs yesterday</p>
+                            </div>
+                            <div className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Invoices</p>
+                              <p className="text-xl font-extrabold text-gray-900">12</p>
+                              <p className="text-[10px] text-green-600 font-bold mt-0.5">8 paid · 4 pending</p>
+                            </div>
+                            <div className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Customers</p>
+                              <p className="text-xl font-extrabold text-gray-900">9</p>
+                              <p className="text-[10px] text-gray-500 mt-0.5">3 new today</p>
+                            </div>
+                          </div>
+
+                          {/* Chart card */}
+                          <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <p className="text-xs font-bold text-gray-900">Last 7 days</p>
+                              <p className="text-[10px] text-gray-500">₹28,400 total</p>
+                            </div>
+                            <div className="flex items-end justify-between gap-1.5 h-16">
+                              <div className="flex-1 bg-[#EFEEFF] rounded-t" style={{height: '40%'}}></div>
+                              <div className="flex-1 bg-[#DAD8FF] rounded-t" style={{height: '60%'}}></div>
+                              <div className="flex-1 bg-[#BDB9FF] rounded-t" style={{height: '50%'}}></div>
+                              <div className="flex-1 bg-[#9F99FF] rounded-t" style={{height: '70%'}}></div>
+                              <div className="flex-1 bg-[#7C73FF] rounded-t" style={{height: '85%'}}></div>
+                              <div className="flex-1 bg-[#635BFF] rounded-t" style={{height: '95%'}}></div>
+                              <div className="flex-1 bg-[#4D44E0] rounded-t" style={{height: '100%'}}></div>
+                            </div>
+                            <div className="flex justify-between mt-2 text-[10px] text-gray-400">
+                              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                            </div>
+                          </div>
+
+                          {/* Recent orders */}
+                          <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                            <p className="text-xs font-bold text-gray-900 mb-3">Recent orders</p>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between py-1 text-xs">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-[10px]">L</div>
+                                  <span className="text-gray-900 font-medium">Lakshmi · 2 tiffins</span>
+                                </div>
+                                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Paid ₹200</span>
+                              </div>
+                              <div className="flex items-center justify-between py-1 text-xs">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-[10px]">R</div>
+                                  <span className="text-gray-900 font-medium">Ravi · 3 tiffins</span>
+                                </div>
+                                <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Pending ₹300</span>
+                              </div>
+                              <div className="flex items-center justify-between py-1 text-xs">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-[10px]">S</div>
+                                  <span className="text-gray-900 font-medium">Sita · 1 tiffin + dal</span>
+                                </div>
+                                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[10px] font-bold">Paid ₹130</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Laptop bottom hinge */}
+                <div className="relative">
+                  <div className="bg-gradient-to-b from-gray-300 to-gray-400 h-3 rounded-b-2xl shadow-lg"></div>
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-400 rounded-b-full"></div>
+                </div>
+                <div className="bg-gradient-to-b from-gray-200 to-gray-100 h-2 mx-auto rounded-b-3xl shadow-md" style={{width: '40%'}}></div>
+
+                {/* Phone mockup tucked in front-right */}
+                <div className="absolute -bottom-4 -right-4 sm:right-8 lg:-right-2 w-32 sm:w-40 lg:w-48 hidden md:block">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/30 to-purple-200/30 blur-2xl rounded-full"></div>
+                    <div className="relative bg-gray-900 rounded-[1.25rem] p-1.5 shadow-2xl">
+                      <div className="bg-white rounded-[1rem] overflow-hidden">
+                        {/* Phone Today screen — compact */}
+                        <div className="bg-gradient-to-br from-[#F4F3FF] to-white px-3 py-3 border-b border-gray-100">
+                          <p className="text-[10px] text-gray-500">Today</p>
+                          <p className="text-lg font-extrabold text-gray-900">₹4,250</p>
+                          <p className="text-[8px] text-[#635BFF] font-bold">+18% vs yesterday</p>
+                        </div>
+                        <div className="grid grid-cols-3 px-2 py-2 text-center">
+                          <div>
+                            <p className="text-sm font-bold text-gray-900">12</p>
+                            <p className="text-[7px] text-gray-500">Inv</p>
+                          </div>
+                          <div className="border-x border-gray-100">
+                            <p className="text-sm font-bold text-green-600">8</p>
+                            <p className="text-[7px] text-gray-500">Paid</p>
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-amber-600">4</p>
+                            <p className="text-[7px] text-gray-500">Pend</p>
+                          </div>
+                        </div>
+                        <div className="px-2 pb-2">
+                          <div className="flex items-end justify-between gap-0.5 h-6">
+                            <div className="flex-1 bg-[#EFEEFF] rounded-t" style={{height: '40%'}}></div>
+                            <div className="flex-1 bg-[#DAD8FF] rounded-t" style={{height: '60%'}}></div>
+                            <div className="flex-1 bg-[#BDB9FF] rounded-t" style={{height: '50%'}}></div>
+                            <div className="flex-1 bg-[#9F99FF] rounded-t" style={{height: '70%'}}></div>
+                            <div className="flex-1 bg-[#7C73FF] rounded-t" style={{height: '85%'}}></div>
+                            <div className="flex-1 bg-[#635BFF] rounded-t" style={{height: '95%'}}></div>
+                            <div className="flex-1 bg-[#4D44E0] rounded-t" style={{height: '100%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Trust microcopy below */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-16 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">📱</span>
+                <span className="font-medium">Phone (Android &amp; iPhone)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">💻</span>
+                <span className="font-medium">Mac &amp; Windows laptops</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🌐</span>
+                <span className="font-medium">Any modern browser</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">✓</span>
+                <span className="font-medium">No app store install</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* How Orderzo works — 4 visual steps */}
         <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50">
           <div className="max-w-6xl mx-auto">
