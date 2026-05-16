@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase'
 export default function SetupPage() {
   const [phone, setPhone] = useState('')
   const [businessName, setBusinessName] = useState('')
+  const [businessMode, setBusinessMode] = useState<'online' | 'offline' | 'both'>('both')
   const [businessType, setBusinessType] = useState('tiffin')
   const [tagline, setTagline] = useState('')
   const [upiId, setUpiId] = useState('')
@@ -48,6 +49,7 @@ export default function SetupPage() {
           setGstin(data.gstin || '')
           setLogoUrl(data.logo_url || '')
           setTermsAccepted(!!data.terms_accepted_at)
+          setBusinessMode((data as any)?.business_mode || 'both')
         }
       })
   }, [router])
@@ -119,6 +121,7 @@ export default function SetupPage() {
       email: email.trim() || null,
       gstin: gstin.trim().toUpperCase() || null,
       logo_url: logoUrl || null,
+      business_mode: businessMode,
       terms_accepted_at: new Date().toISOString(),
     }
 
@@ -221,6 +224,89 @@ export default function SetupPage() {
               className="hidden"
             />
             <p className="text-xs text-gray-500 mt-2">Your logo appears on every invoice & dashboard</p>
+          </div>
+
+          {/* 3-mode selector — how does the business take orders */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              How do you take orders? <span className="text-red-500">*</span>
+            </label>
+            <p className="text-xs text-gray-500 mb-3">Pick the mode that matches your business. You can change this anytime.</p>
+            
+            <div className="grid grid-cols-3 gap-2">
+              {/* Online */}
+              <button
+                type="button"
+                onClick={() => setBusinessMode('online')}
+                className={`relative rounded-2xl p-3 text-left border-2 transition-all ${
+                  businessMode === 'online'
+                    ? 'border-[#635BFF] bg-[#F4F3FF] shadow-md'
+                    : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+              >
+                {businessMode === 'online' && (
+                  <span className="absolute top-2 right-2 w-5 h-5 bg-[#635BFF] text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+                )}
+                <div className="text-2xl mb-1">📱</div>
+                <p className="text-sm font-bold text-gray-900">Online</p>
+                <p className="text-xs text-gray-500 mt-0.5">WhatsApp orders</p>
+              </button>
+
+              {/* Offline */}
+              <button
+                type="button"
+                onClick={() => setBusinessMode('offline')}
+                className={`relative rounded-2xl p-3 text-left border-2 transition-all ${
+                  businessMode === 'offline'
+                    ? 'border-green-500 bg-green-50 shadow-md'
+                    : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+              >
+                {businessMode === 'offline' && (
+                  <span className="absolute top-2 right-2 w-5 h-5 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+                )}
+                <div className="text-2xl mb-1">🏪</div>
+                <p className="text-sm font-bold text-gray-900">Offline</p>
+                <p className="text-xs text-gray-500 mt-0.5">Walk-in counter</p>
+              </button>
+
+              {/* Both */}
+              <button
+                type="button"
+                onClick={() => setBusinessMode('both')}
+                className={`relative rounded-2xl p-3 text-left border-2 transition-all ${
+                  businessMode === 'both'
+                    ? 'border-purple-500 bg-purple-50 shadow-md'
+                    : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+              >
+                {businessMode === 'both' && (
+                  <span className="absolute top-2 right-2 w-5 h-5 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+                )}
+                <div className="text-2xl mb-1">🔄</div>
+                <p className="text-sm font-bold text-gray-900">Both</p>
+                <p className="text-xs text-gray-500 mt-0.5">Online + counter</p>
+              </button>
+            </div>
+
+            {/* Hindi tagline under selected mode */}
+            <div className="mt-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+              {businessMode === 'online' && (
+                <p className="text-sm text-gray-700 italic">
+                  <span className="font-bold text-[#635BFF]">"Order milte hi, bill bhej do."</span> Customers message you, Orderzo turns it into a beautiful WhatsApp invoice with UPI link.
+                </p>
+              )}
+              {businessMode === 'offline' && (
+                <p className="text-sm text-gray-700 italic">
+                  <span className="font-bold text-green-700">"Computer hatao. Phone uthao."</span> Walk-in customer pays at counter, you tap a few fields and the bill is done.
+                </p>
+              )}
+              {businessMode === 'both' && (
+                <p className="text-sm text-gray-700 italic">
+                  <span className="font-bold text-purple-700">"Kabhi WhatsApp, kabhi counter."</span> Both modes available daily. Switch on the fly.
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Business name */}
