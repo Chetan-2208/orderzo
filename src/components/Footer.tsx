@@ -5,19 +5,22 @@ import Logo from './Logo'
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 px-4 py-12 mt-auto">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="mb-3">
-              <Logo variant="lockup" size={36} color="white" />
+    <footer className="bg-gradient-to-b from-white to-gray-50 border-t border-gray-100 px-4 sm:px-8 lg:px-12 pt-16 lg:pt-20 pb-8 mt-auto">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Top section: brand + columns */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 mb-12">
+          
+          {/* Brand block (wider) */}
+          <div className="md:col-span-5">
+            <div className="mb-5">
+              <Logo variant="lockup" size={40} />
             </div>
-            <p className="text-sm text-gray-400 mb-4 max-w-md">
-              Throw away your billing computer. Bill from your phone in 10 seconds. Built for Indian micro-businesses.
+            <p className="text-base text-gray-700 mb-3 max-w-md leading-relaxed">
+              Throw away your billing computer. Bill from your phone in 10 seconds.
             </p>
-            <p className="text-xs text-gray-500 mb-4">
-              Built for Indian micro-businesses. Phone-first. WhatsApp-native.
+            <p className="text-sm text-gray-500 mb-6 max-w-md leading-relaxed">
+              Built for 60 million Indian micro-businesses. Phone-first. WhatsApp-native.
             </p>
             
             {/* Social + WhatsApp */}
@@ -26,7 +29,7 @@ export default function Footer() {
                 href="https://wa.me/918466089662" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-sm hover:shadow-md"
                 aria-label="Contact us on WhatsApp"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -38,50 +41,62 @@ export default function Footer() {
                 href="https://linkedin.com/company/orderzo" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-9 h-9 bg-gray-800 hover:bg-[#4D44E0] text-white rounded-lg transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 bg-white hover:bg-[#635BFF] hover:text-white text-gray-600 border border-gray-200 rounded-xl transition-all shadow-sm"
                 aria-label="Orderzo on LinkedIn"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </a>
             </div>
           </div>
 
-          {/* Company */}
-          <div>
-            <h3 className="text-white font-semibold mb-3 text-sm">Company</h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-              <li><Link href="/support" className="hover:text-white transition-colors">Help & Support</Link></li>
+          {/* Spacer */}
+          <div className="hidden md:block md:col-span-1"></div>
+
+          {/* Company column */}
+          <div className="md:col-span-3">
+            <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Company</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="/about" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">About Us</Link></li>
+              <li><Link href="/contact" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Contact</Link></li>
+              <li><Link href="/pricing" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Pricing</Link></li>
+              <li><Link href="/support" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Help &amp; Support</Link></li>
             </ul>
           </div>
 
-          {/* Legal */}
-          <div>
-            <h3 className="text-white font-semibold mb-3 text-sm">Legal</h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-              <li><Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link></li>
+          {/* Legal column */}
+          <div className="md:col-span-3">
+            <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Legal</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="/privacy" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Terms of Service</Link></li>
+              <li><Link href="/refund" className="text-gray-600 hover:text-[#635BFF] transition-colors font-medium">Refund Policy</Link></li>
             </ul>
           </div>
         </div>
 
+        {/* Made in India badge — visual emphasis */}
+        <div className="flex flex-wrap items-center justify-center gap-3 py-6 mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-base sm:text-lg font-bold text-gray-800">
+            <span className="text-3xl sm:text-4xl">🇮🇳</span>
+            <span>Made in India</span>
+            <span className="text-gray-300 text-xl">·</span>
+            <span>Built in India from NYC</span>
+            <span className="text-gray-300 text-xl">·</span>
+            <span>Data hosted in Mumbai</span>
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="border-t border-gray-800 pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="text-xs text-gray-500">
-              <p>© 2026 Orderzo Technologies Pvt Ltd. All rights reserved.</p>
-              <p className="mt-1">Registered in India · Hyderabad, Telangana · Made for India 🇮🇳</p>
-            </div>
+        <div className="border-t border-gray-200 pt-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+            <p className="text-xs text-gray-500">
+              © 2026 Orderzo Technologies Pvt Ltd. Registered in Hyderabad, Telangana.
+            </p>
             <div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
-              <a href="mailto:info@orderzo.io" className="hover:text-white transition-colors">info@orderzo.io</a>
-              <a href="mailto:support@orderzo.io" className="hover:text-white transition-colors">support@orderzo.io</a>
-              <span>·</span>
-              <span>orderzo.io</span>
+              <a href="mailto:info@orderzo.io" className="hover:text-[#635BFF] transition-colors font-medium">info@orderzo.io</a>
+              <a href="mailto:support@orderzo.io" className="hover:text-[#635BFF] transition-colors font-medium">support@orderzo.io</a>
             </div>
           </div>
         </div>
