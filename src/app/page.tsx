@@ -421,63 +421,197 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Founder block — tightened, combined with trust signal */}
-        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white">
-          <div className="max-w-4xl mx-auto">
+        {/* Product features showcase — 3 mockups */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50">
+          <div className="max-w-6xl mx-auto">
             
-            {/* Trust pill above founder */}
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 bg-[#EFEEFF] text-[#3530B8] px-4 py-2 rounded-full text-sm font-semibold">
-                <span>✨</span>
-                <span>100+ Indian businesses already signed up · No bots, no fake reviews</span>
-              </div>
+            {/* Section header */}
+            <div className="text-center mb-16">
+              <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">The product</p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
+                Built for billing. Nothing else.
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Every screen designed for one job. No menus to learn, no settings to configure.
+              </p>
             </div>
 
-            {/* Founder card */}
-            <div className="bg-gradient-to-br from-white to-[#F4F3FF] rounded-3xl p-8 sm:p-12 border-2 border-[#EFEEFF] shadow-lg">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#635BFF] to-[#3530B8] text-white rounded-2xl flex items-center justify-center font-bold text-2xl sm:text-3xl shadow-lg">
-                  C
-                </div>
-                <div>
-                  <p className="font-bold text-xl sm:text-2xl text-gray-900">Chetan Aitaraju</p>
-                  <p className="text-sm sm:text-base text-gray-600">Founder · Data Engineer in NYC, building Orderzo from home</p>
-                </div>
-              </div>
+            {/* 3 mockups in a row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
               
-              <div className="space-y-5 text-gray-700 leading-relaxed text-base sm:text-lg">
-                <p>
-                  India's <span className="font-semibold text-gray-900">60 million micro-businesses</span> still run on paper notebooks and WhatsApp chats. They've outgrown one but are underserved by the other. Most billing apps treat them like accountants — they're not.
-                </p>
-                <p>
-                  A business owner needs to send a beautiful bill in 10 seconds, get paid via UPI, and move on with their day. Nothing more, nothing less. <span className="font-semibold text-gray-900">That's what Orderzo is.</span>
-                </p>
+              {/* Mockup 1: Today's earnings dashboard */}
+              <div className="group">
+                <div className="relative max-w-[260px] mx-auto mb-6">
+                  {/* Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/20 to-purple-200/20 blur-2xl rounded-full"></div>
+                  
+                  {/* Phone frame */}
+                  <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-xl group-hover:scale-105 transition-transform">
+                    <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                      {/* Header */}
+                      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                        <p className="text-sm font-bold text-gray-900">Today</p>
+                        <span className="text-xs text-gray-500">Mon, 15 May</span>
+                      </div>
+                      
+                      {/* Earnings */}
+                      <div className="px-4 py-5 bg-gradient-to-br from-[#F4F3FF] to-white">
+                        <p className="text-xs text-gray-500 mb-1">Today\'s earnings</p>
+                        <p className="text-3xl font-extrabold text-gray-900">₹4,250</p>
+                        <p className="text-xs text-[#635BFF] font-semibold mt-1">+18% vs yesterday</p>
+                      </div>
+                      
+                      {/* Stats */}
+                      <div className="grid grid-cols-3 px-4 py-3 border-b border-gray-100 text-center">
+                        <div>
+                          <p className="text-lg font-bold text-gray-900">12</p>
+                          <p className="text-[10px] text-gray-500">Invoices</p>
+                        </div>
+                        <div className="border-x border-gray-100">
+                          <p className="text-lg font-bold text-green-600">8</p>
+                          <p className="text-[10px] text-gray-500">Paid</p>
+                        </div>
+                        <div>
+                          <p className="text-lg font-bold text-amber-600">4</p>
+                          <p className="text-[10px] text-gray-500">Pending</p>
+                        </div>
+                      </div>
+                      
+                      {/* Mini chart */}
+                      <div className="px-4 py-4">
+                        <p className="text-[10px] text-gray-500 mb-2">Last 7 days</p>
+                        <div className="flex items-end justify-between gap-1 h-12">
+                          <div className="w-full bg-[#EFEEFF] rounded-t" style={{height: '40%'}}></div>
+                          <div className="w-full bg-[#DAD8FF] rounded-t" style={{height: '60%'}}></div>
+                          <div className="w-full bg-[#BDB9FF] rounded-t" style={{height: '50%'}}></div>
+                          <div className="w-full bg-[#9F99FF] rounded-t" style={{height: '70%'}}></div>
+                          <div className="w-full bg-[#7C73FF] rounded-t" style={{height: '85%'}}></div>
+                          <div className="w-full bg-[#635BFF] rounded-t" style={{height: '95%'}}></div>
+                          <div className="w-full bg-[#4D44E0] rounded-t" style={{height: '100%'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">See your day at a glance.</h3>
+                <p className="text-sm text-gray-600 text-center">Today\'s earnings. Invoices sent. Pending payments. All on one screen.</p>
               </div>
 
-              <div className="flex flex-wrap gap-3 mt-8">
-                <a 
-                  href="https://wa.me/918466089662" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                >
-                  <span>💬</span> WhatsApp me
-                </a>
-                <a 
-                  href="https://linkedin.com/in/chetan-aitaraju" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#635BFF] hover:bg-[#4D44E0] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                >
-                  Connect on LinkedIn
-                </a>
-                <Link 
-                  href="/about" 
-                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-gray-200 hover:border-gray-400 transition-colors"
-                >
-                  Read full story →
-                </Link>
+              {/* Mockup 2: Beautiful invoice */}
+              <div className="group">
+                <div className="relative max-w-[260px] mx-auto mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/20 to-purple-200/20 blur-2xl rounded-full"></div>
+                  
+                  <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-xl group-hover:scale-105 transition-transform">
+                    <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                      {/* Invoice header */}
+                      <div className="bg-[#635BFF] text-white px-4 py-4">
+                        <p className="text-[10px] font-semibold opacity-90 uppercase tracking-wider">YOUR SHOP</p>
+                        <p className="text-base font-bold mt-1">Invoice #1234</p>
+                        <p className="text-[10px] opacity-90">15 May 2026</p>
+                      </div>
+                      
+                      {/* Customer */}
+                      <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
+                        <p className="text-[10px] text-gray-500">Bill to</p>
+                        <p className="text-sm font-semibold text-gray-900">Customer</p>
+                        <p className="text-xs text-gray-500">+91 98... ...43</p>
+                      </div>
+                      
+                      {/* Items */}
+                      <div className="px-4 py-3 space-y-2">
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-700">Lunch tiffin × 2</span>
+                          <span className="font-semibold text-gray-900">₹200</span>
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-700">Extra dal × 1</span>
+                          <span className="font-semibold text-gray-900">₹30</span>
+                        </div>
+                      </div>
+                      
+                      {/* Total */}
+                      <div className="bg-gray-50 px-4 py-3 flex justify-between items-center border-t border-gray-100">
+                        <span className="text-xs text-gray-600">Total</span>
+                        <span className="text-xl font-extrabold text-gray-900">₹230</span>
+                      </div>
+                      
+                      {/* Pay button */}
+                      <div className="bg-white px-4 py-3 border-t border-gray-100">
+                        <button className="w-full bg-[#635BFF] text-white text-sm font-bold py-2.5 rounded-lg">
+                          Pay via UPI →
+                        </button>
+                        <p className="text-[10px] text-gray-400 text-center mt-2">Powered by Orderzo</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Beautiful, branded invoices.</h3>
+                <p className="text-sm text-gray-600 text-center">PDF invoices with your shop name, items, and UPI link. Auto-sent via WhatsApp.</p>
               </div>
+
+              {/* Mockup 3: Customer history */}
+              <div className="group">
+                <div className="relative max-w-[260px] mx-auto mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/20 to-purple-200/20 blur-2xl rounded-full"></div>
+                  
+                  <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-xl group-hover:scale-105 transition-transform">
+                    <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                      {/* Header */}
+                      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center gap-3">
+                        <div className="w-9 h-9 bg-[#EFEEFF] rounded-full flex items-center justify-center text-sm font-bold text-[#635BFF]">L</div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-bold text-gray-900 truncate">Customer L</p>
+                          <p className="text-[10px] text-gray-500">+91 98... ...43</p>
+                        </div>
+                      </div>
+                      
+                      {/* Stats */}
+                      <div className="grid grid-cols-2 px-4 py-3 bg-gradient-to-br from-[#F4F3FF] to-white">
+                        <div>
+                          <p className="text-2xl font-extrabold text-gray-900">12</p>
+                          <p className="text-[10px] text-gray-500">Orders</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-extrabold text-[#635BFF]">₹2,400</p>
+                          <p className="text-[10px] text-gray-500">Total spent</p>
+                        </div>
+                      </div>
+                      
+                      {/* Recent orders */}
+                      <div className="px-4 py-3">
+                        <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-2">Recent orders</p>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center text-xs">
+                            <div>
+                              <p className="text-gray-900 font-medium">Lunch × 2</p>
+                              <p className="text-[10px] text-gray-400">Today</p>
+                            </div>
+                            <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Paid</span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                            <div>
+                              <p className="text-gray-900 font-medium">Dinner × 1</p>
+                              <p className="text-[10px] text-gray-400">Yesterday</p>
+                            </div>
+                            <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Paid</span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                            <div>
+                              <p className="text-gray-900 font-medium">Tiffin × 3</p>
+                              <p className="text-[10px] text-gray-400">2 days ago</p>
+                            </div>
+                            <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Pending</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Every customer remembered.</h3>
+                <p className="text-sm text-gray-600 text-center">Order history. Total spent. Private notes. So you remember every regular.</p>
+              </div>
+
             </div>
           </div>
         </section>
