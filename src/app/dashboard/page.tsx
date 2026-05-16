@@ -215,7 +215,7 @@ export default function DashboardPage() {
           {tabs.map(t => (
             <button
               key={t.id}
-              onClick={() => setActiveTab(t.id)}
+              onClick={() => { if (t.id === 'items') { router.push('/items'); return } setActiveTab(t.id) }}
               className={'w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 transition-all font-medium ' + (activeTab === t.id ? 'bg-[#EFEEFF] text-[#635BFF]' : 'text-gray-600 hover:bg-gray-50')}
             >
               <span className="text-lg">{t.icon}</span>
@@ -543,7 +543,7 @@ export default function DashboardPage() {
           {tabs.map(t => (
             <button
               key={t.id}
-              onClick={() => setActiveTab(t.id)}
+              onClick={() => { if (t.id === 'items') { router.push('/items'); return } setActiveTab(t.id) }}
               className={'flex-1 py-2.5 flex flex-col items-center gap-0.5 transition-colors ' + (activeTab === t.id ? 'text-[#635BFF]' : 'text-gray-400 hover:text-gray-600')}
             >
               <span className="text-xl">{t.icon}</span>
