@@ -203,12 +203,12 @@ export default function Home() {
               {/* Decorative gradient blob behind devices */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/10 via-purple-100/30 to-[#EFEEFF]/40 blur-3xl rounded-full"></div>
 
-              {/* LAPTOP MOCKUP */}
-              <div className="relative">
+              {/* LAPTOP MOCKUP — responsive */}
+              <div className="relative max-w-full">
                 {/* Outer laptop body (silver bezel) */}
-                <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-t-2xl p-2 shadow-2xl">
+                <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-t-xl sm:rounded-t-2xl p-1 sm:p-2 shadow-2xl">
                   {/* Screen border (black bezel) */}
-                  <div className="bg-gray-900 rounded-t-xl p-3">
+                  <div className="bg-gray-900 rounded-t-lg sm:rounded-t-xl p-1.5 sm:p-3">
                     {/* Browser window */}
                     <div className="bg-white rounded-lg overflow-hidden shadow-inner">
                       
@@ -229,10 +229,10 @@ export default function Home() {
                       </div>
 
                       {/* Dashboard content */}
-                      <div className="flex" style={{minHeight: '380px'}}>
+                      <div className="flex" >
                         
                         {/* Sidebar */}
-                        <div className="w-48 bg-white border-r border-gray-100 py-4 flex-shrink-0">
+                        <div className="hidden md:block w-48 bg-white border-r border-gray-100 py-4 flex-shrink-0">
                           {/* Logo */}
                           <div className="px-4 mb-6">
                             <div className="flex items-center gap-2">
@@ -262,12 +262,12 @@ export default function Home() {
                         </div>
 
                         {/* Main content */}
-                        <div className="flex-1 p-6 bg-gradient-to-br from-gray-50 to-white">
+                        <div className="flex-1 p-3 sm:p-4 lg:p-6 bg-gradient-to-br from-gray-50 to-white">
                           {/* Top bar */}
                           <div className="flex items-center justify-between mb-6">
                             <div>
                               <p className="text-xs text-gray-500 mb-1">Mon, 15 May 2026</p>
-                              <h3 className="text-2xl font-extrabold text-gray-900">Today</h3>
+                              <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-gray-900">Today</h3>
                             </div>
                             <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1.5">
                               <div className="w-6 h-6 bg-[#635BFF] text-white rounded-full flex items-center justify-center text-xs font-bold">P</div>
@@ -276,7 +276,7 @@ export default function Home() {
                           </div>
 
                           {/* Stats row */}
-                          <div className="grid grid-cols-3 gap-3 mb-5">
+                          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 lg:gap-3 mb-3 sm:mb-5">
                             <div className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
                               <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Earnings</p>
                               <p className="text-xl font-extrabold text-gray-900">₹4,250</p>
@@ -420,80 +420,253 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How Orderzo works — 4 visual steps */}
-        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50">
+        {/* How it works — Vertical narrative with phone mockups */}
+        <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
+            
+            {/* Hero */}
+            <div className="text-center mb-20">
               <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">How it works</p>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
-                4 steps. 60 seconds total.
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-5">
+                Message in.<br />
+                <span className="text-[#635BFF]">Paid invoice out.</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                From your customer's message to a paid invoice. No computer, no Tally, no paper bills.
+              <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                From customer&apos;s WhatsApp to UPI payment, in <strong className="text-gray-900">60 seconds</strong>. No computer, no Tally, no paper bills.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+            {/* Vertical narrative — 4 steps zig-zagging */}
+            <div className="relative space-y-16 lg:space-y-24">
               
-              {/* Step 1 */}
-              <div className="relative bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="inline-flex items-center justify-center w-10 h-10 bg-[#EFEEFF] text-[#635BFF] rounded-full font-bold text-base">1</span>
-                  <span className="text-4xl">💬</span>
+              {/* Vertical connecting line (desktop only) */}
+              <div className="hidden lg:block absolute left-1/2 top-12 bottom-12 w-0.5 bg-gradient-to-b from-green-300 via-[#635BFF] to-green-300 -translate-x-1/2"></div>
+
+              {/* STEP 1 — Customer messages */}
+              <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-flex items-center gap-3 mb-4">
+                    <span className="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full font-extrabold text-xl shadow-lg shadow-green-500/40">1</span>
+                    <span className="text-xs font-bold text-green-600 uppercase tracking-wider">~5 seconds</span>
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                    Customer messages.
+                  </h3>
+                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                    Your regular customer drops you a WhatsApp like always. No app to download, no link to click. They use the same WhatsApp they already use.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Customer messages</h3>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">They WhatsApp or call you with an order.</p>
-                <div className="bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
-                  <p className="text-xs text-gray-500 italic">"2 tiffin chahiye 🙏"</p>
+                
+                <div className="lg:pl-12 flex justify-center">
+                  <div className="relative w-64">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-200/30 blur-3xl rounded-full"></div>
+                    <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
+                      <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                        <div className="bg-[#075E54] text-white px-4 py-3 flex items-center gap-3">
+                          <div className="w-9 h-9 bg-pink-300 rounded-full flex items-center justify-center text-base font-bold text-pink-800">L</div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-sm">Lakshmi (Regular)</p>
+                            <p className="text-[10px] text-white/70">online</p>
+                          </div>
+                        </div>
+                        <div className="bg-[#ECE5DD] px-3 py-6 min-h-[200px]">
+                          <div className="flex">
+                            <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
+                              <p className="text-sm text-gray-900">Aaj 2 tiffin chahiye 🙏</p>
+                              <p className="text-[10px] text-gray-400 text-right mt-1">12:34 PM</p>
+                            </div>
+                          </div>
+                          <div className="flex mt-2">
+                            <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
+                              <p className="text-sm text-gray-900">Aur 1 extra dal</p>
+                              <p className="text-[10px] text-gray-400 text-right mt-1">12:34 PM</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Step 2 */}
-              <div className="relative bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="inline-flex items-center justify-center w-10 h-10 bg-[#EFEEFF] text-[#635BFF] rounded-full font-bold text-base">2</span>
-                  <span className="text-4xl">⚡</span>
+              {/* STEP 2 — Tap 4 fields */}
+              <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="lg:pr-12 flex justify-center lg:order-1 order-2">
+                  <div className="relative w-64">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/20 to-purple-200/30 blur-3xl rounded-full"></div>
+                    <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
+                      <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                        <div className="bg-[#635BFF] text-white px-4 py-3 flex items-center gap-2">
+                          <span className="text-base">⚡</span>
+                          <p className="font-bold text-sm">New invoice</p>
+                          <span className="ml-auto text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold">10s</span>
+                        </div>
+                        <div className="p-4 space-y-3 bg-gradient-to-br from-[#F4F3FF] to-white min-h-[280px]">
+                          <div>
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">1. Customer</label>
+                            <div className="bg-white border-2 border-[#635BFF] rounded-lg px-3 py-2 mt-1 text-sm font-semibold text-gray-900">+91 98... · Lakshmi ✓</div>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">2. Item</label>
+                            <div className="bg-white border-2 border-[#635BFF] rounded-lg px-3 py-2 mt-1 text-sm font-semibold text-gray-900">Lunch tiffin × 2</div>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">3. Amount</label>
+                            <div className="bg-white border-2 border-[#635BFF] rounded-lg px-3 py-2 mt-1 text-sm font-bold text-gray-900">₹230</div>
+                          </div>
+                          <button className="w-full bg-[#635BFF] text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-[#635BFF]/30">
+                            4. Send invoice →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Tap 4 fields</h3>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">Phone, items, amount, send. That's it.</p>
-                <div className="bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
-                  <p className="text-xs text-gray-500 italic">10 seconds. No menus, no fluff.</p>
+                
+                <div className="lg:pl-12 lg:order-2 order-1">
+                  <div className="inline-flex items-center gap-3 mb-4">
+                    <span className="flex items-center justify-center w-12 h-12 bg-[#635BFF] text-white rounded-full font-extrabold text-xl shadow-lg shadow-[#635BFF]/40">2</span>
+                    <span className="text-xs font-bold text-[#635BFF] uppercase tracking-wider">~10 seconds</span>
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                    Tap 4 fields.
+                  </h3>
+                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                    Open Orderzo. Customer phone, item, amount, send. That&apos;s it. No menus to navigate, no settings to configure, no Tally-style data entry.
+                  </p>
                 </div>
               </div>
 
-              {/* Step 3 */}
-              <div className="relative bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="inline-flex items-center justify-center w-10 h-10 bg-[#EFEEFF] text-[#635BFF] rounded-full font-bold text-base">3</span>
-                  <span className="text-4xl">📤</span>
+              {/* STEP 3 — Invoice sent */}
+              <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="lg:text-right lg:pr-12">
+                  <div className="inline-flex items-center gap-3 mb-4">
+                    <span className="flex items-center justify-center w-12 h-12 bg-[#635BFF] text-white rounded-full font-extrabold text-xl shadow-lg shadow-[#635BFF]/40">3</span>
+                    <span className="text-xs font-bold text-[#635BFF] uppercase tracking-wider">Instant</span>
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                    Invoice in WhatsApp.
+                  </h3>
+                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                    A beautiful invoice card with your shop name, items, and a one-tap UPI Pay button — delivered to your customer&apos;s WhatsApp. No PDF download, no link to share.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Invoice sent</h3>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">Beautiful PDF + UPI link delivered via WhatsApp.</p>
-                <div className="bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
-                  <p className="text-xs text-gray-500 italic">Auto-attached. Auto-formatted.</p>
+                
+                <div className="lg:pl-12 flex justify-center">
+                  <div className="relative w-64">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#635BFF]/20 to-emerald-200/30 blur-3xl rounded-full"></div>
+                    <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
+                      <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                        <div className="bg-[#075E54] text-white px-4 py-3 flex items-center gap-3">
+                          <div className="w-9 h-9 bg-pink-300 rounded-full flex items-center justify-center text-base font-bold text-pink-800">L</div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-sm">Lakshmi (Regular)</p>
+                            <p className="text-[10px] text-white/70">online</p>
+                          </div>
+                        </div>
+                        <div className="bg-[#ECE5DD] px-3 py-3 min-h-[260px]">
+                          <div className="flex justify-end">
+                            <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm p-2 max-w-[90%] shadow-sm">
+                              <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+                                <div className="bg-[#635BFF] text-white px-3 py-2">
+                                  <p className="text-[10px] font-bold opacity-90">PADMA&apos;S KITCHEN</p>
+                                  <p className="text-xs font-bold">Invoice #1234</p>
+                                </div>
+                                <div className="px-3 py-2 text-xs space-y-1">
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-700">Tiffin × 2</span>
+                                    <span className="text-gray-900 font-bold">₹200</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-700">Dal × 1</span>
+                                    <span className="text-gray-900 font-bold">₹30</span>
+                                  </div>
+                                </div>
+                                <div className="bg-gray-50 px-3 py-2 flex justify-between items-center border-t border-gray-100">
+                                  <span className="text-xs text-gray-600">Total</span>
+                                  <span className="text-lg font-extrabold text-gray-900">₹230</span>
+                                </div>
+                                <div className="bg-white px-3 py-2 border-t border-gray-100">
+                                  <button className="w-full bg-[#635BFF] text-white text-xs font-bold py-2 rounded-lg">
+                                    💳 Pay ₹230 via UPI →
+                                  </button>
+                                </div>
+                              </div>
+                              <p className="text-[10px] text-gray-500 text-right mt-1 px-1">12:35 PM ✓✓</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Step 4 */}
-              <div className="relative bg-white rounded-2xl p-6 border-2 border-[#635BFF] shadow-md hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="inline-flex items-center justify-center w-10 h-10 bg-[#635BFF] text-white rounded-full font-bold text-base">4</span>
-                  <span className="text-4xl">✅</span>
+              {/* STEP 4 — Customer pays */}
+              <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="lg:pr-12 flex justify-center lg:order-1 order-2">
+                  <div className="relative w-64">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-400/30 to-emerald-200/30 blur-3xl rounded-full"></div>
+                    <div className="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
+                      <div className="bg-white rounded-[1.5rem] overflow-hidden">
+                        <div className="bg-[#075E54] text-white px-4 py-3 flex items-center gap-3">
+                          <div className="w-9 h-9 bg-pink-300 rounded-full flex items-center justify-center text-base font-bold text-pink-800">L</div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-sm">Lakshmi (Regular)</p>
+                            <p className="text-[10px] text-white/70">online</p>
+                          </div>
+                        </div>
+                        <div className="bg-[#ECE5DD] px-3 py-3 min-h-[200px]">
+                          <div className="flex">
+                            <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
+                              <p className="text-sm text-gray-900">Paid ✓</p>
+                              <p className="text-[10px] text-gray-400 text-right mt-1">12:36 PM</p>
+                            </div>
+                          </div>
+                          <div className="flex justify-center mt-3">
+                            <div className="bg-green-100 border border-green-300 rounded-full px-3 py-1.5 shadow-sm">
+                              <p className="text-[10px] font-bold text-green-800">✓ ₹230 received · Lakshmi</p>
+                            </div>
+                          </div>
+                          <div className="flex mt-3 justify-end">
+                            <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[85%] shadow-sm">
+                              <p className="text-sm text-gray-900">Thank you Lakshmi! 🙏</p>
+                              <p className="text-[10px] text-gray-500 text-right mt-1">12:36 PM ✓✓</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Customer pays</h3>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">One tap. UPI. You get auto-confirmation.</p>
-                <div className="bg-[#EFEEFF] rounded-lg px-3 py-2 border border-[#DAD8FF]">
-                  <p className="text-xs text-[#4D44E0] font-semibold italic">Done. Move to next customer.</p>
+                
+                <div className="lg:pl-12 lg:order-2 order-1">
+                  <div className="inline-flex items-center gap-3 mb-4">
+                    <span className="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full font-extrabold text-xl shadow-lg shadow-green-500/40">4</span>
+                    <span className="text-xs font-bold text-green-600 uppercase tracking-wider">~45 seconds</span>
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                    Customer pays. Done.
+                  </h3>
+                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                    Customer taps the UPI button. Pays in their banking app. You get instant confirmation. The order is logged, the invoice is saved, the dashboard updates. Move to the next customer.
+                  </p>
                 </div>
               </div>
+
             </div>
 
-            {/* Time summary below the steps */}
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-3 bg-white rounded-full px-6 py-3 border border-gray-200 shadow-sm">
-                <span className="text-2xl">⏱️</span>
-                <p className="text-base font-semibold text-gray-900">Total time: under 60 seconds per customer.</p>
+            {/* Celebratory 60 seconds total */}
+            <div className="mt-20 lg:mt-24 text-center">
+              <div className="inline-flex flex-wrap items-center justify-center gap-4 sm:gap-6 bg-gradient-to-r from-[#635BFF] to-[#3530B8] text-white rounded-full px-6 sm:px-10 py-4 sm:py-5 shadow-2xl shadow-[#635BFF]/40">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl sm:text-3xl">⏱️</span>
+                  <p className="text-lg sm:text-xl font-extrabold tracking-tight">Total time:</p>
+                </div>
+                <p className="text-2xl sm:text-3xl font-extrabold tracking-tight">60 seconds.</p>
+                <p className="text-sm sm:text-base text-white/80 hidden sm:block">Per customer. Every time.</p>
               </div>
+              <p className="text-sm text-gray-500 mt-4 sm:hidden">Per customer. Every time.</p>
             </div>
           </div>
         </section>
