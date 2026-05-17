@@ -149,7 +149,7 @@ function NewFastContent() {
       }
 
       // Create order
-      const orderStatus = payMethod === 'later' ? 'sent' : 'paid'
+      const orderStatus = payMethod === 'cash' ? 'paid' : 'sent'
       const orderPayMethod = payMethod === 'cash' ? 'cash' : payMethod === 'upi' ? 'upi' : 'pending'
 
       const { data: order, error: orderErr } = await supabase
