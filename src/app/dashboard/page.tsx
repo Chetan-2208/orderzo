@@ -358,7 +358,7 @@ export default function DashboardPage() {
                       const isPaid = o.status === 'paid' || o.status === 'done'
                       const initial = (o.customer_name || 'W').charAt(0).toUpperCase()
                       return (
-                        <div key={o.id} className="px-6 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors">
+                        <Link key={o.id} href={'/orders/' + o.id} className="px-6 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors">
                           <div className="w-9 h-9 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
                             {initial}
                           </div>
@@ -376,7 +376,7 @@ export default function DashboardPage() {
                               {isPaid ? '✓ Paid' : '⏳ Pending'}
                             </p>
                           </div>
-                        </div>
+                        </Link>
                       )
                     })}
                   </div>
@@ -407,7 +407,7 @@ export default function DashboardPage() {
                   {stats.recentList.map((o: any) => {
                     const isPaid = o.status === 'paid' || o.status === 'done'
                     return (
-                      <div key={o.id} className="px-6 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors">
+                      <Link key={o.id} href={'/orders/' + o.id} className="px-6 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors">
                         <div className="w-9 h-9 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center font-bold text-sm">
                           {(o.customer_name || 'W').charAt(0).toUpperCase()}
                         </div>
@@ -425,7 +425,7 @@ export default function DashboardPage() {
                             {isPaid ? '✓ Paid' : '⏳ Pending'}
                           </p>
                         </div>
-                      </div>
+                      </Link>
                     )
                   })}
                 </div>
