@@ -179,7 +179,7 @@ function NewFastContent() {
           order_id: order.id,
           item_name: whatBought.trim(),
           quantity: 1,
-          price: amt,
+          price_at_time: amt,
         })
       }
 

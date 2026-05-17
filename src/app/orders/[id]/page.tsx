@@ -77,7 +77,7 @@ export default function OrderDetailPage() {
       id: it.id,
       item_name: it.item_name,
       quantity: it.quantity,
-      price: parseFloat(it.price),
+      price: parseFloat(it.price_at_time),
     }))
     setOrderItems(oi)
 

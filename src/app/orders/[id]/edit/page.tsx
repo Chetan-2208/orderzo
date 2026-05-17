@@ -93,7 +93,7 @@ export default function EditOrderPage() {
       itemId: oi.item_id,
       name: oi.item_name,
       quantity: oi.quantity,
-      price: parseFloat(oi.price),
+      price: parseFloat(oi.price_at_time),
     }))
     setOrderItems(oiList)
 
@@ -173,10 +173,9 @@ export default function EditOrderPage() {
       // Insert new order_items
       const newRows = orderItems.map(oi => ({
         order_id: orderId,
-        item_id: oi.itemId,
         item_name: oi.name,
         quantity: oi.quantity,
-        price: oi.price,
+        price_at_time: oi.price,
       }))
       const { error: itemsError } = await supabase.from('order_items').insert(newRows)
       if (itemsError) throw new Error('Could not update items: ' + itemsError.message)
