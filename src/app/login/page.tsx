@@ -129,7 +129,7 @@ export default function LoginPage() {
                   <span className="text-[#635BFF]">Orderzo.</span>
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 mb-8 max-w-md">
-                  Enter your mobile number to get started. In 2 minutes, you will be sending your first invoice.
+                  Enter your mobile number to sign in or get started. New here? Setup takes 2 minutes. Returning? You'll be on your dashboard in 30 seconds.
                 </p>
 
                 <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-xl shadow-[#635BFF]/10 border border-[#EFEEFF]">

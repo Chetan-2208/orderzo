@@ -240,7 +240,7 @@ export default function DashboardPage() {
                 {tabs.find(t => t.id === activeTab)?.label || 'Today'}
               </h1>
             </div>
-            <div className="flex items-center gap-3">
+            <button onClick={() => setActiveTab('me')} className="flex items-center gap-3 rounded-xl hover:bg-gray-50 transition-colors p-1 -m-1" aria-label="Open profile">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-semibold text-gray-900 leading-tight">{business?.business_name}</p>
                 <p className="text-xs text-gray-400">+91 {phone}</p>
@@ -248,7 +248,7 @@ export default function DashboardPage() {
               <div className="w-10 h-10 bg-[#635BFF] text-white rounded-full flex items-center justify-center font-bold shadow-md">
                 {business?.business_name?.charAt(0).toUpperCase() || 'O'}
               </div>
-            </div>
+            </button>
           </div>
         </header>
 
