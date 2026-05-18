@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { generateInvoicePDF } from '@/lib/generateInvoice'
 
 interface Business {
   id: string
@@ -183,15 +184,62 @@ function NewFastContent() {
         })
       }
 
-      // Send via WhatsApp
+      // === DAY 4 PROVEN PATTERN: PDF generate -> save pdf_url -> short URL -> clean WhatsApp message ===
+      
+      // Step 1: Generate branded PDF and upload to Supabase storage
+      let pdfUrl = ''
+      try {
+        pdfUrl = await generateInvoicePDF({
+          orderId: order.id,
+          businessName: business.business_name,
+          businessPhone: business.owner_phone,
+          businessUpi: business.upi_id || '',
+          customerName,
+          customerPhone: customerPhone || undefined,
+          items: [{ name: whatBought.trim(), quantity: 1, price: amt }],
+          total: amt,
+          mode: 'order',
+          paymentMethod: payMethod === 'cash' ? 'cash' : 'upi',
+          paymentStatus: payMethod === 'cash' ? 'paid' : 'pending',
+          date: new Date(),
+        })
+      } catch (e: any) {
+        console.error('PDF generation error:', e?.message)
+      }
+
+      // Step 2: Save pdf_url on order so /i/[shortId] route can serve it
+      if (pdfUrl && order?.id) {
+        try {
+          await supabase.from('orders').update({ pdf_url: pdfUrl }).eq('id', order.id)
+        } catch (e: any) {
+          console.error('Could not save pdf_url:', e?.message)
+        }
+      }
+
+      // Step 3: Build short branded URL (orderzo.io/i/abc12345)
+      const shortId = order?.id?.slice(0, 8) || ''
+      const shortPdfUrl = shortId ? `https://orderzo.io/i/${shortId}` : pdfUrl
+
+      // Step 4: Build clean WhatsApp message (Day 4 style — no broken emojis)
       const cleanPhone = (customerPhone || '').replace(/\D/g, '')
-      const message = payMethod === 'upi' && business.upi_id
-        ? `Hi ${customerName},\n\nYour bill from ${business.business_name}:\n${whatBought.trim()} — ₹${amt}\n\nPay via UPI: ${business.upi_id}\n\nThank you!`
-        : `Hi ${customerName},\n\nYour bill from ${business.business_name}:\n${whatBought.trim()} — ₹${amt}\n\nThank you!`
+      const upiLink = payMethod === 'upi' && business.upi_id
+        ? `upi://pay?pa=${business.upi_id}&pn=${encodeURIComponent(business.business_name)}&am=${amt}&cu=INR&tn=${encodeURIComponent('Order from ' + business.business_name)}`
+        : ''
+
+      let message = `Hi ${customerName},\n\nYour order from *${business.business_name}* is confirmed:\n\n- ${whatBought.trim()} - Rs.${amt}\n\n*TOTAL: Rs.${amt}*\n`
+      if (upiLink) {
+        message += `\nPay via UPI:\n${upiLink}\n`
+      }
+      if (pdfUrl) {
+        message += `\nInvoice:\n${shortPdfUrl}\n`
+      }
+      message += `\nThank you!\n\n_Sent via Orderzo \u00b7 orderzo.io_`
 
       if (cleanPhone) {
         const fullPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone
         window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`, '_blank')
+      } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
       }
 
       // Redirect to dashboard with success

@@ -244,9 +244,9 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
     doc.setTextColor(30, 30, 30)
     doc.text(item.name, margin + 4, yPos)
     doc.text(item.quantity.toString(), pageWidth - margin - 50, yPos, { align: 'center' })
-    doc.text('Rs.' + item.price, pageWidth - margin - 28, yPos, { align: 'center' })
+    doc.text('₹' + item.price.toLocaleString('en-IN'), pageWidth - margin - 28, yPos, { align: 'center' })
     doc.setFont('helvetica', 'bold')
-    doc.text('Rs.' + (item.price * item.quantity), pageWidth - margin - 4, yPos, { align: 'right' })
+    doc.text('₹' + (item.price * item.quantity).toLocaleString('en-IN'), pageWidth - margin - 4, yPos, { align: 'right' })
     doc.setFont('helvetica', 'normal')
     yPos += 8
   })
@@ -264,7 +264,7 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<string> {
   doc.text('TOTAL', pageWidth - margin - 70, yPos + 2)
   doc.setFontSize(20)
   doc.setFont('helvetica', 'bold')
-  doc.text('Rs.' + data.total, pageWidth - margin - 4, yPos + 5, { align: 'right' })
+  doc.text('₹' + data.total.toLocaleString('en-IN'), pageWidth - margin - 4, yPos + 5, { align: 'right' })
 
   yPos += 22
   if (data.paymentStatus === 'paid') {
@@ -397,9 +397,9 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
     doc.setTextColor(30, 30, 30)
     doc.text(item.name, margin + 4, yPos)
     doc.text(item.quantity.toString(), pageWidth - margin - 50, yPos, { align: 'center' })
-    doc.text('Rs.' + item.price, pageWidth - margin - 28, yPos, { align: 'center' })
+    doc.text('₹' + item.price.toLocaleString('en-IN'), pageWidth - margin - 28, yPos, { align: 'center' })
     doc.setFont('helvetica', 'bold')
-    doc.text('Rs.' + (item.price * item.quantity), pageWidth - margin - 4, yPos, { align: 'right' })
+    doc.text('₹' + (item.price * item.quantity).toLocaleString('en-IN'), pageWidth - margin - 4, yPos, { align: 'right' })
     doc.setFont('helvetica', 'normal')
     yPos += 8
   })
@@ -413,7 +413,7 @@ export async function generatePaidReceiptPDF(data: InvoiceData): Promise<string>
   doc.text('PAID', pageWidth - margin - 70, yPos + 2)
   doc.setFontSize(20)
   doc.setFont('helvetica', 'bold')
-  doc.text('Rs.' + data.total, pageWidth - margin - 4, yPos + 5, { align: 'right' })
+  doc.text('₹' + data.total.toLocaleString('en-IN'), pageWidth - margin - 4, yPos + 5, { align: 'right' })
 
   yPos += 22
   doc.setFillColor(245, 250, 245)
