@@ -186,6 +186,122 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Built For — show specific use cases so target audience instantly recognizes themselves */}
+        <section className="px-4 sm:px-8 lg:px-12 py-16 lg:py-24 bg-gradient-to-b from-[#F4F3FF] via-white to-[#FAF9FF]">
+          <div className="max-w-6xl mx-auto">
+            
+            <div className="text-center mb-12">
+              <p className="text-sm font-semibold text-[#635BFF] uppercase tracking-wider mb-3">Made for</p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight mb-4">
+                The businesses that<br className="hidden sm:block" />
+                <span className="text-[#635BFF]"> built India.</span>
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                If you serve customers from your phone, on WhatsApp, or at a counter — Orderzo is for you.
+              </p>
+            </div>
+
+            {/* Use case cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+              
+              {/* 1. Tiffin services — stacked dabba */}
+              <div className="group bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-[#BDB9FF] hover:shadow-lg hover:shadow-[#635BFF]/10 hover:-translate-y-1 transition-all cursor-default">
+                <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+                  <svg viewBox="0 0 64 64" fill="none" className="w-full h-full text-[#635BFF] group-hover:scale-110 transition-transform" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="14" y="20" width="36" height="10" rx="1.5" />
+                    <rect x="14" y="32" width="36" height="10" rx="1.5" />
+                    <rect x="14" y="44" width="36" height="10" rx="1.5" />
+                    <path d="M22 20V14a4 4 0 014-4h12a4 4 0 014 4v6" />
+                    <circle cx="20" cy="25" r="0.8" fill="currentColor" />
+                    <circle cx="20" cy="37" r="0.8" fill="currentColor" />
+                    <circle cx="20" cy="49" r="0.8" fill="currentColor" />
+                    <path d="M32 7v3" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Tiffin services</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 mt-1">Daily regulars, monthly bills</p>
+              </div>
+
+              {/* 2. Cloud kitchens — kadhai with steam */}
+              <div className="group bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-[#BDB9FF] hover:shadow-lg hover:shadow-[#635BFF]/10 hover:-translate-y-1 transition-all cursor-default">
+                <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+                  <svg viewBox="0 0 64 64" fill="none" className="w-full h-full text-[#635BFF] group-hover:scale-110 transition-transform" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 30h36v6a14 14 0 01-14 14h-8a14 14 0 01-14-14v-6z" />
+                    <line x1="10" y1="30" x2="54" y2="30" />
+                    <path d="M6 33h-2M58 33h2" />
+                    <path d="M24 18c0 2-2 3-2 5s2 3 2 5" />
+                    <path d="M32 14c0 2-2 3-2 5s2 3 2 5" />
+                    <path d="M40 18c0 2-2 3-2 5s2 3 2 5" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Cloud kitchens</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 mt-1">Pickles, home food, catering, lunch boxes</p>
+              </div>
+
+              {/* 3. Kirana shops — Indian shopfront */}
+              <div className="group bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-[#BDB9FF] hover:shadow-lg hover:shadow-[#635BFF]/10 hover:-translate-y-1 transition-all cursor-default">
+                <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+                  <svg viewBox="0 0 64 64" fill="none" className="w-full h-full text-[#635BFF] group-hover:scale-110 transition-transform" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 22l4-10h36l4 10" />
+                    <line x1="10" y1="22" x2="54" y2="22" />
+                    <path d="M14 22v32h36V22" />
+                    <rect x="20" y="32" width="10" height="22" />
+                    <rect x="34" y="32" width="10" height="14" />
+                    <line x1="14" y1="22" x2="14" y2="26" />
+                    <line x1="22" y1="22" x2="22" y2="26" />
+                    <line x1="32" y1="22" x2="32" y2="26" />
+                    <line x1="42" y1="22" x2="42" y2="26" />
+                    <line x1="50" y1="22" x2="50" y2="26" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Kirana shops</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 mt-1">All offline walk-in customers</p>
+              </div>
+
+              {/* 4. Salons & freelancers — scissors + comb */}
+              <div className="group bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-[#BDB9FF] hover:shadow-lg hover:shadow-[#635BFF]/10 hover:-translate-y-1 transition-all cursor-default">
+                <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+                  <svg viewBox="0 0 64 64" fill="none" className="w-full h-full text-[#635BFF] group-hover:scale-110 transition-transform" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="18" cy="46" r="6" />
+                    <circle cx="34" cy="46" r="6" />
+                    <line x1="22" y1="42" x2="50" y2="14" />
+                    <line x1="30" y1="42" x2="50" y2="22" />
+                    <rect x="38" y="34" width="20" height="6" rx="1" />
+                    <line x1="42" y1="34" x2="42" y2="30" />
+                    <line x1="46" y1="34" x2="46" y2="30" />
+                    <line x1="50" y1="34" x2="50" y2="30" />
+                    <line x1="54" y1="34" x2="54" y2="30" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Salons &amp; freelancers</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 mt-1">Service bills on the spot</p>
+              </div>
+
+              {/* 5. Cafes & food trucks — chai glass with steam */}
+              <div className="group bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-[#BDB9FF] hover:shadow-lg hover:shadow-[#635BFF]/10 hover:-translate-y-1 transition-all cursor-default col-span-2 sm:col-span-1">
+                <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+                  <svg viewBox="0 0 64 64" fill="none" className="w-full h-full text-[#635BFF] group-hover:scale-110 transition-transform" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 28h24l-3 22a4 4 0 01-4 3.5h-10a4 4 0 01-4-3.5L20 28z" />
+                    <ellipse cx="32" cy="28" rx="12" ry="2.5" />
+                    <line x1="22" y1="38" x2="42" y2="38" opacity="0.5" />
+                    <path d="M26 16c0 2-2 3-2 5s2 3 2 5" />
+                    <path d="M32 12c0 2-2 3-2 5s2 3 2 5" />
+                    <path d="M38 16c0 2-2 3-2 5s2 3 2 5" />
+                  </svg>
+                </div>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Cafes &amp; food trucks</p>
+                <p className="text-[11px] sm:text-xs text-gray-500 mt-1">Counter sales + delivery</p>
+              </div>
+
+            </div>
+
+            {/* Bottom hint */}
+            <p className="text-center text-xs sm:text-sm text-gray-500 mt-8">
+              Don&apos;t see your business? <a href="https://wa.me/918466089662?text=Hi%20Chetan%2C%20I%20run%20a%20business%20and%20want%20to%20know%20if%20Orderzo%20works%20for%20me" target="_blank" rel="noopener noreferrer" className="text-[#635BFF] font-bold hover:text-[#4D44E0] hover:underline">WhatsApp us</a> — we&apos;ll tell you honestly.
+            </p>
+          </div>
+        </section>
+
         {/* Works on phone + laptop — proof of real product on multiple devices */}
         <section className="px-4 sm:px-8 lg:px-12 py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
           <div className="max-w-7xl mx-auto">
