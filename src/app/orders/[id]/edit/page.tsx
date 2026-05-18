@@ -268,7 +268,7 @@ export default function EditOrderPage() {
                 className="text-left bg-gray-50 hover:bg-[#F4F3FF] border border-gray-200 hover:border-[#BDB9FF] rounded-xl p-3 transition-all"
               >
                 <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
-                <p className="text-xs text-[#635BFF] font-bold">Rs.{item.price}</p>
+                <p className="text-xs text-[#635BFF] font-bold">₹{item.price.toLocaleString("en-IN")}</p>
               </button>
             ))}
           </div>
@@ -283,21 +283,21 @@ export default function EditOrderPage() {
                 <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-gray-900 text-sm truncate">{oi.name}</p>
-                    <p className="text-xs text-gray-500">Rs.{oi.price} each</p>
+                    <p className="text-xs text-gray-500">₹{oi.price.toLocaleString("en-IN")} each</p>
                   </div>
                   <div className="flex items-center gap-2 mx-2">
                     <button onClick={() => handleQtyChange(idx, -1)} className="w-7 h-7 bg-gray-200 rounded-full text-gray-700 font-bold">-</button>
                     <span className="font-semibold w-6 text-center">{oi.quantity}</span>
                     <button onClick={() => handleQtyChange(idx, 1)} className="w-7 h-7 bg-[#635BFF] rounded-full text-white font-bold">+</button>
                   </div>
-                  <p className="font-bold text-[#635BFF] w-16 text-right text-sm">Rs.{oi.price * oi.quantity}</p>
+                  <p className="font-bold text-[#635BFF] w-16 text-right text-sm">₹{(oi.price * oi.quantity).toLocaleString("en-IN")}</p>
                   <button onClick={() => handleRemoveItem(idx)} className="ml-2 text-red-500 text-lg">🗑️</button>
                 </div>
               ))}
             </div>
             <div className="mt-3 pt-3 border-t border-gray-200 flex justify-between items-center">
               <span className="font-semibold text-gray-900">TOTAL</span>
-              <span className="text-2xl font-bold text-[#635BFF]">Rs.{total}</span>
+              <span className="text-2xl font-bold text-[#635BFF]">₹{total.toLocaleString("en-IN")}</span>
             </div>
           </div>
         )}
@@ -370,7 +370,7 @@ export default function EditOrderPage() {
             disabled={saving || orderItems.length === 0}
             className="flex-1 bg-[#635BFF] text-white py-4 rounded-xl font-bold shadow-lg shadow-[#635BFF]/30 hover:bg-[#4D44E0] disabled:bg-gray-300"
           >
-            {saving ? 'Saving...' : `Save - Rs.${total}`}
+            {saving ? 'Saving...' : `Save - ₹${total.toLocaleString("en-IN")}`}
           </button>
         </div>
       </div>
