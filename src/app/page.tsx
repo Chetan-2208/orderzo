@@ -65,6 +65,13 @@ export default function Home() {
                 </a>
               </div>
               
+              <p className="text-sm text-gray-500 mb-5">
+                Already have an Orderzo account?{' '}
+                <Link href="/login" className="text-[#635BFF] font-bold hover:text-[#4D44E0] hover:underline">
+                  Sign in here →
+                </Link>
+              </p>
+              
               <p className="text-sm text-gray-500">
                 Free for 30 invoices/month · No credit card · Setup in 2 minutes
               </p>
@@ -82,11 +89,11 @@ export default function Home() {
                   <div className="bg-white rounded-[2rem] overflow-hidden">
                     {/* WhatsApp header */}
                     <div className="bg-[#075E54] text-white px-4 py-3 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#128C7E] rounded-full flex items-center justify-center text-lg font-bold">
-                        🏪
+                      <div className="w-10 h-10 bg-gray-300 text-gray-700 rounded-full flex items-center justify-center text-base font-bold">
+                        👤
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold text-sm">Your Shop</p>
+                        <p className="font-semibold text-sm">Your customer</p>
                         <p className="text-[10px] text-white/70">online</p>
                       </div>
                       <span className="text-lg">📞</span>
@@ -94,7 +101,7 @@ export default function Home() {
                     
                     {/* WhatsApp chat body */}
                     <div className="bg-[#ECE5DD] px-3 py-4 space-y-2 min-h-[420px]">
-                      {/* Customer message */}
+                      {/* Customer message (incoming, left, white) */}
                       <div className="flex">
                         <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[80%] shadow-sm">
                           <p className="text-sm text-gray-900">Aaj 2 tiffin chahiye 🙏</p>
@@ -102,47 +109,44 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      {/* Owner reply with Orderzo invoice card */}
+                      {/* Your reply (outgoing, right, green) - the REAL Orderzo WhatsApp message */}
                       <div className="flex justify-end">
-                        <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm p-2 max-w-[85%] shadow-sm">
-                          {/* Invoice card */}
-                          <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-                            {/* Invoice header */}
-                            <div className="bg-[#635BFF] text-white px-3 py-2">
-                              <p className="text-[10px] font-semibold opacity-90">YOUR SHOP</p>
-                              <p className="text-xs font-bold">Order #1234</p>
+                        <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[85%] shadow-sm">
+                          <p className="text-sm text-gray-900 leading-relaxed">
+                            Hi! Your bill from <span className="font-semibold">Your Business</span>:
+                          </p>
+                          <div className="my-1.5 py-1.5 border-y border-green-200/60 text-xs text-gray-700 space-y-0.5">
+                            <div className="flex justify-between gap-3">
+                              <span>Lunch tiffin × 2</span>
+                              <span className="font-semibold">₹200</span>
                             </div>
-                            
-                            {/* Invoice items */}
-                            <div className="px-3 py-2 text-xs space-y-1">
-                              <div className="flex justify-between">
-                                <span className="text-gray-700">Lunch tiffin × 2</span>
-                                <span className="text-gray-900 font-semibold">₹200</span>
-                              </div>
-                            </div>
-                            
-                            {/* Total */}
-                            <div className="bg-gray-50 px-3 py-2 flex justify-between items-center border-t border-gray-100">
-                              <span className="text-xs text-gray-600">Total</span>
-                              <span className="text-base font-bold text-gray-900">₹200</span>
-                            </div>
-                            
-                            {/* Pay button */}
-                            <div className="bg-white px-3 py-2 border-t border-gray-100">
-                              <button className="w-full bg-[#635BFF] text-white text-xs font-bold py-2 rounded-lg">
-                                Pay via UPI →
-                              </button>
+                            <div className="flex justify-between gap-3 font-bold text-gray-900 pt-0.5">
+                              <span>Total</span>
+                              <span>₹200</span>
                             </div>
                           </div>
-                          <p className="text-[10px] text-gray-500 text-right mt-1 px-1">12:34 PM ✓✓</p>
+                          <p className="text-sm text-gray-900 mt-1.5">💳 Pay via UPI:</p>
+                          <p className="text-xs text-[#0088CC] underline break-all leading-snug">
+                            upi://pay?pa=yourshop@upi&am=200
+                          </p>
+                          <p className="text-sm text-gray-900 mt-1.5">Thank you! 🙏</p>
+                          <p className="text-[10px] text-gray-500 text-right mt-1">12:35 PM ✓✓</p>
                         </div>
                       </div>
 
-                      {/* Customer reply */}
+                      {/* Customer reply (incoming, left, white) */}
                       <div className="flex">
                         <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[80%] shadow-sm">
                           <p className="text-sm text-gray-900">Paid ✓</p>
-                          <p className="text-[10px] text-gray-400 text-right mt-1">12:35 PM</p>
+                          <p className="text-[10px] text-gray-400 text-right mt-1">12:36 PM</p>
+                        </div>
+                      </div>
+
+                      {/* Your thank you reply (outgoing, right, green) */}
+                      <div className="flex justify-end">
+                        <div className="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[80%] shadow-sm">
+                          <p className="text-sm text-gray-900">Thank you! Receipt sent 🙏</p>
+                          <p className="text-[10px] text-gray-500 text-right mt-1">12:37 PM ✓✓</p>
                         </div>
                       </div>
                     </div>
