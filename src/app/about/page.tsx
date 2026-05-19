@@ -54,6 +54,12 @@ export default function AboutPage() {
               <p className="text-xl font-semibold text-gray-900">
                 Indian business owners deserve a tool built for how they actually work — not how someone in a glass office thinks they should.
               </p>
+              <p className="text-base italic text-[#635BFF] font-medium pt-2">
+                Apna dukan, apne haath mein. (Your shop, in your hands.)
+              </p>
+              <p className="text-base italic text-[#635BFF] font-medium pt-2">
+                Apna dukan, apne haath mein. (Your shop, in your hands.)
+              </p>
             </div>
           </div>
         </section>
@@ -114,7 +120,7 @@ export default function AboutPage() {
                   <div className="w-12 h-12 bg-[#EFEEFF] rounded-xl flex items-center justify-center text-2xl flex-shrink-0">📱</div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Replace your computer</h3>
-                    <p className="text-sm text-gray-600">No more ₹25,000 PC + ₹18,000/year Tally + thermal printer.</p>
+                    <p className="text-sm text-gray-600">No more ₹25,000 PC + ₹18,000 Tally license + ₹4,000 thermal printer.</p>
                   </div>
                 </div>
               </div>
@@ -208,7 +214,7 @@ export default function AboutPage() {
                   </div>
                   
                   <p>
-                    I noticed something while talking to <strong className="text-gray-900">over 100 of them</strong>: they had moved past the notebook. But the tools available felt heavy, complicated, built for someone else.
+                    I noticed something while talking to <strong className="text-gray-900">many of them</strong>: they had moved past the notebook. But the tools available felt heavy, complicated, built for someone else.
                   </p>
                   
                   {/* Pull quote — elevated paragraph */}
@@ -276,6 +282,12 @@ export default function AboutPage() {
               </p>
               <p className="text-xl font-bold text-gray-900">
                 Made in India 🇮🇳 · For India.
+              </p>
+              <p className="text-sm text-gray-500 pt-4">
+                Orderzo Technologies Private Limited · Registered office in Hyderabad, Telangana, India.
+              </p>
+              <p className="text-sm text-gray-500 pt-4">
+                Orderzo Technologies Private Limited · Registered office in Hyderabad, Telangana, India.
               </p>
             </div>
           </div>
