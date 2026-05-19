@@ -29,7 +29,7 @@ export default function PrivacyPage() {
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-6">
               Privacy Policy
             </h1>
-            <p className="text-base text-gray-500">Last updated: 3 May 2026 · Effective from: 3 May 2026</p>
+            <p className="text-base text-gray-500">Last updated: 18 May 2026 · Effective from: 18 May 2026</p>
           </div>
         </section>
 
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>This Privacy Policy applies to services provided by <strong>Orderzo Technologies Pvt Ltd</strong> ("Orderzo", "we", "us", "our") — a company registered in India (registration in progress), with its registered office at:</p>
+            <p>This Privacy Policy applies to services provided by <strong>Orderzo Technologies Private Limited</strong> ("Orderzo", "we", "us", "our") — a company incorporated in India under the Companies Act, 2013, with its registered office at:</p>
             <address className="not-italic mt-2 bg-gray-50 p-3 rounded-lg text-sm">
               Laqsh Residency, Plot No. 101<br />
               Gopalakrishnan Puram, Road No. 3<br />
@@ -63,7 +63,13 @@ export default function PrivacyPage() {
               Nagole, Hyderabad - 500068<br />
               Telangana, India
             </address>
-            <p className="mt-3">For privacy concerns or data requests, contact us at <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> with subject "DPDPA Request".</p>
+            <p className="mt-3">For privacy concerns or data requests, contact us at <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a> with subject "DPDPA Request".</p>
+            <div className="mt-3 bg-[#F4F3FF] border border-[#DAD8FF] rounded-xl p-4 text-sm">
+              <p className="font-semibold text-gray-900 mb-1">Grievance Officer (per DPDP Act 2023, Section 8(9))</p>
+              <p><strong>Name:</strong> Chetan Aitaraju</p>
+              <p><strong>Email:</strong> <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a></p>
+              <p className="text-xs text-gray-600 mt-2">All privacy grievances will be acknowledged within 7 days and resolved within 30 days. If you are unsatisfied, you may escalate to the Data Protection Board of India.</p>
+            </div>
             </div>
           </details>
 
@@ -154,9 +160,11 @@ export default function PrivacyPage() {
               <li><strong>Supabase Inc.</strong> — Database and file storage. All Orderzo data is hosted in AWS Mumbai (Asia Pacific - Mumbai region).</li>
               <li><strong>Vercel Inc.</strong> — Web hosting and serverless functions for orderzo.io.</li>
               <li><strong>Cloudflare Inc.</strong> — DNS routing and DDoS protection.</li>
-              <li><strong>Google Workspace</strong> — Our business email (info@orderzo.io, support@orderzo.io).</li>
+              <li><strong>Google Workspace</strong> — Our business email (info@orderzo.io, support@orderzo.io, chetan@orderzo.io).</li>
+              <li><strong>Razorpay Software Pvt Ltd</strong> — Payment processing for subscription billing. When you upgrade to a paid plan, your payment details (UPI ID, card, bank info) are processed by Razorpay directly. We never see or store your payment credentials. <a href="https://razorpay.com/privacy/" target="_blank" rel="noopener noreferrer" className="text-[#4D44E0] underline">Razorpay privacy policy</a></li>
+              <li><strong>Meta Platforms (WhatsApp):</strong> When you send invoices via WhatsApp, we use <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">wa.me</code> deep links to open your WhatsApp app. We do not access WhatsApp message content — you communicate with your customer directly through your own WhatsApp account.</li>
             </ul>
-            <p className="mt-3 text-sm text-gray-600">When we add new processors (e.g., SMS delivery, payment gateway), we will update this list and notify users of material changes via email.</p>
+            <p className="mt-3 text-sm text-gray-600">When we add new processors (such as SMS delivery via MSG91 or similar providers), we will update this list and notify users of material changes via email.</p>
             </div>
           </details>
 
@@ -168,14 +176,18 @@ export default function PrivacyPage() {
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p className="mb-2">All data is stored in <strong>AWS Mumbai (Asia Pacific - Mumbai region)</strong> — fully compliant with RBI data residency guidelines.</p>
+            <p className="mb-2">All Orderzo data is stored in <strong>AWS Mumbai (Asia Pacific - Mumbai region)</strong> via Supabase Cloud — fully compliant with RBI data residency guidelines.</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li>Encrypted in transit (HTTPS/TLS 1.3)</li>
               <li>Encrypted at rest (AES-256)</li>
               <li>Regular automated backups</li>
               <li>Access restricted to authorized personnel only</li>
-              <li>SOC 2 Type II certified infrastructure (Supabase)</li>
+              <li>Our infrastructure provider Supabase is SOC 2 Type II certified</li>
             </ul>
+            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm">
+              <p className="font-semibold text-gray-900 mb-1">Cross-border access disclosure</p>
+              <p className="text-gray-700">Your data is stored exclusively in India. However, our operations team — including our founder, who is based in the United States — may access data using encrypted, access-controlled connections to operate the service. <strong>No data is transferred to or stored outside India.</strong></p>
+            </div>
             </div>
           </details>
 
@@ -213,7 +225,7 @@ export default function PrivacyPage() {
               <li><strong>Grievance redressal</strong> — contact us first; if unsatisfied, escalate to the Data Protection Board of India</li>
               <li><strong>Nominate</strong> — designate someone to exercise rights on your behalf</li>
             </ul>
-            <p className="mt-3">To exercise any of these rights, email <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> with subject "DPDPA Request" and your registered phone number. <strong>Erasure requests: responded within 7 days</strong> (per DPDP Act). Other requests: within 30 days.</p>
+            <p className="mt-3">To exercise any of these rights, email our Grievance Officer at <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a> with subject "DPDPA Request" and your registered phone number. <strong>Erasure requests: responded within 7 days</strong> (per DPDP Act). Other requests: within 30 days.</p>
             </div>
           </details>
 
@@ -288,7 +300,7 @@ export default function PrivacyPage() {
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
               <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
-              <p className="mt-2">Privacy / DPDPA inquiries: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a></p>
+              <p className="mt-2">Privacy / DPDPA / Grievance: <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a></p>
               <p>Customer support: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
             </div>
             </div>
