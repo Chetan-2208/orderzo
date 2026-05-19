@@ -29,7 +29,7 @@ export default function TermsPage() {
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-6">
               Terms of Service
             </h1>
-            <p className="text-base text-gray-500">Last updated: 3 May 2026 · Effective from: 3 May 2026</p>
+            <p className="text-base text-gray-500">Last updated: 18 May 2026 · Effective from: 18 May 2026</p>
           </div>
         </section>
 
@@ -55,7 +55,7 @@ export default function TermsPage() {
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>These Terms of Service ("Terms") govern your access to and use of Orderzo, a software-as-a-service platform provided by <strong>Orderzo Technologies Pvt Ltd</strong> ("Orderzo", "we", "us", "our"). By creating an account or using our service, you agree to be bound by these Terms.</p>
+            <p>These Terms of Service ("Terms") govern your access to and use of Orderzo, a software-as-a-service platform provided by <strong>Orderzo Technologies Private Limited</strong> ("Orderzo", "we", "us", "our"). By creating an account or using our service, you agree to be bound by these Terms.</p>
             <p className="mt-2">If you do not agree, please do not use our service.</p>
             </div>
           </details>
@@ -147,14 +147,13 @@ export default function TermsPage() {
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>Current plans (subject to change with 30 days notice):</p>
+            <p>Orderzo offers two subscription plans:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
-              <li><strong>Free Plan</strong> — limited to 5 transactions/day</li>
-              <li><strong>Free Plan</strong> — Rs. 0/forever, 30 invoices per month</li>
-              <li><strong>Pro Plan</strong> — Rs. 2,499/year (or Rs. 249/month), unlimited invoices</li>
-              <li><strong>Business Plan</strong> — Rs. 499/month, unlimited + advanced features</li>
+              <li><strong>Free Plan</strong> — Rs. 0 forever. Includes up to 30 invoices per calendar month. All core features (invoices, customers, items, WhatsApp delivery, branded PDFs).</li>
+              <li><strong>Pro Plan</strong> — Rs. 249/month or Rs. 2,499/year (saves Rs. 489 annually). Includes unlimited invoices and all features.</li>
             </ul>
-            <p className="mt-3">All prices are inclusive of applicable taxes. We reserve the right to modify pricing with 30 days advance notice via email.</p>
+            <p className="mt-3">All prices are in Indian Rupees and inclusive of applicable taxes. You can view current plans and upgrade anytime at <Link href="/pricing" className="text-[#4D44E0] underline">orderzo.io/pricing</Link>.</p>
+            <p className="mt-2">We reserve the right to modify pricing with at least 30 days advance notice via email. Existing subscriptions continue at their committed price until the end of their billing cycle.</p>
             </div>
           </details>
 
@@ -198,7 +197,7 @@ export default function TermsPage() {
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>All Orderzo content — software, logos, designs, trademarks, and branding (including "Orderzo", "Order. Bill. Done.", and the orange checkmark logo) — is owned by Orderzo Technologies Pvt Ltd and protected by Indian and international intellectual property laws.</p>
+            <p>All Orderzo content — software, logos, designs, trademarks, and branding (including "Orderzo", "Order. Bill. Done.", "Apna dukan, apne haath mein", and the Orderzo logo) — is owned by Orderzo Technologies Pvt Ltd and protected by Indian and international intellectual property laws.</p>
             <p className="mt-2">You may not copy, reproduce, or use our brand without written permission.</p>
             </div>
           </details>
@@ -215,7 +214,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
               <li>Scheduled maintenance (with advance notice when possible)</li>
               <li>Emergency bug fixes or security patches</li>
-              <li>Third-party service outages (Supabase, Vercel, Razorpay, Twilio)</li>
+              <li>Third-party service outages (Supabase, Vercel, Cloudflare, Razorpay, or SMS providers)</li>
               <li>Force majeure events</li>
             </ul>
             <p className="mt-3">We are not liable for losses due to temporary unavailability.</p>
@@ -314,26 +313,40 @@ export default function TermsPage() {
             <p>Per the IT Act, 2000, our designated Grievance Officer is:</p>
             <div className="bg-gray-50 rounded-xl p-4 text-sm mt-2">
               <p><strong>Chetan Aitaraju</strong></p>
-              <p>Founder, Orderzo Technologies Pvt Ltd</p>
-              <p>Email: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a> (Subject: "Grievance")</p>
-              <p>Response time: within 15 days of receipt</p>
+              <p>Founder, Orderzo Technologies Private Limited</p>
+              <p>Email: <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a> (Subject: "Grievance")</p>
+              <p>Acknowledgment: within 48 hours. Resolution: within 15 days of receipt.</p>
             </div>
             </div>
           </details>
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">17. Contact us</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">17. Severability and entire agreement</h2>
+              <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </span>
+            </summary>
+            <div className="px-6 pb-6 pt-2 border-t border-gray-100">
+            <p>If any provision of these Terms is held invalid or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect.</p>
+            <p className="mt-2">These Terms, together with our <Link href="/privacy" className="text-[#4D44E0] underline">Privacy Policy</Link> and <Link href="/refund" className="text-[#4D44E0] underline">Refund Policy</Link>, constitute the entire agreement between you and Orderzo Technologies Private Limited regarding your use of the service.</p>
+            </div>
+          </details>
+
+          <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
+            <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">18. Contact us</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
-              <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
+              <p><strong>Orderzo Technologies Private Limited</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
               <p className="mt-2">General: <a href="mailto:info@orderzo.io" className="text-[#4D44E0] underline">info@orderzo.io</a></p>
               <p>Support: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
+              <p>Grievance: <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a></p>
             </div>
             </div>
           </details>
