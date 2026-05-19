@@ -29,7 +29,7 @@ export default function RefundPage() {
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.05] mb-6">
               Refund & Cancellation Policy
             </h1>
-            <p className="text-base text-gray-500">Last updated: 3 May 2026 · Effective from: 3 May 2026</p>
+            <p className="text-base text-gray-500">Last updated: 18 May 2026 · Effective from: 18 May 2026</p>
           </div>
         </section>
 
@@ -79,24 +79,7 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">3. Business Plan (Rs. 499/month)</h2>
-              <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-              </span>
-            </summary>
-            <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>Same terms as Pro Plan:</p>
-            <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
-              <li>Within first 7 days: full refund, no questions asked</li>
-              <li>After 7 days: pro-rated refund for unused days in current billing cycle</li>
-              <li>Refund is processed to the original payment method</li>
-            </ul>
-            </div>
-          </details>
-
-          <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
-            <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">4. How to request a refund</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">3. How to request a refund</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -116,7 +99,7 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">5. Cancellation</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">4. Cancellation</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -133,7 +116,7 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">6. Refund processing time</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">5. Refund processing time</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -151,7 +134,7 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">7. Non-refundable cases</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">6. Non-refundable cases</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -159,17 +142,18 @@ export default function RefundPage() {
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
             <p>Refunds will not be processed in the following cases:</p>
             <ul className="list-disc pl-6 space-y-1 text-sm mt-2">
-              <li>Account terminated due to violation of <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service</Link></li>
-              <li>Refund request made after 7 days for the initial purchase (only pro-rated allowed)</li>
-              <li>Misuse of the service or fraudulent activity detected</li>
-              <li>Free plan usage</li>
+              <li>Account terminated for violation of <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service</Link></li>
+              <li>Misuse of the service or fraudulent activity</li>
+              <li>Free plan usage (nothing was charged)</li>
+              <li>Abuse of refund policy (e.g. heavy service usage immediately followed by refund request, repeated sign-up + refund cycles)</li>
             </ul>
+            <p className="mt-3 text-sm"><strong>Note on pro-rated refunds:</strong> After the first 7 days, you can still cancel anytime and receive a pro-rated refund for unused days in your current billing cycle (as described in Section 2).</p>
             </div>
           </details>
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">8. Failed payments</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">7. Failed payments</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -187,20 +171,30 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">9. Disputes</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">8. Disputes and chargebacks</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-            <p>If you have a dispute about a charge or refund, contact us first at <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a>. We aim to resolve all disputes within 15 days.</p>
-            <p className="mt-2">If unresolved, refer to our grievance redressal process in our <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service</Link>.</p>
+            <p>If you have a dispute about a charge or refund, contact us first at <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a>. We aim to acknowledge within 24 hours and resolve all disputes within 15 days.</p>
+            <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm">
+              <p className="font-semibold text-gray-900 mb-1">⚠️ Chargebacks</p>
+              <p>If you initiate a chargeback with your bank or card issuer without first contacting us, we reserve the right to:</p>
+              <ul className="list-disc pl-5 space-y-1 mt-1.5">
+                <li>Suspend your account pending investigation</li>
+                <li>Provide evidence of service delivery to the payment processor</li>
+                <li>Recover the chargeback fee (typically Rs. 500-Rs. 1,500) if the dispute is found in our favour</li>
+              </ul>
+              <p className="mt-2">Please contact us first — we resolve almost all refund requests within 5-7 business days.</p>
+            </div>
+            <p className="mt-3">For unresolved disputes, contact our Grievance Officer: <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a>. See full grievance redressal process in our <Link href="/terms" className="text-[#4D44E0] underline">Terms of Service, Section 16</Link>.</p>
             </div>
           </details>
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">10. Changes to this policy</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">9. Changes to this policy</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
@@ -212,16 +206,17 @@ export default function RefundPage() {
 
           <details className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
             <summary className="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">11. Contact</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">10. Contact</h2>
               <span className="flex-shrink-0 w-8 h-8 bg-[#EFEEFF] text-[#635BFF] rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </span>
             </summary>
             <div className="px-6 pb-6 pt-2 border-t border-gray-100">
             <div className="bg-gray-50 rounded-xl p-4 text-sm">
-              <p><strong>Orderzo Technologies Pvt Ltd</strong></p>
+              <p><strong>Orderzo Technologies Private Limited</strong></p>
               <p>Laqsh Residency, Plot No. 101, Gopalakrishnan Puram, Road No. 3, Anand Nagar, Beside Go Colours, Nagole, Hyderabad - 500068, Telangana, India</p>
               <p className="mt-2">Refund inquiries: <a href="mailto:support@orderzo.io" className="text-[#4D44E0] underline">support@orderzo.io</a></p>
+              <p>Grievance Officer: <a href="mailto:chetan@orderzo.io" className="text-[#4D44E0] underline">chetan@orderzo.io</a></p>
               <p>Response within 24 hours during business hours (Mon-Sat, 9 AM - 9 PM IST)</p>
             </div>
             </div>
